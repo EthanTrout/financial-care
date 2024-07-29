@@ -12,20 +12,22 @@
     <header>
         <nav class="light-blue darken-1">
             <div class="nav-wrapper">
-              <a href="{{url_for('home')}}" class="brand-logo">Financial Care</a>
+              <a href="{{url_for('login')}}" class="brand-logo">Financial Care</a>
               <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
               <ul class="right hide-on-med-and-down">
-                <li><a href="{{url_for('home')}}">Home</a></li>
-                <li><a href="">Services</a></li>
+                <li><a href="{{url_for('login')}}">Home</a></li>
+                <li><a href="{{url_for('services')}}">Services</a></li>
                 <li><a href="">Individual</a></li>
+                <li><a href="">Staff</a></li>
               </ul>
             </div>
           </nav>
         
           <ul class="sidenav" id="mobile-demo">
-                <li><a href="{{url_for('home')}}">Home</a></li>
-                <li><a href="">Services</a></li>
+                <li><a href="{{url_for('login')}}">Home</a></li>
+                <li><a href="{{url_for('services')}}">Services</a></li>
                 <li><a href="">Individual</a></li>
+                <li><a href="">Staff</a></li>
           </ul>
     </header>
 
