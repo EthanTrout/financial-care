@@ -37,3 +37,25 @@ def delete_service(service_id):
     db.session.commit()
     return redirect(url_for("services"))
     
+@app.route("/users")
+def users():
+    return render_template("users.html")
+
+
+@app.route("/add_user",methods=["GET","POST"])
+def add_user():
+    services =list(Service.query.order_by(Service.name).all())
+    if request.method=="POST":
+        user = User(
+            name=request.form.get("user_name"),
+            email=request.form.get("email"),
+            access=request.form.get("access"),
+        )
+        user.set_password(request.form.get("password"))
+        db.session.add(user)
+        db.session.commit()
+        user_service = Service.query.filter_by(id=request.form.get("services")).first()
+        user.services.append(user_service)
+        db.session.commit()
+        return redirect(url_for("users"))
+    return render_template("add_user.html",services=services)
