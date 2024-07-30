@@ -6,9 +6,26 @@
 <div class="row">
     <div class="col s12 center-align">
         <a href="{{ url_for('add_service') }}" class="btn-large light-blue darken-2">
-            Add Service <i class="material-icons">add_circle_outline</i>
+            Add Service <i class="fas fa-plus-square right"></i>
         </a>
     </div>
 </div>
+
+<div class="row">
+    {% for service in services %}
+    <div class="col s12 m6 l3">
+        <div class="card light-blue darken-4 center-align">
+            <div class="card-content white-text">
+                <span class="card-title">{{ service.name }}</span>
+            </div>
+            <div class="card-action">
+                <a href="{{ url_for('edit_service',service_id=service.id) }}" class="btn green accent-4">Edit</a>
+                <a href="#" class="btn red">Delete</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 
 {% endblock %}
