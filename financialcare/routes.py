@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from financialcare import app, db
-from financialcare.models import User,Service , user_service
+from financialcare.models import Staff,Service , staff_service
 
 
 @app.route("/")
@@ -39,6 +39,9 @@ def delete_service(service_id):
     
 @app.route("/users")
 def users():
+    staff =list(Staff.query.order_by(Staff.name).all())
+    print('users:')
+    print(staff)
     return render_template("users.html")
 
 
@@ -46,16 +49,76 @@ def users():
 def add_user():
     services =list(Service.query.order_by(Service.name).all())
     if request.method=="POST":
-        user = User(
+        staff = Staff(
             name=request.form.get("user_name"),
             email=request.form.get("email"),
             access=request.form.get("access"),
+            # password=request.form.get("password")
         )
-        user.set_password(request.form.get("password"))
-        db.session.add(user)
-        db.session.commit()
-        user_service = Service.query.filter_by(id=request.form.get("services")).first()
-        user.services.append(user_service)
-        db.session.commit()
+        staff.set_password(request.form.get("password"))
+        
+        service_id = request.form.get("service")
+        staff_service = Service.query.filter_by(id=service_id).first()
+        print(service_id)
+        # db.session.add(user)
+        # db.session.commit()
+        
+        if staff_service is not None:
+            staff.services.append(staff_service)
+            db.session.add(staff)
+            db.session.commit()
+            return redirect(url_for("users"))
+        else:
+            # Handle the case where the service is not found
+            print("Service not found.", "error")
         return redirect(url_for("users"))
     return render_template("add_user.html",services=services)
+
+# @app.route("/add_user", methods=["GET", "POST"])
+# def add_user():
+#     services = list(Service.query.order_by(Service.name).all())
+#     if request.method == "POST":
+#         user_name = request.form.get("user_name")
+#         email = request.form.get("email")
+#         access = request.form.get("access")
+#         password = request.form.get("password")
+#         service_id = request.form.get("service")
+
+#         print(f"Received form data: user_name={user_name}, email={email}, access={access}, password={password}, service_id={service_id}")
+
+#         user = User(
+#             name=user_name,
+#             email=email,
+#             access=access,
+#         )
+#         user.set_password(password)
+
+#         try:
+#             db.session.add(user)
+#             db.session.commit()
+#             print(f"User {user_name} added successfully with ID: {user.id}")
+#         except Exception as e:
+#             print(f"Error adding user: {e}")
+#             db.session.rollback()
+#             return "Error adding user", 500
+        
+#         user_service = Service.query.filter_by(id=service_id).first()
+#         print(f"Queried user_service: {user_service}")
+
+#         # if user_service is not None:
+#         #     try:
+#         #         user.services.append(user_service)
+#         #         db.session.add(user)
+#         #         db.session.commit()
+#         #         print(f"Service {user_service.name} appended to user {user.name}")
+#         #     except Exception as e:
+#         #         print(f"Error appending service to user: {e}")
+#         #         db.session.rollback()
+#         #         return "Error associating service with user", 500
+            
+#         #     return redirect(url_for("users"))
+#         # else:
+#         #     print("Service not found.", "error")
+        
+#         return redirect(url_for("users"))
+#     return render_template("add_user.html", services=services)
