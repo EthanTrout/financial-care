@@ -74,51 +74,17 @@ def add_user():
         return redirect(url_for("users"))
     return render_template("add_user.html",services=services)
 
-# @app.route("/add_user", methods=["GET", "POST"])
-# def add_user():
-#     services = list(Service.query.order_by(Service.name).all())
-#     if request.method == "POST":
-#         user_name = request.form.get("user_name")
-#         email = request.form.get("email")
-#         access = request.form.get("access")
-#         password = request.form.get("password")
-#         service_id = request.form.get("service")
+@app.route("/edit_user/<int:staff_id>",methods=["GET","POST"])
+def edit_user(staff_id):
+    staff = Staff.query.get_or_404(staff_id)
+    services =list(Service.query.order_by(Service.name).all())
+    if request.method=="POST":
 
-#         print(f"Received form data: user_name={user_name}, email={email}, access={access}, password={password}, service_id={service_id}")
-
-#         user = User(
-#             name=user_name,
-#             email=email,
-#             access=access,
-#         )
-#         user.set_password(password)
-
-#         try:
-#             db.session.add(user)
-#             db.session.commit()
-#             print(f"User {user_name} added successfully with ID: {user.id}")
-#         except Exception as e:
-#             print(f"Error adding user: {e}")
-#             db.session.rollback()
-#             return "Error adding user", 500
+        staff.name=request.form.get("user_name")
+        staff.email=request.form.get("email")
+        staff.access=request.form.get("access")
+        staff.password= staff.password
+        db.session.commit()
+        return redirect(url_for("users"))
         
-#         user_service = Service.query.filter_by(id=service_id).first()
-#         print(f"Queried user_service: {user_service}")
-
-#         # if user_service is not None:
-#         #     try:
-#         #         user.services.append(user_service)
-#         #         db.session.add(user)
-#         #         db.session.commit()
-#         #         print(f"Service {user_service.name} appended to user {user.name}")
-#         #     except Exception as e:
-#         #         print(f"Error appending service to user: {e}")
-#         #         db.session.rollback()
-#         #         return "Error associating service with user", 500
-            
-#         #     return redirect(url_for("users"))
-#         # else:
-#         #     print("Service not found.", "error")
-        
-#         return redirect(url_for("users"))
-#     return render_template("add_user.html", services=services)
+    return render_template("edit_user.html",staff=staff,services=services)

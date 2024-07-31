@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="light-blue-text text-darken-4 center-align">Edit User</h3>
+
+<div class="row card-panel grey lighten-5">
+    <form class="col s12" method="POST" action="{{ url_for('edit_user',staff_id=staff.id) }}">
+        <!-- Full name -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="fa-regular fa-user prefix light-blue-text text-darken-4"></i>
+                <input id="user_name" name="user_name" minlength="3" maxlength="124" type="text" class="validate" value="{{staff.name}}" required>
+                <label for="user_name">Full Name</label>
+            </div>
+        </div>
+         <!-- Email -->
+         <div class="row">
+            <div class="input-field col s12">
+                <i class="fa-regular fa-user prefix light-blue-text text-darken-4"></i>
+                <input id="email" name="email" type="email" class="validate" value="{{staff.email}}" required>
+                <label for="email">Email</label>
+            </div>
+        </div>
+        <!-- Access -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="fa-regular fa-user prefix light-blue-text text-darken-4"></i>
+                <select id="access" name="access" class="validate" required>
+                    <option value="" disabled selected>Select User Acess</option>
+                    {% if staff.access == "support" %}
+                        <option value="support" selected>Support Worker</option>
+                        <option value="manager">Manager</option>
+                        <option value="it">IT Technician</option>
+                    {% elif staff.access =="manager" %}
+                        <option value="support">Support Worker</option>
+                        <option value="manager" selected>Manager</option>
+                        <option value="it">IT Technician</option>
+                    {% elif staff.access =="it" %}
+                        <option value="support">Support Worker</option>
+                        <option value="manager">Manager</option>
+                        <option value="it" selected>IT Technician</option>
+                    {% else %}
+                        <option value="" disabled selected>Select User Acess</option>
+                        <option value="support">Support Worker</option>
+                        <option value="manager">Manager</option>
+                        <option value="it">IT Technician</option>
+                    {%endif%}
+                </select>
+                <label for="access">Access</label>
+            </div>
+        </div>
+        <!-- submit button -->
+        <div class="row">
+            <div class="col s12 center-align">
+                <button type="submit" class="btn-large light-blue darken-1">
+                    Edit User <i class="fas fa-plus-square right"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
