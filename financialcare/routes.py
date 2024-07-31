@@ -40,9 +40,7 @@ def delete_service(service_id):
 @app.route("/users")
 def users():
     staff =list(Staff.query.order_by(Staff.name).all())
-    print('users:')
-    print(staff)
-    return render_template("users.html")
+    return render_template("users.html",staff=staff)
 
 
 @app.route("/add_user",methods=["GET","POST"])
@@ -70,7 +68,9 @@ def add_user():
             return redirect(url_for("users"))
         else:
             # Handle the case where the service is not found
-            print("Service not found.", "error")
+            db.session.add(staff)
+            db.session.commit()
+            return redirect(url_for("users"))
         return redirect(url_for("users"))
     return render_template("add_user.html",services=services)
 
