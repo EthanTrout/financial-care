@@ -23,8 +23,23 @@
             {% endfor %}
         {% endif%}
         <p>
-            <a href="{{ url_for('edit_user',staff_id=staff_member.id) }}" class="btn green accent-4">Edit</a>
+            <a href="{{ url_for('edit_user',staff_id=staff_member.id) }}" class="btn green accent-4">Edit details</a>
+            <a href="{{ url_for('edit_user_password',staff_id=staff_member.id) }}" class="btn yellow accent-4">Update Password</a>
+            <a href="#modal-{{ staff_member.id }}" class="btn red modal-trigger">Delete</a>
         </p>
+        
+        <!-- Modal Structure -->
+        <div id="modal-{{ staff_member.id }}" class="modal">
+            <div class="modal-content">
+                <h4>Are you sure you want to delete {{staff.name}}</h4>
+                <p>this action can not be undone</p>
+            </div>
+            <div class="modal-footer">
+                <a href="{{ url_for('delete_user',staff_id=staff_member.id) }}" class="btn red">Delete</a>
+                <a href="" class="btn green accent-4 modal-close">Cancel</a>
+            </div>
+        </div>
+        
       </div>
     </li>
     {% endfor %}

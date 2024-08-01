@@ -88,3 +88,25 @@ def edit_user(staff_id):
         return redirect(url_for("users"))
         
     return render_template("edit_user.html",staff=staff,services=services)
+
+@app.route("/edit_user_password/<int:staff_id>",methods=["GET","POST"])
+def edit_user_password(staff_id):
+    staff = Staff.query.get_or_404(staff_id)
+    if request.method=="POST":
+
+        staff.name= staff.name
+        staff.email= staff.email
+        staff.access= staff.access
+        staff.set_password(request.form.get("password"))
+        db.session.commit()
+        return redirect(url_for("users"))
+        
+    return render_template("edit_user_password.html",staff=staff,services=services)
+
+@app.route("/delete_user/<int:staff_id>")
+def delete_user(staff_id):
+    staff = Staff.query.get_or_404(staff_id)
+    db.session.delete(staff)
+    db.session.commit()
+    return redirect(url_for("users"))
+    
