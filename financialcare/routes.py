@@ -30,6 +30,20 @@ def edit_service(service_id):
         return redirect(url_for("services"))
     return render_template("edit_service.html",service=service)
 
+@app.route("/edit_service_staff/<int:service_id>",methods=["GET","POST"])
+def edit_service_staff(service_id):
+    service = Service.query.get_or_404(service_id)
+    staff =list(Staff.query.order_by(Staff.name).all())
+    if request.method == "POST":
+        service.name = service.name
+        print (service.name)
+        staff_id = request.form.get("staff")
+        service_staff = Staff.query.filter_by(id=staff_id).first()
+        service.staff.append(service_staff)
+        db.session.commit()
+        return redirect(url_for("services"))
+    return render_template("edit_service_staff.html",service=service,staff=staff)
+
 @app.route("/delete_service/<int:service_id>")
 def delete_service(service_id):
     service = Service.query.get_or_404(service_id)
