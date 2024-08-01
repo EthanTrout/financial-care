@@ -1,16 +1,28 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from financialcare import app, db
 from financialcare.models import Staff,Service , staff_service
 
 
-@app.route("/")
+@app.route("/",methods=["GET", "POST"])
 def login():
+    if request.method =="POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        
+        staff = Staff.query.filter_by(email=email).first()
+        
+        if staff and staff.check_password(password):
+            session["user"] = staff.id  
+            return redirect(url_for("services"))
     return render_template("login.html")
 
 @app.route("/services")
 def services():
-    services =list(Service.query.order_by(Service.name).all())
-    return render_template("services.html",services=services)
+    if "user" in session:
+        services =list(Service.query.order_by(Service.name).all())
+        return render_template("services.html",services=services)
+    else:
+        return redirect(url_for("login"))
 
 @app.route("/add_service",methods=["GET","POST"])
 def add_service():
