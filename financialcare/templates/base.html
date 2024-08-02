@@ -20,7 +20,7 @@
                 <li><a href="{{url_for('login')}}">Home</a></li>
                 <li><a href="{{url_for('services')}}">Services</a></li>
                 {% if session["user_access"]in ["manager", "it"] %}
-                  <li><a href="">Individual</a></li>
+                  <li><a href="{{url_for('service_users')}}">Individual</a></li>
                   <li><a href="{{url_for('users')}}">Staff</a></li>
                 {% endif %}
               </ul>

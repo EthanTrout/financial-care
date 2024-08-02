@@ -30,5 +30,13 @@ class Staff(db.Model):
 class Service(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(128),nullable =False)
+    service_user=db.relationship("ServiceUser",backref="service")
     def __repr__(self):
         return f"<service: {self.name}>"
+
+
+class ServiceUser(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(128),nullable=False)
+    bank = db.Column(db.String(128),nullable=False)
+    service_id =db.Column(db.Integer,db.ForeignKey("service.id"),nullable=False)

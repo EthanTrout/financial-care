@@ -1,8 +1,8 @@
 from flask import render_template, request, redirect, url_for, session
 from financialcare import app, db
-from financialcare.models import Staff,Service , staff_service
+from financialcare.models import Staff,Service , staff_service, ServiceUser
 
-
+# Login logout routes
 @app.route("/",methods=["GET", "POST"])
 def login():
     if request.method =="POST":
@@ -19,6 +19,15 @@ def login():
         return redirect(url_for("services"))
     return render_template("login.html")
 
+
+@app.route("/logout")
+def logout():
+    session.pop("user",None)
+    session.pop("user_access",None)
+    return redirect(url_for("login"))
+
+
+# Service routes
 @app.route("/services")
 def services():
     if "user" in session:
@@ -78,10 +87,12 @@ def delete_service(service_id):
         return redirect(url_for("services"))
     else:
         return redirect(url_for("login"))
-    
+
+# Staff/website user routes
+
 @app.route("/users")
 def users():
-    if ("user" in session): #and (session["user_access"]in ["manager", "it"]):
+    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
         staff =list(Staff.query.order_by(Staff.name).all())
         return render_template("users.html",staff=staff)
     else:
@@ -89,7 +100,7 @@ def users():
 
 @app.route("/add_user",methods=["GET","POST"])
 def add_user():
-    if ("user" in session): #and (session["user_access"]in ["manager", "it"]):
+    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
         services =list(Service.query.order_by(Service.name).all())
         if request.method=="POST":
             staff = Staff(
@@ -169,8 +180,30 @@ def delete_user(staff_id):
     else:
         return redirect(url_for("login"))
     
-@app.route("/logout")
-def logout():
-    session.pop("user",None)
-    session.pop("user_access",None)
-    return redirect(url_for("login"))
+# Indivdual/ service_user routes 
+
+@app.route("/indivdual")
+def service_users():
+    if session["user_access"]in ["manager", "it"]:
+        service_users =list(ServiceUser.query.order_by(ServiceUser.name).all())
+        return render_template("service_users.html",service_users=service_users)
+    elif session["user_access"] == "support":
+        staff = Staff.query.filter_by(id=session["user"]).first()
+        staff_service_ids = staff.services()
+        service_users = ServiceUser.query.filter_by(staff_service_ids).all()
+        return render_template("service_users.html",service_users=service_users)
+
+@app.route("/add_indvidual",methods=["GET","POST"])
+def add_service_user():
+    services =list(Service.query.order_by(Service.name).all())
+    if request.method=="POST":
+            service_user = ServiceUser(
+                name=request.form.get("name"),
+                bank=request.form.get("bank"),
+                service_id=request.form.get("service")
+                )
+            db.session.add(service_user)
+            db.session.commit()
+            return redirect(url_for("service_users"))
+            
+    return render_template("add_service_user.html",services=services)

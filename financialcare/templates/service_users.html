@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="light-blue-text text-darken-4 center-align">Indivduals</h3>
+
+<div class="row">
+    <div class="col s12 center-align">
+        <a href="{{ url_for('add_service_user') }}" class="btn-large light-blue darken-2">
+            Add User <i class="fas fa-plus-square right"></i>
+        </a>
+    </div>
+</div>
+
+<ul class="collapsible">
+    {% for service_user in service_users %}
+    <li>
+      <div class="collapsible-header white-text light-blue darken-4"><i class="fa fa-caret-down"></i><strong>{{service_user.name}}</strong></div>
+      <div class="collapsible-body">
+        <strong>Services.</strong>
+        <p>
+            <a href="" class="btn green accent-4">Edit details</a>
+            <a href="" class="btn yellow accent-4">Update Password</a>
+            <a href="" class="btn red modal-trigger">Delete</a>
+        </p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  
+{% endblock %}

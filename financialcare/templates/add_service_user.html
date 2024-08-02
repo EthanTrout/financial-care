@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="light-blue-text text-darken-4 center-align">Add User</h3>
+
+<div class="row card-panel grey lighten-5">
+    <form class="col s12" method="POST" action="{{ url_for('add_service_user') }}">
+        <!-- Full name -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="fa-regular fa-user prefix light-blue-text text-darken-4"></i>
+                <input id="name" name="name" minlength="3" maxlength="124" type="text" class="validate" required>
+                <label for="name">Full Name</label>
+            </div>
+        </div>
+         <!-- Bank -->
+         <div class="row">
+            <div class="input-field col s12">
+                <i class="fa-regular fa-user prefix light-blue-text text-darken-4"></i>
+                <input id="bank" name="bank" type="text" class="validate" placeholder="Write none if no bank account"required>
+                <label for="bank">Bank Name</label>
+            </div>
+        </div>
+         <!-- Service -->
+         <div class="row">
+            <div class="input-field col s12">
+                <i class="fa-regular fa-user prefix light-blue-text text-darken-4"></i>
+                <select id="service" name="service" class="validate" >
+                    <option value="" disabled selected>Select Service</option>
+                    {% for service in services %}
+                        <option value="{{service.id}}">{{service.name}}</option>
+                    {% endfor %}
+                </select>
+                <label for="service">Service</label>
+            </div>
+        </div>
+        <!-- submit button -->
+        <div class="row">
+            <div class="col s12 center-align">
+                <button type="submit" class="btn-large light-blue darken-1">
+                    Add Indivdual <i class="fas fa-plus-square right"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
