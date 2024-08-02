@@ -207,3 +207,29 @@ def add_service_user():
             return redirect(url_for("service_users"))
             
     return render_template("add_service_user.html",services=services)
+
+
+@app.route("/edit_indivdual/<int:service_user_id>",methods=["GET","POST"])
+def edit_service_user(service_user_id):
+    service_user = ServiceUser.query.get_or_404(service_user_id)
+    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
+        services =list(Service.query.order_by(Service.name).all())
+        if request.method == "POST":
+            service_user.name = request.form.get("name")
+            service_user.bank = request.form.get("bank")
+            service_user.service_id = request.form.get("service")
+            db.session.commit()
+            return redirect(url_for("service_users"))
+        return render_template("edit_service_user.html",service_user=service_user,services=services)
+    else:
+        return redirect(url_for("login"))
+
+@app.route("/delete_indivdual/<int:service_user_id>")
+def delete_service_user(service_user_id):
+    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
+        service_user = ServiceUser.query.get_or_404(service_user_id)
+        db.session.delete(service_user)
+        db.session.commit()
+        return redirect(url_for("service_users"))
+    else:
+        return redirect(url_for("login"))
