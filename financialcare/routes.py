@@ -182,34 +182,44 @@ def delete_user(staff_id):
     
 # Indivdual/ service_user routes 
 
-@app.route("/indivdual")
+@app.route("/individual")
 def service_users():
-    if session["user_access"]in ["manager", "it"]:
-        service_users =list(ServiceUser.query.order_by(ServiceUser.name).all())
-        return render_template("service_users.html",service_users=service_users)
-    elif session["user_access"] == "support":
-        staff = Staff.query.filter_by(id=session["user"]).first()
-        staff_service_ids = staff.services()
-        service_users = ServiceUser.query.filter_by(staff_service_ids).all()
-        return render_template("service_users.html",service_users=service_users)
+    if "user" in session:
+        if session["user_access"]in ["manager", "it"]:
+            service_users =list(ServiceUser.query.order_by(ServiceUser.name).all())
+            return render_template("service_users.html",service_users=service_users)
+        elif session["user_access"] == "support":
+            # service_users =list(ServiceUser.query.order_by(ServiceUser.name).all())
+            staff = Staff.query.filter_by(id=session["user"]).first()
+            service_ids =[]
+            for service in staff.services:
+                service_ids.append(service.id)
+            print(service_ids)
+            service_users = ServiceUser.query.filter(ServiceUser.service_id.in_(service_ids)).all()
+            return render_template("service_users.html",service_users=service_users)
+    else:
+        return redirect(url_for("login"))
 
-@app.route("/add_indvidual",methods=["GET","POST"])
+@app.route("/add_individual",methods=["GET","POST"])
 def add_service_user():
     services =list(Service.query.order_by(Service.name).all())
-    if request.method=="POST":
-            service_user = ServiceUser(
-                name=request.form.get("name"),
-                bank=request.form.get("bank"),
-                service_id=request.form.get("service")
-                )
-            db.session.add(service_user)
-            db.session.commit()
-            return redirect(url_for("service_users"))
+    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
+        if request.method=="POST":
+                service_user = ServiceUser(
+                    name=request.form.get("name"),
+                    bank=request.form.get("bank"),
+                    service_id=request.form.get("service")
+                    )
+                db.session.add(service_user)
+                db.session.commit()
+                return redirect(url_for("service_users"))
             
-    return render_template("add_service_user.html",services=services)
+        return render_template("add_service_user.html",services=services)
+    else:
+        return redirect(url_for("login"))
 
 
-@app.route("/edit_indivdual/<int:service_user_id>",methods=["GET","POST"])
+@app.route("/edit_individual/<int:service_user_id>",methods=["GET","POST"])
 def edit_service_user(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     if ("user" in session) and (session["user_access"]in ["manager", "it"]):
@@ -224,7 +234,7 @@ def edit_service_user(service_user_id):
     else:
         return redirect(url_for("login"))
 
-@app.route("/delete_indivdual/<int:service_user_id>")
+@app.route("/delete_individual/<int:service_user_id>")
 def delete_service_user(service_user_id):
     if ("user" in session) and (session["user_access"]in ["manager", "it"]):
         service_user = ServiceUser.query.get_or_404(service_user_id)
