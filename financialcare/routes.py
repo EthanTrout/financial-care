@@ -3,6 +3,8 @@ from financialcare import app, db
 from financialcare.models import Staff,Service , staff_service, ServiceUser, WalletEntry
 from datetime import datetime
 
+
+
 # Login logout routes
 @app.route("/",methods=["GET", "POST"])
 def login():
@@ -248,6 +250,15 @@ def delete_service_user(service_user_id):
 @app.route("/open_wallet/<int:service_user_id>",methods=["GET","POST"])
 def open_wallet(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
+    last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
+    print(last_wallet_entry)
+    if last_wallet_entry is None:
+        return redirect(url_for("set_up_wallet",service_user_id=service_user_id))
+
+    if last_wallet_entry.cash_out > 0 or last_wallet_entry.bank_card_removed == True:
+        return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=last_wallet_entry.cash_out))
+
+    
     if request.method == "POST":
         wallet_entry = WalletEntry(
             service_user_id = service_user.id,
@@ -268,4 +279,68 @@ def open_wallet(service_user_id):
     else:
         return render_template("open_wallet.html",service_user=service_user)
             
-        
+
+
+
+@app.route("/close_wallet/<int:service_user_id>/<int:last_wallet_id>/<int:outstanding_money>",methods=["GET","POST"])
+def close_wallet(service_user_id,last_wallet_id,outstanding_money):
+    service_user = ServiceUser.query.get_or_404(service_user_id)
+    last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
+    print(last_wallet_entry)
+    if request.method == "POST":
+        print(outstanding_money)
+        if outstanding_money >= int(request.form.get("money_spent")):
+
+            wallet_entry = WalletEntry(
+                service_user_id = service_user.id,
+                staff_id = session["user"],
+                date_time = datetime.now(),
+                seal_number = last_wallet_entry.seal_number,
+                cash_amount = last_wallet_entry.cash_amount,
+                bank_amount = last_wallet_entry.bank_amount,
+                cash_out = 0,
+                cash_in = 0,
+                bank_card_removed= last_wallet_entry.bank_card_removed,
+                money_spent = request.form.get("money_spent"),
+                money_spent_description = request.form.get("money_spent_description")
+                )
+            db.session.add(wallet_entry)
+            db.session.commit()
+            return redirect(url_for("close_wallet",service_user_id = service_user_id,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money - int(request.form.get("money_spent"))))
+        else:
+            return("not enough money out to add")
+    else:
+        return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money)
+
+
+@app.route("/close_wallet_add_cash")
+def close_wallet_add_cash():
+    # Add cash back into wallet 
+
+    #  if cash doesnt add up to total then propmpt to call manager or review reciepts
+    return redirect(url_for("service_users"))
+
+
+@app.route("/set_up_wallet/<int:service_user_id>",methods=["GET","POST"])
+def set_up_wallet(service_user_id):
+    service_user = ServiceUser.query.get_or_404(service_user_id)
+    if request.method == "POST":
+        wallet_entry = WalletEntry(
+            service_user_id = service_user.id,
+            staff_id = session["user"],
+            date_time = datetime.now(),
+            seal_number = request.form.get("seal_number"),
+            cash_amount = request.form.get("cash_amount"),
+            bank_amount = request.form.get("bank_amount"),
+            cash_out = 0,
+            cash_in = 0,
+            bank_card_removed=bool(False),
+            money_spent = 0,
+            money_spent_description = "Setting up Wallet"
+            )
+        db.session.add(wallet_entry)
+        db.session.commit()
+        return redirect(url_for("services"))
+    else:
+        return render_template("set_up_wallet.html",service_user=service_user)
+            
