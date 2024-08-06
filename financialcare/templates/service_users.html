@@ -22,8 +22,9 @@
             {% if session["user_access"]in ["manager", "it"] %}
                     <a href="{{ url_for('edit_service_user',service_user_id=service_user.id) }}" class="btn green accent-4">Edit</a>
                     <a href="#modal-{{ service_user.id }}" class="btn red modal-trigger">Delete</a>
-                    <a href="{{ url_for('edit_service_staff',service_id=service_user.service_id) }}" class="btn yellow accent-4">Add Staff</a>
+                    
                 {% endif %}
+            <a href="{{ url_for('open_wallet',service_user_id=service_user.id) }}" class="btn green accent-4">Open Wallet</a>
         </p>
             <!-- Modal Structure -->
             <div id="modal-{{ service_user.id }}" class="modal">

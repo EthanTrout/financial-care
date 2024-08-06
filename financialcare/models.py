@@ -40,3 +40,21 @@ class ServiceUser(db.Model):
     name = db.Column(db.String(128),nullable=False)
     bank = db.Column(db.String(128),nullable=False)
     service_id =db.Column(db.Integer,db.ForeignKey("service.id"),nullable=False)
+    
+
+class WalletEntry(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    service_user_id = db.Column(db.Integer,db.ForeignKey("service_user.id"),nullable=False)
+    staff_id = db.Column(db.Integer,db.ForeignKey("staff.id"),nullable=False)
+    date_time = db.Column(db.DateTime,nullable=False)
+    seal_number = db.Column(db.Integer,nullable=False)
+    cash_amount = db.Column(db.Float,nullable=False)
+    bank_amount = db.Column(db.Float,nullable=False)
+    cash_out = db.Column(db.Float)
+    cash_in = db.Column(db.Float)
+    bank_card_removed = db.Column(db.Boolean,default=False,nullable=False)
+    money_spent = db.Column(db.Float)
+    money_spent_description = db.Column(db.String)
+    
+
+    

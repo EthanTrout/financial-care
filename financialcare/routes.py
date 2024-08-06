@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, session
 from financialcare import app, db
-from financialcare.models import Staff,Service , staff_service, ServiceUser
+from financialcare.models import Staff,Service , staff_service, ServiceUser, WalletEntry
+from datetime import datetime
 
 # Login logout routes
 @app.route("/",methods=["GET", "POST"])
@@ -243,3 +244,28 @@ def delete_service_user(service_user_id):
         return redirect(url_for("service_users"))
     else:
         return redirect(url_for("login"))
+
+@app.route("/open_wallet/<int:service_user_id>",methods=["GET","POST"])
+def open_wallet(service_user_id):
+    service_user = ServiceUser.query.get_or_404(service_user_id)
+    if request.method == "POST":
+        wallet_entry = WalletEntry(
+            service_user_id = service_user.id,
+            staff_id = session["user"],
+            date_time = datetime.now(),
+            seal_number = request.form.get("seal_number"),
+            cash_amount = 100,
+            bank_amount = 100,
+            cash_out = request.form.get("cash_out"),
+            cash_in = 0,
+            bank_card_removed=bool(True if request.form.get("bank_card_removed") else False),
+            money_spent = 0,
+            money_spent_description = request.form.get("cash_out_description")
+            )
+        db.session.add(wallet_entry)
+        db.session.commit()
+        return redirect(url_for("services"))
+    else:
+        return render_template("open_wallet.html",service_user=service_user)
+            
+        
