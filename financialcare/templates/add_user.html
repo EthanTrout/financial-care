@@ -16,7 +16,7 @@
          <!-- Email -->
          <div class="row">
             <div class="input-field col s12">
-                <i class="fa-regular fa-user prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-envelope prefix light-blue-text text-darken-4"></i>
                 <input id="email" name="email" type="email" class="validate" required>
                 <label for="email">Email</label>
             </div>
@@ -24,7 +24,7 @@
         <!-- Password -->
         <div class="row">
             <div class="input-field col s12">
-                <i class="fa-regular fa-user prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-key prefix light-blue-text text-darken-4"></i>
                 <input id="password" name="password" minlength="10" maxlength="124" type="text" class="validate" required>
                 <label for="password">Password</label>
             </div>
@@ -32,7 +32,7 @@
         <!-- Access -->
         <div class="row">
             <div class="input-field col s12">
-                <i class="fa-regular fa-user prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-circle-exclamation prefix light-blue-text text-darken-4"></i>
                 <select id="access" name="access" class="validate" required>
                     <option value="" disabled selected>Select User Acess</option>
                     <option value="support">Support Worker</option>
@@ -45,7 +45,7 @@
          <!-- Service -->
          <div class="row">
             <div class="input-field col s12">
-                <i class="fa-regular fa-user prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-house prefix light-blue-text text-darken-4"></i>
                 <select id="service" name="service" class="validate" >
                     <option value="" disabled selected>Select Service</option>
                     {% for service in services %}

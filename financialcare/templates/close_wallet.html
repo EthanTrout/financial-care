@@ -18,7 +18,7 @@
       <!-- Cash Out -->
         <div class="row">
             <div class="input-field col s12">
-                <i class="fas fa-folder-open prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-sterling-sign prefix light-blue-text text-darken-4"></i>
                 <input id="money_spent" name="money_spent" type="number" min="1" step="any" class="validate" >
                 <label for="money_spent">Cash spent</label>
             </div>
@@ -33,13 +33,14 @@
             </div>
         </div>
     </form>
+</div>
     <!-- Done button -->
-    <div class="row">
+    <div class="row ">
         <div class="col s12 center-align">
             {% if outstanding_money == 0 %}
-                <a class="btn-large light-blue darken-1" href="{{url_for('services')}}">Done</a>
+                <a class="btn-large light-green darken-1" href="{{url_for('services')}}">Done <i class="fa-solid fa-check"></i></a>
             {% else %}
-                <a class="btn-large light-blue darken-1" href="{{url_for('close_wallet_add_cash',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money)}}">Done</a>
+                <a class="btn-large green darken-1" href="{{url_for('close_wallet_add_cash',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money)}}">Done <i class="fa-solid fa-check"></i></a>
             {% endif %}
         </div>
     </div>

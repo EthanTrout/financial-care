@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3 class="light-blue-text text-darken-4 center-align">Edit service</h3>
+<h3 class="light-blue-text text-darken-4 center-align">Add Staff To Service</h3>
 
 <div class="row card-panel grey lighten-5">
     <form class="col s12" method="POST" action="{{ url_for('edit_service_staff',service_id=service.id) }}">
         <!-- Service name -->
         <div class="row">
             <div class="input-field col s12">
-                <i class="fas fa-folder-open prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-house prefix light-blue-text text-darken-4"></i>
                 <input id="service_name" name="service_name" value="{{service.name}}" minlength="3" maxlength="124" type="text" class="validate" disabled>
                 <label for="service_name">Service Name</label>
             </div>
