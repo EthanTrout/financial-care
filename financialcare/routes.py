@@ -318,25 +318,32 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
     # Add cash back into wallet 
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
+    show_modal = False
+    remaining_money = 0
     if request.method == "POST":
-        wallet_entry = WalletEntry(
-            service_user_id = service_user.id,
-            staff_id = session["user"],
-            date_time = datetime.now(),
-            seal_number = request.form.get("seal_number"),
-            cash_amount = last_wallet_entry.cash_amount + int(request.form.get("cash_in")),
-            bank_amount = last_wallet_entry.bank_amount,
-            cash_out = 0,
-            cash_in = request.form.get("cash_in"),
-            bank_card_removed=bool(False),
-            money_spent = 0,
-            money_spent_description = "Remaining cash back in"
+        cash_in = int(request.form.get("cash_in"))
+        if cash_in == outstanding_money:
+            wallet_entry = WalletEntry(
+                service_user_id=service_user.id,
+                staff_id=session["user"],
+                date_time=datetime.now(),
+                seal_number=request.form.get("seal_number"),
+                cash_amount=last_wallet_entry.cash_amount + cash_in,
+                bank_amount=last_wallet_entry.bank_amount,
+                cash_out=0,
+                cash_in=cash_in,
+                bank_card_removed=False,
+                money_spent=0,
+                money_spent_description="Remaining cash back in"
             )
-        db.session.add(wallet_entry)
-        db.session.commit()
-        return redirect(url_for("services"))
-    else:
-        return render_template("close_wallet_add_cash.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money)
+            db.session.add(wallet_entry)
+            db.session.commit()
+            return redirect(url_for("services"))
+        else:
+            show_modal = True
+            remaining_money = outstanding_money - cash_in
+
+    return render_template("close_wallet_add_cash.html", service_user=service_user, last_wallet_id=last_wallet_id, outstanding_money=outstanding_money, show_modal=show_modal,remaining_money=remaining_money)
     #  if cash doesnt add up to total then propmpt to call manager or review reciepts
     
 

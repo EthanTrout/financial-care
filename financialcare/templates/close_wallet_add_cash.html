@@ -33,6 +33,31 @@
             </div>
         </div>
     </form>
+
+    <div id="modal-total_incomplete" class="modal">
+        <div class="modal-content">
+            <h4>The Total cash out is un accounted for</h4>
+            <p>Total outstanding:{{outstanding_money}}</p>
+            <p>Total unacounted for:{{remaining_money}}</p>
+        </div>
+        <div class="modal-footer">
+            <a href="{{url_for('close_wallet',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money)}}" class="btn red">Add new Receipt</a>
+            <a href="" class="btn green accent-4 modal-close">Update Cash in</a>
+        </div>
+    </div>
     
 
+{% endblock %}
+
+{% block script %}
+{% if show_modal %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            var instance = M.Modal.getInstance(document.getElementById('modal-total_incomplete'));
+            instance.open();
+            
+        });
+    </script>
+{% endif %}
 {% endblock %}

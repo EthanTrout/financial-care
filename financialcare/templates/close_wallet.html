@@ -36,7 +36,11 @@
     <!-- Done button -->
     <div class="row">
         <div class="col s12 center-align">
-            <a class="btn-large light-blue darken-1" href="{{url_for('close_wallet_add_cash',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money)}}">Done</a>
+            {% if outstanding_money == 0 %}
+                <a class="btn-large light-blue darken-1" href="{{url_for('services')}}">Done</a>
+            {% else %}
+                <a class="btn-large light-blue darken-1" href="{{url_for('close_wallet_add_cash',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money)}}">Done</a>
+            {% endif %}
         </div>
     </div>
 
