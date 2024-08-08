@@ -203,6 +203,14 @@ def service_users():
     else:
         return redirect(url_for("login"))
 
+@app.route("/individual<int:service_id>")
+def service_users_in_service(service_id):
+    if "user" in session:
+        service_users = ServiceUser.query.filter_by(service_id=service_id).all()
+        return render_template("service_users.html",service_users=service_users)
+    else:
+        return redirect(url_for("login"))
+
 @app.route("/add_individual",methods=["GET","POST"])
 def add_service_user():
     services =list(Service.query.order_by(Service.name).all())

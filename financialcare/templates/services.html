@@ -27,6 +27,7 @@
                     <a href="#modal-{{ service.id }}" class="btn red modal-trigger">Delete</a>
                     <a href="{{ url_for('edit_service_staff',service_id=service.id) }}" class="btn yellow accent-4">Add Staff</a>
                 {% endif %}
+                <a href="{{url_for('service_users_in_service',service_id=service.id)}}"class="btn blue accent-4">View People</a>
 
                                     <!-- Modal Structure -->
                 <div id="modal-{{ service.id }}" class="modal">
