@@ -21,6 +21,7 @@
                 {% if session["user_access"]in ["manager", "it"] %}
                   <li><a href="{{url_for('users')}}">Staff</a></li>
                 {% endif %}
+                <li class="red"><a href="{{url_for('logout')}}">Log out</a></li>
               </ul>
             </div>
           </nav>
