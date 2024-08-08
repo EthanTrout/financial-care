@@ -34,8 +34,17 @@ def logout():
 @app.route("/services")
 def services():
     if "user" in session:
-        services =list(Service.query.order_by(Service.name).all())
-        return render_template("services.html",services=services)
+        if session["user_access"]in ["manager", "it"]:
+            services =list(Service.query.order_by(Service.name).all())
+            return render_template("services.html",services=services)
+        elif session["user_access"] == "support":
+            staff = Staff.query.filter_by(id=session["user"]).first()
+            service_ids =[]
+            for service in staff.services:
+                service_ids.append(service.id)
+            print(service_ids)
+            services = Service.query.filter(Service.id.in_(service_ids)).all()
+            return render_template("services.html",services=services)
     else:
         return redirect(url_for("login"))
 
