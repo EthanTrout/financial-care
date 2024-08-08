@@ -255,6 +255,8 @@ def delete_service_user(service_user_id):
     else:
         return redirect(url_for("login"))
 
+
+# Wallet routes
 @app.route("/open_wallet/<int:service_user_id>",methods=["GET","POST"])
 def open_wallet(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
@@ -379,3 +381,14 @@ def set_up_wallet(service_user_id):
     else:
         return render_template("set_up_wallet.html",service_user=service_user)
             
+@app.route("/check_seal/<int:service_user_id>", methods=["GET","POST"])
+def check_seal(service_user_id):
+    service_user = ServiceUser.query.get_or_404(service_user_id)
+    last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
+    open_modal = False
+    if request.method == "POST":
+        if last_wallet_entry.seal_number == int(request.form.get("seal_number")):
+            return redirect(url_for("open_wallet",service_user_id=service_user_id))
+        else:
+            open_modal = True
+    return render_template("check_seal.html",service_user_id=service_user_id, open_modal=open_modal)

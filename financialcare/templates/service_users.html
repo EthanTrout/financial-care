@@ -24,7 +24,7 @@
                     <a href="#modal-{{ service_user.id }}" class="btn red modal-trigger">Delete</a>
                     
                 {% endif %}
-            <a href="{{ url_for('open_wallet',service_user_id=service_user.id) }}" class="btn green accent-4">Open Wallet</a>
+            <a href="{{ url_for('check_seal',service_user_id=service_user.id) }}" class="btn green accent-4">Open Wallet</a>
         </p>
             <!-- Modal Structure -->
             <div id="modal-{{ service_user.id }}" class="modal">
