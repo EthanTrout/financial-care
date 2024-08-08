@@ -7,13 +7,24 @@
     <form class="col s12" method="POST" action="{{ url_for('close_wallet_add_cash',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money)}}">
     
       <!-- Cash In -->
+       {% if outstanding_money == 0 %}
         <div class="row">
             <div class="input-field col s12">
                 <i class="fa-solid fa-sterling-sign prefix light-blue-text text-darken-4"></i>
-                <input id="cash_in" name="cash_in" type="number" min="1" step="any" class="validate" >
+                <input id="cash_in" name="cash_in" type="number" value="0" min="0" step="any" class="validate">
                 <label for="cash_in">Cash back in wallet</label>
             </div>
         </div>
+        {% else %}
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="fa-solid fa-sterling-sign prefix light-blue-text text-darken-4"></i>
+                <input id="cash_in" name="cash_in" type="number" min="1" step="any" class="validate">
+                <label for="cash_in">Cash back in wallet</label>
+            </div>
+        </div>
+        {% endif %}
+
 
         <!-- Wallet number -->
         <div class="row">
