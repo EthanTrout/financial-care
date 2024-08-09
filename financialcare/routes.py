@@ -410,3 +410,11 @@ def check_seal(service_user_id):
         else:
             open_modal = True
     return render_template("check_seal.html",service_user_id=service_user_id, open_modal=open_modal)
+
+
+@app.route("/view_wallet/<int:service_user_id>")
+def view_wallet(service_user_id):
+    wallet_entries = WalletEntry.query.filter_by(service_user_id=service_user_id).all()
+    return render_template("view_wallet.html",wallet_entries=wallet_entries)
+
+    

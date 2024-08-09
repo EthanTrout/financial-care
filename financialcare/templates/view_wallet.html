@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="light-blue-text text-darken-4 center-align">View Wallet</h3>
+
+<table class="highlight responsive-table striped">
+    <thead>
+      <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Cash Spent</th>
+          <th>Cash In</th>
+          <th>Cash Out</th>
+          <th>Balance</th>
+          <th>Bank Balance</th>
+          <th>Seal Number</th>
+          <th>Staff ID</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        {% for wallet_entry in wallet_entries %}
+        <tr>
+            <td>{{wallet_entry.date_time}}</td>
+            <td>{{wallet_entry.money_spent_description}}</td>
+            <td>{{wallet_entry.money_spent}}</td>
+            <td>{{wallet_entry.cash_in}}</td>
+            <td>{{wallet_entry.cash_out}}</td>
+            <td>{{wallet_entry.cash_amount}}</td>
+            <td>{{wallet_entry.bank_amount}}</td>
+            <td>{{wallet_entry.seal_number}}</td>
+            <td>{{wallet_entry.staff_id}}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
