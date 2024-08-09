@@ -55,6 +55,10 @@ class WalletEntry(db.Model):
     bank_card_removed = db.Column(db.Boolean,default=False,nullable=False)
     money_spent = db.Column(db.Float)
     money_spent_description = db.Column(db.String)
+    bank_out = db.Column(db.Float)
+    bank_in = db.Column(db.Float)
+    receipt_number =db.Column(db.Integer)
     
+    staff = db.relationship('Staff', backref='wallet_entries')
 
     

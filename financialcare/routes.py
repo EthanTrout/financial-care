@@ -290,7 +290,10 @@ def open_wallet(service_user_id):
             cash_in = 0,
             bank_card_removed=bool(True if request.form.get("bank_card_removed") else False),
             money_spent = 0,
-            money_spent_description = request.form.get("cash_out_description")
+            money_spent_description = request.form.get("cash_out_description"),
+            bank_out = 0 ,
+            bank_in = 0,
+            receipt_number = 0
             )
         db.session.add(wallet_entry)
         db.session.commit()
@@ -307,11 +310,14 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
     outstanding_money = Decimal(str(outstanding_money))
-    print(outstanding_money)
+    last_entry_with_receipt = WalletEntry.query.filter(WalletEntry.receipt_number != 0).order_by(WalletEntry.id.desc()).first()
     if request.method == "POST":
         print(outstanding_money)
         if outstanding_money >= float(request.form.get("money_spent")):
-
+            if last_entry_with_receipt is not None:
+                receipt_number = last_entry_with_receipt.receipt_number + 1
+            else:
+                receipt_number = 1
             wallet_entry = WalletEntry(
                 service_user_id = service_user.id,
                 staff_id = session["user"],
@@ -323,7 +329,10 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
                 cash_in = 0,
                 bank_card_removed= last_wallet_entry.bank_card_removed,
                 money_spent = float(request.form.get("money_spent")),
-                money_spent_description = request.form.get("money_spent_description")
+                money_spent_description = request.form.get("money_spent_description"),
+                bank_out = 0 ,
+                bank_in = 0,
+                receipt_number = receipt_number
                 )
             db.session.add(wallet_entry)
             db.session.commit()
@@ -358,7 +367,10 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
                 cash_in=cash_in,
                 bank_card_removed=False,
                 money_spent=0,
-                money_spent_description="Remaining cash back in"
+                money_spent_description="Remaining cash back in",
+                bank_out = 0 ,
+                bank_in = 0,
+                receipt_number = 0
             )
             db.session.add(wallet_entry)
             db.session.commit()
@@ -387,7 +399,10 @@ def set_up_wallet(service_user_id):
             cash_in = 0,
             bank_card_removed=bool(False),
             money_spent = 0,
-            money_spent_description = "Setting up Wallet"
+            money_spent_description = "Setting up Wallet",
+            bank_out = 0 ,
+            bank_in = 0,
+            receipt_number = 0
             )
         db.session.add(wallet_entry)
         db.session.commit()
@@ -414,6 +429,7 @@ def check_seal(service_user_id):
 @app.route("/view_wallet/<int:service_user_id>")
 def view_wallet(service_user_id):
     wallet_entries = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.date_time.desc()).all()
-    return render_template("view_wallet.html",wallet_entries=wallet_entries)
+    staff = list(Staff.query.order_by(Staff.id).all())
+    return render_template("view_wallet.html",wallet_entries=wallet_entries,staff=staff)
 
     
