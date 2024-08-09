@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for, session
 from financialcare import app, db
 from financialcare.models import Staff,Service , staff_service, ServiceUser, WalletEntry
 from datetime import datetime
+from decimal import Decimal
 
 
 
@@ -270,7 +271,7 @@ def delete_service_user(service_user_id):
 def open_wallet(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
-    print(last_wallet_entry)
+    print(last_wallet_entry.cash_out)
     if last_wallet_entry is None:
         return redirect(url_for("set_up_wallet",service_user_id=service_user_id))
 
@@ -284,9 +285,9 @@ def open_wallet(service_user_id):
             staff_id = session["user"],
             date_time = datetime.now(),
             seal_number = request.form.get("seal_number"),
-            cash_amount = last_wallet_entry.cash_amount - int(request.form.get("cash_out")),
+            cash_amount = last_wallet_entry.cash_amount - float(request.form.get("cash_out")),
             bank_amount = 100,
-            cash_out = request.form.get("cash_out"),
+            cash_out = float(request.form.get("cash_out")),
             cash_in = 0,
             bank_card_removed=bool(True if request.form.get("bank_card_removed") else False),
             money_spent = 0,
@@ -294,6 +295,7 @@ def open_wallet(service_user_id):
             )
         db.session.add(wallet_entry)
         db.session.commit()
+        print(float(request.form.get("cash_out")))
         return redirect(url_for("services"))
     else:
         return render_template("open_wallet.html",service_user=service_user)
@@ -301,14 +303,15 @@ def open_wallet(service_user_id):
 
 
 
-@app.route("/close_wallet/<int:service_user_id>/<int:last_wallet_id>/<int:outstanding_money>",methods=["GET","POST"])
+@app.route("/close_wallet/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
 def close_wallet(service_user_id,last_wallet_id,outstanding_money):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
-    print(last_wallet_entry)
+    outstanding_money = Decimal(str(outstanding_money))
+    print(outstanding_money)
     if request.method == "POST":
         print(outstanding_money)
-        if outstanding_money >= int(request.form.get("money_spent")):
+        if outstanding_money >= float(request.form.get("money_spent")):
 
             wallet_entry = WalletEntry(
                 service_user_id = service_user.id,
@@ -320,27 +323,30 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
                 cash_out = 0,
                 cash_in = 0,
                 bank_card_removed= last_wallet_entry.bank_card_removed,
-                money_spent = request.form.get("money_spent"),
+                money_spent = float(request.form.get("money_spent")),
                 money_spent_description = request.form.get("money_spent_description")
                 )
             db.session.add(wallet_entry)
             db.session.commit()
-            return redirect(url_for("close_wallet",service_user_id = service_user_id,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money - int(request.form.get("money_spent"))))
+            money_spent = Decimal(request.form.get("money_spent"))
+            new_outstanding_money = outstanding_money - money_spent
+            return redirect(url_for("close_wallet",service_user_id = service_user_id,last_wallet_id=last_wallet_id,outstanding_money=float(new_outstanding_money)))
         else:
             return("not enough money out to add")
     else:
         return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money)
 
 
-@app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<int:outstanding_money>",methods=["GET","POST"])
+@app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
 def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
     # Add cash back into wallet 
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
     show_modal = False
     remaining_money = 0
+    print(outstanding_money)
     if request.method == "POST":
-        cash_in = int(request.form.get("cash_in"))
+        cash_in = float(request.form.get("cash_in"))
         if cash_in == outstanding_money:
             wallet_entry = WalletEntry(
                 service_user_id=service_user.id,
@@ -395,6 +401,9 @@ def check_seal(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
     open_modal = False
+    if last_wallet_entry is None:
+        return redirect(url_for("open_wallet",service_user_id=service_user_id))
+
     if request.method == "POST":
         if last_wallet_entry.seal_number == int(request.form.get("seal_number")):
             return redirect(url_for("open_wallet",service_user_id=service_user_id))
