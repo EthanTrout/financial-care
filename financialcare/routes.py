@@ -271,7 +271,6 @@ def delete_service_user(service_user_id):
 def open_wallet(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
-    print(last_wallet_entry.cash_out)
     if last_wallet_entry is None:
         return redirect(url_for("set_up_wallet",service_user_id=service_user_id))
 
@@ -414,7 +413,7 @@ def check_seal(service_user_id):
 
 @app.route("/view_wallet/<int:service_user_id>")
 def view_wallet(service_user_id):
-    wallet_entries = WalletEntry.query.filter_by(service_user_id=service_user_id).all()
+    wallet_entries = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.date_time.desc()).all()
     return render_template("view_wallet.html",wallet_entries=wallet_entries)
 
     
