@@ -286,7 +286,7 @@ def open_wallet(service_user_id):
             date_time = datetime.now(),
             seal_number = request.form.get("seal_number"),
             cash_amount = last_wallet_entry.cash_amount - float(request.form.get("cash_out")),
-            bank_amount = 100,
+            bank_amount = last_wallet_entry.bank_amount,
             cash_out = float(request.form.get("cash_out")),
             cash_in = 0,
             bank_card_removed=bool(True if request.form.get("bank_card_removed") else False),
