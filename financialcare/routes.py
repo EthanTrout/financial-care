@@ -420,13 +420,13 @@ def close_wallet_banking(service_user_id):
             date_time = datetime.now(),
             seal_number = last_wallet_entry.seal_number,
             cash_amount = last_wallet_entry.cash_amount,
-            bank_amount = last_wallet_entry.bank_amount - float(request.form.get("bank_out")),
+            bank_amount = last_wallet_entry.bank_amount - Decimal(request.form.get("bank_out")),
             cash_out = 0,
             cash_in = 0,
             bank_card_removed=bool(False),
-            money_spent = float(request.form.get("bank_out")),
+            money_spent = Decimal(request.form.get("bank_out")),
             money_spent_description = request.form.get("money_spent_description"),
-            bank_out = float(request.form.get("bank_out")) ,
+            bank_out = Decimal(request.form.get("bank_out")) ,
             bank_in = 0,
             receipt_number = receipt_number
             )
@@ -481,8 +481,65 @@ def check_seal(service_user_id):
 
 @app.route("/view_wallet/<int:service_user_id>")
 def view_wallet(service_user_id):
-    wallet_entries = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.date_time.desc()).all()
+    wallet_entries = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).all()
     staff = list(Staff.query.order_by(Staff.id).all())
     return render_template("view_wallet.html",wallet_entries=wallet_entries,staff=staff)
 
-    
+@app.route("/reconsile_in_or_out/<int:service_user_id>",methods=["GET","POST"]) 
+def reconsile_in_or_out(service_user_id):
+    service_user = ServiceUser.query.get_or_404(service_user_id)
+    if request.method == "POST":
+        if request.form.get("in_or_out") == "bank_in":
+            return redirect(url_for("reconsile_banking",service_user_id=service_user_id, bank_in = "True"))
+        else:
+            return redirect(url_for("reconsile_banking",service_user_id=service_user_id, bank_in = "False"))
+    else:
+        return render_template("reconsile_in_or_out.html",service_user=service_user)
+
+
+@app.route("/reconsile_banking/<int:service_user_id>/<string:bank_in>",methods=["GET","POST"])
+def reconsile_banking(service_user_id,bank_in):
+    service_user = ServiceUser.query.get_or_404(service_user_id)
+    last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
+    if request.method == "POST":
+        if bank_in =="True":
+            wallet_entry = WalletEntry(
+                service_user_id = service_user.id,
+                staff_id = session["user"],
+                date_time = request.form.get("date")+ " 00:00:00.000000",
+                seal_number = last_wallet_entry.seal_number,
+                cash_amount = last_wallet_entry.cash_amount,
+                bank_amount = last_wallet_entry.bank_amount + Decimal(request.form.get("bank_in")),
+                cash_out = 0,
+                cash_in = 0,
+                bank_card_removed=bool(False),
+                money_spent = 0,
+                money_spent_description = "Reconsiliation: " + request.form.get("money_spent_description"),
+                bank_out = 0 ,
+                bank_in = Decimal(request.form.get("bank_in")),
+                receipt_number = 0
+                )
+        else:
+            wallet_entry = WalletEntry(
+                service_user_id = service_user.id,
+                staff_id = session["user"],
+                date_time = request.form.get("date")+ " 00:00:00.000000",
+                seal_number = last_wallet_entry.seal_number,
+                cash_amount = last_wallet_entry.cash_amount,
+                bank_amount = last_wallet_entry.bank_amount - Decimal(request.form.get("bank_out")),
+                cash_out = 0,
+                cash_in = 0,
+                bank_card_removed=bool(False),
+                money_spent = Decimal(request.form.get("bank_out")),
+                money_spent_description = "Reconsiliation: " + request.form.get("money_spent_description"),
+                bank_out = Decimal(request.form.get("bank_out")) ,
+                bank_in = 0,
+                receipt_number = 0
+                )
+
+        db.session.add(wallet_entry)
+        db.session.commit()
+        return redirect(url_for("reconsile_banking",service_user_id=service_user_id,bank_in=bank_in))
+    else:
+        return render_template("reconsile_banking.html",service_user=service_user,bank_in=bank_in)
+

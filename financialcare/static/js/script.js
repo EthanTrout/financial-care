@@ -15,4 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var collapsible = document.querySelectorAll('.collapsible');
     M.Collapsible.init(collapsible);
 
+    // Date picker Initalisation
+    var datepicker = document.querySelectorAll('.datepicker');
+    M.Datepicker.init(datepicker,{
+      format:"yyyy,mm,dd",
+      i18n:{done:"Select"}
+    });
+
   });
+
+  

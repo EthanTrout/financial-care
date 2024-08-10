@@ -26,6 +26,7 @@
                 {% endif %}
             <a href="{{ url_for('check_seal',service_user_id=service_user.id) }}" class="btn green accent-4">Open Wallet</a>
             <a href="{{ url_for('view_wallet',service_user_id=service_user.id) }}" class="btn light-blue accent-4">View Wallet</a>
+            <a href="{{ url_for('reconsile_in_or_out',service_user_id=service_user.id) }}" class="btn yellow accent-4">Reconsile</a>
         </p>
             <!-- Modal Structure -->
             <div id="modal-{{ service_user.id }}" class="modal">
