@@ -11,7 +11,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="fa-solid fa-sterling-sign prefix light-blue-text text-darken-4"></i>
-                <input id="cash_in" name="cash_in" type="number" value="0" min="0" step="any" class="validate">
+                <input id="cash_in" name="cash_in" type="number" value="0" min="0" step="0.01" class="validate">
                 <label for="cash_in">Cash back in wallet</label>
             </div>
         </div>
@@ -19,7 +19,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="fa-solid fa-sterling-sign prefix light-blue-text text-darken-4"></i>
-                <input id="cash_in" name="cash_in" type="number" min="1" step="any" class="validate">
+                <input id="cash_in" name="cash_in" type="number" min="0" step="0.01" class="validate">
                 <label for="cash_in">Cash back in wallet</label>
             </div>
         </div>
@@ -48,8 +48,8 @@
     <div id="modal-total_incomplete" class="modal">
         <div class="modal-content">
             <h4>The Total cash out is un accounted for</h4>
-            <p>Total outstanding:{{outstanding_money}}</p>
-            <p>Total unacounted for:{{remaining_money}}</p>
+            <p>Total outstanding:{{ outstanding_money|floatformat(2) }}</p>
+            <p>Total unacounted for:{{ remaining_money|floatformat(2) }}</p>
         </div>
         <div class="modal-footer">
             <a href="{{url_for('close_wallet',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money)}}" class="btn red">Add new Receipt</a>

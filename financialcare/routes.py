@@ -4,6 +4,14 @@ from financialcare.models import Staff,Service , staff_service, ServiceUser, Wal
 from datetime import datetime
 from decimal import Decimal
 
+@app.template_filter('floatformat')
+def floatformat(value, decimal_places=2):
+    """Format a Decimal or float to a specific number of decimal places."""
+    if isinstance(value, Decimal):
+        return f"{value:.{decimal_places}f}"
+    elif isinstance(value, float):
+        return f"{value:.{decimal_places}f}"
+    return value
 
 
 # Login logout routes
@@ -277,16 +285,15 @@ def open_wallet(service_user_id):
     if last_wallet_entry.cash_out > 0 or last_wallet_entry.bank_card_removed == True:
         return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=last_wallet_entry.cash_out))
 
-    
     if request.method == "POST":
         wallet_entry = WalletEntry(
             service_user_id = service_user.id,
             staff_id = session["user"],
             date_time = datetime.now(),
             seal_number = request.form.get("seal_number"),
-            cash_amount = last_wallet_entry.cash_amount - float(request.form.get("cash_out")),
+            cash_amount = Decimal(last_wallet_entry.cash_amount) - Decimal(request.form.get("cash_out")),
             bank_amount = last_wallet_entry.bank_amount,
-            cash_out = float(request.form.get("cash_out")),
+            cash_out = Decimal(request.form.get("cash_out")),
             cash_in = 0,
             bank_card_removed = bool(request.form.get("bank_card_removed")),
             money_spent = 0,
@@ -298,7 +305,7 @@ def open_wallet(service_user_id):
         db.session.add(wallet_entry)
         db.session.commit()
         print((bool(request.form.get("bank_card_removed"))))
-        return redirect(url_for("services"))
+        return redirect(url_for("service_users_in_service",service_id = service_user.service_id))
     else:
         return render_template("open_wallet.html",service_user=service_user)
             
@@ -310,10 +317,16 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
     outstanding_money = Decimal(str(outstanding_money))
-    last_entry_with_receipt = WalletEntry.query.filter(WalletEntry.receipt_number != 0).order_by(WalletEntry.id.desc()).first()
+    last_entry_with_receipt = (
+    WalletEntry.query
+    .filter(WalletEntry.receipt_number != 0)
+    .filter(WalletEntry.service_user_id == service_user_id)
+    .order_by(WalletEntry.id.desc())
+    .first())
     if request.method == "POST":
-        print(outstanding_money)
-        if outstanding_money >= float(request.form.get("money_spent")):
+        money_spent = Decimal(request.form.get("money_spent"))
+
+        if outstanding_money >= money_spent:
             if last_entry_with_receipt is not None:
                 receipt_number = last_entry_with_receipt.receipt_number + 1
             else:
@@ -328,7 +341,7 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
                 cash_out = 0,
                 cash_in = 0,
                 bank_card_removed= last_wallet_entry.bank_card_removed,
-                money_spent = float(request.form.get("money_spent")),
+                money_spent = money_spent,
                 money_spent_description = request.form.get("money_spent_description"),
                 bank_out = 0 ,
                 bank_in = 0,
@@ -336,7 +349,6 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
                 )
             db.session.add(wallet_entry)
             db.session.commit()
-            money_spent = Decimal(request.form.get("money_spent"))
             new_outstanding_money = outstanding_money - money_spent
             return redirect(url_for("close_wallet",service_user_id = service_user_id,last_wallet_id=last_wallet_id,outstanding_money=float(new_outstanding_money)))
         else:
@@ -348,13 +360,15 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
 @app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
 def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
     # Add cash back into wallet 
+    outstanding_money = Decimal(str(outstanding_money))
+
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
     show_modal = False
-    remaining_money = 0
+    remaining_money = Decimal(0.00)
     print(outstanding_money)
     if request.method == "POST":
-        cash_in = float(request.form.get("cash_in"))
+        cash_in = Decimal(request.form.get("cash_in"))
         if cash_in == outstanding_money:
             wallet_entry = WalletEntry(
                 service_user_id=service_user.id,
@@ -376,7 +390,7 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
             db.session.commit()
             if last_wallet_entry.bank_card_removed:
                 return redirect(url_for("close_wallet_banking",service_user_id=service_user_id))
-            return redirect(url_for("services"))
+            return redirect(url_for("service_users_in_service",service_id = service_user.service_id))
         else:
             show_modal = True
             remaining_money = outstanding_money - cash_in
@@ -389,7 +403,12 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
 def close_wallet_banking(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
-    last_entry_with_receipt = WalletEntry.query.filter(WalletEntry.receipt_number != 0).order_by(WalletEntry.id.desc()).first()
+    last_entry_with_receipt = (
+    WalletEntry.query
+    .filter(WalletEntry.receipt_number != 0)
+    .filter(WalletEntry.service_user_id == service_user_id)
+    .order_by(WalletEntry.id.desc())
+    .first())
     if request.method == "POST":
         if last_entry_with_receipt is not None:
             receipt_number = last_entry_with_receipt.receipt_number + 1
@@ -440,7 +459,7 @@ def set_up_wallet(service_user_id):
             )
         db.session.add(wallet_entry)
         db.session.commit()
-        return redirect(url_for("services"))
+        return redirect(url_for("service_users_in_service",service_id = service_user.service_id))
     else:
         return render_template("set_up_wallet.html",service_user=service_user)
             
