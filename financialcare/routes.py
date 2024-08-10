@@ -323,6 +323,10 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
     .filter(WalletEntry.service_user_id == service_user_id)
     .order_by(WalletEntry.id.desc())
     .first())
+
+    # Retrieve receipts from session
+    all_receipts = session.get('all_receipts', [])
+
     if request.method == "POST":
         money_spent = Decimal(request.form.get("money_spent"))
 
@@ -350,22 +354,33 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
             db.session.add(wallet_entry)
             db.session.commit()
             new_outstanding_money = outstanding_money - money_spent
+
+             # Update receipts
+            receipt = [receipt_number, request.form.get("money_spent_description"), float(money_spent)]
+            all_receipts.append(receipt)
+
+            # Store updated receipts in session
+            session['all_receipts'] = all_receipts
+
+            print(all_receipts)
+            
             return redirect(url_for("close_wallet",service_user_id = service_user_id,last_wallet_id=last_wallet_id,outstanding_money=float(new_outstanding_money)))
         else:
             return("not enough money out to add")
     else:
-        return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money)
+        return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,all_receipts=all_receipts)
 
 
 @app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
 def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
-    # Add cash back into wallet 
-    outstanding_money = Decimal(str(outstanding_money))
+    # Clear session of reciepts
+    session['all_receipts'] = []
 
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
     show_modal = False
     remaining_money = Decimal(0.00)
+    outstanding_money = Decimal(str(outstanding_money))
     print(outstanding_money)
     if request.method == "POST":
         cash_in = Decimal(request.form.get("cash_in"))

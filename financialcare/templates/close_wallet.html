@@ -41,4 +41,20 @@
         </div>
     </div>
 
+{% if all_receipts %}
+    <div class="row">
+    {% for receipt in all_receipts %}
+        <div class="col s12 m6 l3">
+          <div class="card light-blue darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Reciept: {{receipt[0]}}</span>
+              <p>{{receipt[1]}}.</p>
+              <b>£{{receipt[2]}}</b>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endif %}
+
 {% endblock %}
