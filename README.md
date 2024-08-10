@@ -1,131 +1,103 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Financial-Care
 
-Welcome Ethan Trout,
+Financial Care is a web application developed for social care providers and there staff team to securely store records of the transactions of the people that they support and the staff that have helped them make these transactions
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+This application has been made alongside HFT Leeds(a social care provider located in leeds). to update there systems and move away from FRS sheets (Paper recording sheets for transactions)
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
 
-## Gitpod Reminders
+# Rationale
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+## Introduction and background
 
-`python3 -m http.server`
+To understand this application you must first understand how financial transactions are recorded currently in social care.
 
-A blue button should appear to click: _Make Public_,
+Supported people within Social care may not have capacity to look after their own finances. therefore the staff teams that work within these services support the indivdual to to store. withdraw and make payments. 
 
-Another blue button should appear to click: _Open Browser_.
+Cash is usually stored within a wallet or pouch that can be sealed. these seals have a number on them so that the ins and outs of the wallet can be tracked to specific staff members. This is to avoid Financial Abuse or to help identify perptrators of this abuse. These wallets are stored securely in safes that staff have access to.
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+Whenever a Supported person would like to take money or there bank card out the staff has to access these safes and wallets and Log on a FRS sheet the amount taken out the new total that is left in the wallet and the new seal number that is on the wallet.
 
-A blue button should appear to click: _Make Public_,
+Whenever money has been spent by a supported person reciepts have to be logged to the FRS sheet by a staff member and any remaning money has to be added back to the wallet and the new seal number recorded 
 
-Another blue button should appear to click: _Open Browser_.
+FRS sheets are known as Financial Recording sheets and are paper backed documents that record all of these transactions.
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+Bank statments are usually collected weekly by staff and the FRS sheets updated with transactions such as Direct debits or benefits that have been added to a bank account.
 
-To log into the Heroku toolbelt CLI:
+FRS sheets are Legal Documents that are audited by managers and have to reflect every transaction of the indivdual. Staff are to sign for every transaction to state it was them they supported to person to make it.
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+## Problems with the Paper Model
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+There are many issues that arise with FRS sheets that creates more work for Managers and Staff teams that this application aims to solve.
 
-### Connecting your Mongo database
+1. Staff members taking money out, recording reciepts and adding money back in and the total of the the reciepts and cash in does not add up to the total of money taken out.
+    - This means that there is so money unacounted for. This is classed as a Financial Error for the staff member and can result in disaplinary action.
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+2. Staff members making addition or subtraction mistakes when adding up the Totals of the wallet or Bank total.
+    - This is easily done in a very busy work place but is also a Financial Error.
+    - This can cause alot of wasted time when Staff have to reconsile FRS sheets as they have to identify where this error was made.
 
-------
+3. Managers traveling to all services to collect these FRS sheets each month to collect these FRS sheets to be audited.
+    - This can take alot of time as services can be spaced far apart.
+    - If FRS sheets are not all stored correctly weeks can be missing from this audit.
 
-## Release History
+## How this Application plans to fix these issues.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+1. The application will track the cash taken out of a wallet and will prompt a user that the reciepts and cash in does not add up to the cash that was taken out. It will then prompt the user that they are either missing a reciept or to recount the cash going in. if these still do not add up they should contact a manager. (As in procedure Within HFT and other care providers)
 
-**June 18, 2024,** Add Mongo back into template
+2. The Addition and subtraction from the Cash Total and the Bank Account total will be done by the application so that no mistakes are made. The user is only prompted to enter either the cash out, The cash reciepts, the Bank card reciepts or the Cash In.
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+3. Managers will have access to the Application and can access the records stored digitally and therefore will not need to travel to services to collect FRS sheets.
+    - Staff will still store Reciepts but these can be photographed and sent to managers via Email.
 
-**May 28 2024:** Fix Mongo and Links installs
 
-**April 26 2024:** Update node version to 16
+## Project Scope and limitations 
 
-**September 20 2023:** Update Python version to 3.9.17.
+The scope of the project includes the development of the web-based application with the aforementioned features, focusing on usability and accessibility. Known limitations include:
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+- A large orginsation such as HFT has thousands of staff and service users aswell as hundred of services. Querying these large datasets could be slow using Postgresql as the dataset increases. i have proposed some future additions to the application. See Future Versions.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+- Social Care providers have to adhere to strict GDPR regulation via the The Data Protection Act 2018. I have set up Encryption with stored passwords however the best practice for a social care provider would be to store these User tables Internally and authenticate through there already set up internal system
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+The Data should also be stored securly on there in House servers with Access only through the company computers.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+## Future Versions
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+Ideas for future enhancements to WWAMI include:
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+- An image based upload for Reciepts to be stored on the database with the relating transaction
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+# User Experience (UX)
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+- ## User Stories
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+- ### Orginsation Goals
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+- a. As a orginasation i want the application to save workers time filling out these forms and managers auditing them, allowing for more time spent supporting the people in services.
+- b. As a orginsation i want to decrease the amount of financial error that are made while filling out these forms.
+- c. As a orginsation i want to be able to ensure these forms are correctly maintained and easily accessable for auditing.
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+### Managers and Admin Goals
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+- a. As a manager i want to be able to easily create new services, edit services or delete them to reflect the services i manage.
+- b. As a manager i want to be able to easily create new service users and add them to the services that they reside in. Or delete service users that are no longer using us as a care provider.
+- c. As a manager i want to be able to easily create new staff members and give them access to the services they are working in. or update the services of exsisting staff members.
+- d. As a manager or IT technictan i want to be able to update staff members passwords if they are having trouble logging into the site
+- e. As a manager i want to be able to update a staff members access if they have been promoted to a manager.
 
-------
+### Staff member/ User Goals
 
-## FAQ about the uptime script
+#### First time user
+- a. As a first time user i want to be easily able to access the service that i work in and add records to the person that i am supporting to take money out or in.
+- b. As a first time user i want to be easily able to view the records of the person i am supporting.
+- c. As a first time user i want the website to be easy to navigate and intutaive as to what i am doing.
+- d. As a first time user i want the website to assist with not making any mistakes on the records that i enter.
 
-**Why have you added this script?**
+#### Frequent user
+- a. a Frequent user i want to be easily able to access the service that i work in and add records to the person that i am supporting to take money out or in.
+- b. a Frequent user i want to be easily able to view the records of the person i am supporting.
+- d. As a Frequent user i want to be able to easily view someones records and reconcile bank entries from a bank statment.
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
 
-**How will this affect me?**
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!
