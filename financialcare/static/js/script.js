@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
       i18n:{done:"Select"}
     });
 
+    // Tooltip initalisation
+    var tooltipped = document.querySelectorAll('.tooltipped');
+    M.Tooltip.init(tooltipped);
+
     // Apply saved nav alert changes
     applySavedNavAlert();
   });
