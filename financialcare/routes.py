@@ -4,6 +4,7 @@ from financialcare.models import Staff,Service , staff_service, ServiceUser, Wal
 from datetime import datetime
 from decimal import Decimal
 
+# Template filter to format Float as a decimal like 0.00
 @app.template_filter('floatformat')
 def floatformat(value, decimal_places=2):
     """Format a Decimal or float to a specific number of decimal places."""
@@ -12,7 +13,6 @@ def floatformat(value, decimal_places=2):
     elif isinstance(value, float):
         return f"{value:.{decimal_places}f}"
     return value
-
 
 # Login logout routes
 @app.route("/",methods=["GET", "POST"])

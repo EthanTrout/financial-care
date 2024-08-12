@@ -22,6 +22,54 @@ document.addEventListener('DOMContentLoaded', function() {
       i18n:{done:"Select"}
     });
 
+    // Apply saved nav alert changes
+    applySavedNavAlert();
   });
 
-  
+
+  function updateNavAlert(navText, navColor) {
+    let navAlert = document.getElementById("nav-alert");
+    navAlert.className = "";
+    navAlert.innerText = navText;
+    navAlert.classList.add(navColor, "center-align");
+    
+    // Save the nav alert text and color to localStorage
+    localStorage.setItem('navText', navText);
+    localStorage.setItem('navColor', navColor);
+    
+    // Ensure the nav alert is visible when updated
+    localStorage.setItem('navAlertVisible', 'true');
+    navAlert.classList.remove('hide');
+}
+
+function applySavedNavAlert() {
+    let navText = localStorage.getItem('navText');
+    let navColor = localStorage.getItem('navColor');
+    let navAlertVisible = localStorage.getItem('navAlertVisible');
+
+    if (navText && navColor) {
+        let navAlert = document.getElementById("nav-alert");
+
+        // Clear all existing classes
+        navAlert.className = "";
+
+        // Apply the saved text and classes
+        navAlert.innerText = navText;
+        navAlert.classList.add(navColor, "center-align");
+
+        // Apply visibility based on saved state
+        if (navAlertVisible === 'false') {
+            navAlert.classList.add('hide');
+        } else {
+            navAlert.classList.remove('hide');
+        }
+    }
+}
+
+function hideNavAlert() {
+    let navAlert = document.getElementById("nav-alert");
+    navAlert.classList.add("hide");
+
+    // Update localStorage to remember that the nav alert is hidden
+    localStorage.setItem('navAlertVisible', 'false');
+}

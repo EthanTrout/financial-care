@@ -16,7 +16,7 @@
         <!-- submit button -->
         <div class="row">
             <div class="col s12 center-align">
-                <button type="submit" class="btn-large light-blue darken-1">
+                <button type="submit" class="btn-large light-blue darken-1" onclick="updateNavAlert('Service updated', 'green')">
                     Edit Service <i class="fas fa-edit right"></i>
                 </button>
             </div>
@@ -33,7 +33,9 @@
         <p>this action can not be undone</p>
     </div>
     <div class="modal-footer">
-        <a href="{{ url_for('delete_service',service_id=service.id) }}" class="btn red">Delete</a>
+        <a href="{{ url_for('delete_service', service_id=service.id) }}" 
+        onclick="updateNavAlert('Service deleted', 'red')" 
+        class="btn red">Delete</a>
         <a href="" class="btn green accent-4 modal-close">Cancel</a>
     </div>
 </div>

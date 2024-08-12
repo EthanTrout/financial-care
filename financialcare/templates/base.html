@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="light-blue darken-1">
+        <nav class="light-blue darken-1 nav-extended">
             <div class="nav-wrapper">
               <a href="{{url_for('login')}}" class="brand-logo">Financial Care</a>
               <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
@@ -23,6 +23,10 @@
                 {% endif %}
                 <li class="red"><a href="{{url_for('logout')}}">Log out</a></li>
               </ul>
+            </div>
+
+            <div class="nav-content" onclick="hideNavAlert()">
+                <p id ="nav-alert" class="red hide">This is an Alert</p>
             </div>
           </nav>
         

@@ -35,7 +35,7 @@
                         <p>this action can not be undone</p>
                 </div>
                 <div class="modal-footer">
-                        <a href="{{ url_for('delete_service_user',service_user_id=service_user.id) }}" class="btn red">Delete</a>
+                        <a href="{{ url_for('delete_service_user',service_user_id=service_user.id) }}" class="btn red" onclick="updateNavAlert('Service user deleted', 'red')">Delete</a>
                         <a href="" class="btn green accent-4 modal-close">Cancel</a>
                 </div>
             </div>
