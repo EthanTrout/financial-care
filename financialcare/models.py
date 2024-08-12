@@ -39,7 +39,7 @@ class ServiceUser(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(128),nullable=False)
     bank = db.Column(db.String(128),nullable=False)
-    service_id =db.Column(db.Integer,db.ForeignKey("service.id"),nullable=False)
+    service_id =db.Column(db.Integer,db.ForeignKey("service.id"),nullable=True)
     
 
 class WalletEntry(db.Model):

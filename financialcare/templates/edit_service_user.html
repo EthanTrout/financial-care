@@ -30,8 +30,10 @@
                     {% for service in services %}
                         {% if service_user.service_id == service.id%}
                             <option value="{{service.id}}" selected>{{service.name}}</option>
+                        {% elif service_user.service_id == null %}
+                            <option value="{{service.id}}" selected>None</option>
                         {% else %}
-                            <option value="{{service.id}}" selected>{{service.name}}</option>
+                        <option value="{{service.id}}">{{service.name}}</option>
                         {% endif %}
                     {% endfor %}
                 </select>
