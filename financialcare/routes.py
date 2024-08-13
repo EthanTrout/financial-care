@@ -323,13 +323,14 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
     .filter(WalletEntry.service_user_id == service_user_id)
     .order_by(WalletEntry.id.desc())
     .first())
+    show_modal = False
+
 
     # Retrieve receipts from session
     all_receipts = session.get('all_receipts', [])
 
     if request.method == "POST":
         money_spent = Decimal(request.form.get("money_spent"))
-
         if outstanding_money >= money_spent:
             if last_entry_with_receipt is not None:
                 receipt_number = last_entry_with_receipt.receipt_number + 1
@@ -366,9 +367,11 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
             
             return redirect(url_for("close_wallet",service_user_id = service_user_id,last_wallet_id=last_wallet_id,outstanding_money=float(new_outstanding_money)))
         else:
-            return("not enough money out to add")
-    else:
-        return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,all_receipts=all_receipts)
+            new_outstanding_money = outstanding_money - money_spent
+            show_modal = True
+            
+            
+    return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,all_receipts=all_receipts,show_modal =show_modal)
 
 
 @app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])

@@ -57,4 +57,27 @@
     </div>
 {% endif %}
 
+<div id="modal-over-total-out" class="modal">
+    <div class="modal-content">
+        <h4>More money than Cash taken out</h4>
+        <p>Total outstanding:{{ outstanding_money|floatformat(2) }}</p>
+    </div>
+    <div class="modal-footer">
+        <a href="" class="btn green accent-4 modal-close">Update Reciept</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+{% if show_modal %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            var instance = M.Modal.getInstance(document.getElementById('modal-over-total-out'));
+            instance.open();
+            
+        });
+    </script>
+{% endif %}
 {% endblock %}
