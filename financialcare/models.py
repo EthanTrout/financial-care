@@ -40,12 +40,13 @@ class ServiceUser(db.Model):
     name = db.Column(db.String(128),nullable=False)
     bank = db.Column(db.String(128),nullable=False)
     service_id =db.Column(db.Integer,db.ForeignKey("service.id"),nullable=True)
+    wallet_entries = db.relationship("WalletEntry",backref="service_user",cascade="all, delete",lazy=True)
     
 
 class WalletEntry(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     service_user_id = db.Column(db.Integer,db.ForeignKey("service_user.id"),nullable=False)
-    staff_id = db.Column(db.Integer,db.ForeignKey("staff.id"),nullable=False)
+    staff_id = db.Column(db.Integer,db.ForeignKey("staff.id",ondelete="CASCADE"),nullable=False)
     date_time = db.Column(db.DateTime,nullable=False)
     seal_number = db.Column(db.Integer,nullable=False)
     cash_amount = db.Column(db.Numeric(precision=10, scale=2),nullable=False)
