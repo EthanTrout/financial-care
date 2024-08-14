@@ -38,7 +38,7 @@
         <!-- submit button -->
         <div class="row">
             <div class="col s12 center-align">
-                <button type="submit" class="btn-large light-blue darken-1">
+                <button type="submit" class="btn-large light-blue darken-1" onclick="updateNavAlert('Recorded: Cash Put back in', 'green')">
                     Add <i class="fas fa-plus-square right"></i>
                 </button>
             </div>
@@ -67,8 +67,9 @@
             
             var instance = M.Modal.getInstance(document.getElementById('modal-total_incomplete'));
             instance.open();
-            
+
         });
+        updateNavAlert('Not Recorded: Cash Put back in does not equal total remaning', 'red')
     </script>
 {% endif %}
 {% endblock %}

@@ -427,6 +427,7 @@ def close_wallet_banking(service_user_id):
     .filter(WalletEntry.service_user_id == service_user_id)
     .order_by(WalletEntry.id.desc())
     .first())
+    all_receipts = session.get('all_receipts', [])
     if request.method == "POST":
         if last_entry_with_receipt is not None:
             receipt_number = last_entry_with_receipt.receipt_number + 1
@@ -450,9 +451,14 @@ def close_wallet_banking(service_user_id):
             )
         db.session.add(wallet_entry)
         db.session.commit()
+        receipt = [receipt_number, request.form.get("money_spent_description"), float(request.form.get("bank_out"))]
+        all_receipts.append(receipt)
+
+         # Store updated receipts in session
+        session['all_receipts'] = all_receipts
         return redirect(url_for("close_wallet_banking",service_user_id=service_user_id))
     else:
-        return render_template("close_wallet_banking.html",service_user=service_user)
+        return render_template("close_wallet_banking.html",service_user=service_user,all_receipts=all_receipts)
 
 
 @app.route("/set_up_wallet/<int:service_user_id>",methods=["GET","POST"])
