@@ -1,8 +1,30 @@
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, session, flash
 from financialcare import app, db
 from financialcare.models import Staff,Service , staff_service, ServiceUser, WalletEntry
 from datetime import datetime
 from decimal import Decimal
+from functools import wraps
+
+
+# Decorator to enforce user authentication and role-based access control.
+# Redirects to the login page if the user is not logged in.
+# Redirects to a designated page if the user does not have the required role to access the resource.
+def login_required(allowed_roles=None):
+    if allowed_roles is None:
+        allowed_roles = []
+
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if "user" not in session:
+                return redirect(url_for("login"))
+            
+            if session.get("user_access") not in allowed_roles:
+                return redirect(url_for("services"))  # Redirect to a general page or an error page
+
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
 
 # Template filter to format Float as a decimal like 0.00
 @app.template_filter('floatformat')
@@ -41,241 +63,221 @@ def logout():
 
 # Service routes
 @app.route("/services")
+@login_required(allowed_roles=["manager", "it", "support"])
 def services():
-    if "user" in session:
-        if session["user_access"]in ["manager", "it"]:
-            services =list(Service.query.order_by(Service.name).all())
-            return render_template("services.html",services=services)
-        elif session["user_access"] == "support":
-            staff = Staff.query.filter_by(id=session["user"]).first()
-            service_ids =[]
-            for service in staff.services:
-                service_ids.append(service.id)
+    services = []  # Default value in case none of the conditions are met
+    if session["user_access"]in ["manager", "it"]:
+        services =list(Service.query.order_by(Service.name).all())
+        return render_template("services.html",services=services)
+    elif session["user_access"] == "support":
+        staff = Staff.query.filter_by(id=session["user"]).first()
+        service_ids =[]
+        for service in staff.services:
+            service_ids.append(service.id)
             print(service_ids)
             services = Service.query.filter(Service.id.in_(service_ids)).all()
-            return render_template("services.html",services=services)
-    else:
-        return redirect(url_for("login"))
+        return render_template("services.html",services=services)
 
 @app.route("/add_service",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it"])
 def add_service():
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        print(session["user_access"])
-        if request.method=="POST":
-            service = Service(name=request.form.get("service_name"))
-            db.session.add(service)
-            db.session.commit()
-            return redirect(url_for("services"))
-        return render_template("add_service.html")
-    else:
-        return redirect(url_for("login"))
-
-@app.route("/edit_service/<int:service_id>",methods=["GET","POST"])
-def edit_service(service_id):
-    service = Service.query.get_or_404(service_id)
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        if request.method == "POST":
-            service.name = request.form.get("service_name")
-            db.session.commit()
-            return redirect(url_for("services"))
-        return render_template("edit_service.html",service=service)
-    else:
-        return redirect(url_for("login"))
-
-@app.route("/edit_service_staff/<int:service_id>",methods=["GET","POST"])
-def edit_service_staff(service_id):
-    service = Service.query.get_or_404(service_id)
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        staff =list(Staff.query.order_by(Staff.name).all())
-        if request.method == "POST":
-            service.name = service.name
-            print (service.name)
-            staff_id = request.form.get("staff")
-            service_staff = Staff.query.filter_by(id=staff_id).first()
-            service.staff.append(service_staff)
-            db.session.commit()
-            return redirect(url_for("services"))
-        return render_template("edit_service_staff.html",service=service,staff=staff)
-    else:
-        return redirect(url_for("login"))
-
-@app.route("/delete_service/<int:service_id>")
-def delete_service(service_id):
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        service = Service.query.get_or_404(service_id)
-        db.session.delete(service)
+    print(session["user_access"])
+    if request.method=="POST":
+        service = Service(name=request.form.get("service_name"))
+        db.session.add(service)
         db.session.commit()
         return redirect(url_for("services"))
-    else:
-        return redirect(url_for("login"))
+    return render_template("add_service.html")
+    
+
+@app.route("/edit_service/<int:service_id>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it"])
+def edit_service(service_id):
+    service = Service.query.get_or_404(service_id)
+    if request.method == "POST":
+        service.name = request.form.get("service_name")
+        db.session.commit()
+        return redirect(url_for("services"))
+    return render_template("edit_service.html",service=service)
+
+
+@app.route("/edit_service_staff/<int:service_id>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it"])
+def edit_service_staff(service_id):
+    service = Service.query.get_or_404(service_id)
+    staff =list(Staff.query.order_by(Staff.name).all())
+    if request.method == "POST":
+        service.name = service.name
+        print (service.name)
+        staff_id = request.form.get("staff")
+        service_staff = Staff.query.filter_by(id=staff_id).first()
+        service.staff.append(service_staff)
+        db.session.commit()
+        return redirect(url_for("services"))
+    return render_template("edit_service_staff.html",service=service,staff=staff)
+
+@app.route("/delete_service/<int:service_id>")
+@login_required(allowed_roles=["manager", "it"])
+def delete_service(service_id):
+    service = Service.query.get_or_404(service_id)
+    db.session.delete(service)
+    db.session.commit()
+    return redirect(url_for("services"))
 
 # Staff/website user routes
 
 @app.route("/users")
+@login_required(allowed_roles=["manager", "it"])
 def users():
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        staff =list(Staff.query.order_by(Staff.name).all())
-        return render_template("users.html",staff=staff)
-    else:
-        return redirect(url_for("login"))
+    staff =list(Staff.query.order_by(Staff.name).all())
+    return render_template("users.html",staff=staff)
+
 
 @app.route("/add_user",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it"])
 def add_user():
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        services =list(Service.query.order_by(Service.name).all())
-        if request.method=="POST":
-            staff = Staff(
-                name=request.form.get("user_name"),
-                email=request.form.get("email"),
+    services =list(Service.query.order_by(Service.name).all())
+    if request.method=="POST":
+        staff = Staff(
+            name=request.form.get("user_name"),
+            email=request.form.get("email"),
                 access=request.form.get("access"),
-                # password=request.form.get("password")
-            )
-            staff.set_password(request.form.get("password"))
+            # password=request.form.get("password")
+        )
+        staff.set_password(request.form.get("password"))
             
-            service_id = request.form.get("service")
-            staff_service = Service.query.filter_by(id=service_id).first()
-            print(service_id)
-            # db.session.add(user)
-            # db.session.commit()
+        service_id = request.form.get("service")
+        staff_service = Service.query.filter_by(id=service_id).first()
+        print(service_id)
+        # db.session.add(user)
+        # db.session.commit()
             
-            if staff_service is not None:
-                staff.services.append(staff_service)
-                db.session.add(staff)
-                db.session.commit()
-                return redirect(url_for("users"))
-            else:
-                # Handle the case where the service is not found
-                db.session.add(staff)
-                db.session.commit()
-                return redirect(url_for("users"))
+        if staff_service is not None:
+            staff.services.append(staff_service)
+            db.session.add(staff)
+            db.session.commit()
             return redirect(url_for("users"))
-        return render_template("add_user.html",services=services)
-    else:
-        return redirect(url_for("login"))
+        else:
+            # Handle the case where the service is not found
+            db.session.add(staff)
+            db.session.commit()
+            return redirect(url_for("users"))
+        return redirect(url_for("users"))
+    return render_template("add_user.html",services=services)
 
 
 @app.route("/edit_user/<int:staff_id>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it"])
 def edit_user(staff_id):
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        staff = Staff.query.get_or_404(staff_id)
-        services =list(Service.query.order_by(Service.name).all())
-        if request.method=="POST":
+    staff = Staff.query.get_or_404(staff_id)
+    services =list(Service.query.order_by(Service.name).all())
+    if request.method=="POST":
 
-            staff.name=request.form.get("user_name")
-            staff.email=request.form.get("email")
-            staff.access=request.form.get("access")
-            staff.password= staff.password
-            db.session.commit()
-            return redirect(url_for("users"))
+        staff.name=request.form.get("user_name")
+        staff.email=request.form.get("email")
+        staff.access=request.form.get("access")
+        staff.password= staff.password
+        db.session.commit()
+        return redirect(url_for("users"))
             
-        return render_template("edit_user.html",staff=staff,services=services)
-    else:
-        return redirect(url_for("login"))
+    return render_template("edit_user.html",staff=staff,services=services)
 
 
 @app.route("/edit_user_password/<int:staff_id>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it"])
 def edit_user_password(staff_id):
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        staff = Staff.query.get_or_404(staff_id)
-        if request.method=="POST":
+    staff = Staff.query.get_or_404(staff_id)
+    if request.method=="POST":
 
-            staff.name= staff.name
-            staff.email= staff.email
-            staff.access= staff.access
-            staff.set_password(request.form.get("password"))
-            db.session.commit()
-            return redirect(url_for("users"))
+        staff.name= staff.name
+        staff.email= staff.email
+        staff.access= staff.access
+        staff.set_password(request.form.get("password"))
+        db.session.commit()
+        return redirect(url_for("users"))
             
-        return render_template("edit_user_password.html",staff=staff,services=services)
-    else:
-        return redirect(url_for("login"))
+    return render_template("edit_user_password.html",staff=staff,services=services)
 
 
 @app.route("/delete_user/<int:staff_id>")
+@login_required(allowed_roles=["manager", "it"])
 def delete_user(staff_id):
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        staff = Staff.query.get_or_404(staff_id)
-        db.session.delete(staff)
-        db.session.commit()
-        return redirect(url_for("users"))
-    else:
-        return redirect(url_for("login"))
+    staff = Staff.query.get_or_404(staff_id)
+    db.session.delete(staff)
+    db.session.commit()
+    return redirect(url_for("users"))
+
     
 # Indivdual/ service_user routes 
 
 @app.route("/individual")
+@login_required(allowed_roles=["manager", "it","support"])
 def service_users():
-    if "user" in session:
-        if session["user_access"]in ["manager", "it"]:
-            service_users =list(ServiceUser.query.order_by(ServiceUser.name).all())
-            return render_template("service_users.html",service_users=service_users)
-        elif session["user_access"] == "support":
-            # service_users =list(ServiceUser.query.order_by(ServiceUser.name).all())
-            staff = Staff.query.filter_by(id=session["user"]).first()
-            service_ids =[]
-            for service in staff.services:
-                service_ids.append(service.id)
-            print(service_ids)
-            service_users = ServiceUser.query.filter(ServiceUser.service_id.in_(service_ids)).all()
-            return render_template("service_users.html",service_users=service_users)
-    else:
-        return redirect(url_for("login"))
+    if session["user_access"]in ["manager", "it"]:
+        service_users =list(ServiceUser.query.order_by(ServiceUser.name).all())
+        return render_template("service_users.html",service_users=service_users)
+    elif session["user_access"] == "support":
+        # service_users =list(ServiceUser.query.order_by(ServiceUser.name).all())
+        staff = Staff.query.filter_by(id=session["user"]).first()
+        service_ids =[]
+        for service in staff.services:
+            service_ids.append(service.id)
+        print(service_ids)
+        service_users = ServiceUser.query.filter(ServiceUser.service_id.in_(service_ids)).all()
+        return render_template("service_users.html",service_users=service_users)
+
 
 @app.route("/individual<int:service_id>")
+@login_required(allowed_roles=["manager", "it","support"])
 def service_users_in_service(service_id):
-    if "user" in session:
-        service_users = ServiceUser.query.filter_by(service_id=service_id).all()
-        return render_template("service_users.html",service_users=service_users)
-    else:
-        return redirect(url_for("login"))
+    service_users = ServiceUser.query.filter_by(service_id=service_id).all()
+    return render_template("service_users.html",service_users=service_users)
+
 
 @app.route("/add_individual",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it"])
 def add_service_user():
     services =list(Service.query.order_by(Service.name).all())
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        if request.method=="POST":
-                service_user = ServiceUser(
-                    name=request.form.get("name"),
-                    bank=request.form.get("bank"),
-                    service_id=request.form.get("service")
-                    )
-                db.session.add(service_user)
-                db.session.commit()
-                return redirect(url_for("service_users"))
+    if request.method=="POST":
+        service_user = ServiceUser(
+            name=request.form.get("name"),
+            bank=request.form.get("bank"),
+            service_id=request.form.get("service")
+            )
+        db.session.add(service_user)
+        db.session.commit()
+        return redirect(url_for("service_users"))
             
-        return render_template("add_service_user.html",services=services)
-    else:
-        return redirect(url_for("login"))
+    return render_template("add_service_user.html",services=services)
 
 
 @app.route("/edit_individual/<int:service_user_id>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it"])
 def edit_service_user(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        services =list(Service.query.order_by(Service.name).all())
-        if request.method == "POST":
-            service_user.name = request.form.get("name")
-            service_user.bank = request.form.get("bank")
-            service_user.service_id = request.form.get("service")
-            db.session.commit()
-            return redirect(url_for("service_users"))
-        return render_template("edit_service_user.html",service_user=service_user,services=services)
-    else:
-        return redirect(url_for("login"))
-
-@app.route("/delete_individual/<int:service_user_id>")
-def delete_service_user(service_user_id):
-    if ("user" in session) and (session["user_access"]in ["manager", "it"]):
-        service_user = ServiceUser.query.get_or_404(service_user_id)
-        db.session.delete(service_user)
+    services =list(Service.query.order_by(Service.name).all())
+    if request.method == "POST":
+        service_user.name = request.form.get("name")
+        service_user.bank = request.form.get("bank")
+        service_user.service_id = request.form.get("service")
         db.session.commit()
         return redirect(url_for("service_users"))
-    else:
-        return redirect(url_for("login"))
+    return render_template("edit_service_user.html",service_user=service_user,services=services)
+
+
+@app.route("/delete_individual/<int:service_user_id>")
+@login_required(allowed_roles=["manager", "it"])
+def delete_service_user(service_user_id):
+    service_user = ServiceUser.query.get_or_404(service_user_id)
+    db.session.delete(service_user)
+    db.session.commit()
+    return redirect(url_for("service_users"))
+
 
 
 # Wallet routes
 @app.route("/open_wallet/<int:service_user_id>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it","support"])
 def open_wallet(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
@@ -313,6 +315,7 @@ def open_wallet(service_user_id):
 
 
 @app.route("/close_wallet/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it","support"])
 def close_wallet(service_user_id,last_wallet_id,outstanding_money):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
@@ -375,6 +378,7 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
 
 
 @app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it","support"])
 def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
     # Clear session of reciepts
     session['all_receipts'] = []
@@ -418,6 +422,7 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
     
 
 @app.route("/close_wallet_banking/<int:service_user_id>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it","support"])
 def close_wallet_banking(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
@@ -462,6 +467,7 @@ def close_wallet_banking(service_user_id):
 
 
 @app.route("/set_up_wallet/<int:service_user_id>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it","support"])
 def set_up_wallet(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     if request.method == "POST":
@@ -488,6 +494,7 @@ def set_up_wallet(service_user_id):
         return render_template("set_up_wallet.html",service_user=service_user)
             
 @app.route("/check_seal/<int:service_user_id>", methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it","support"])
 def check_seal(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
@@ -504,12 +511,14 @@ def check_seal(service_user_id):
 
 
 @app.route("/view_wallet/<int:service_user_id>")
+@login_required(allowed_roles=["manager", "it","support"])
 def view_wallet(service_user_id):
     wallet_entries = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).all()
     staff = list(Staff.query.order_by(Staff.id).all())
     return render_template("view_wallet.html",wallet_entries=wallet_entries,staff=staff)
 
 @app.route("/reconsile_in_or_out/<int:service_user_id>",methods=["GET","POST"]) 
+@login_required(allowed_roles=["manager", "it","support"])
 def reconsile_in_or_out(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     if request.method == "POST":
@@ -522,6 +531,7 @@ def reconsile_in_or_out(service_user_id):
 
 
 @app.route("/reconsile_banking/<int:service_user_id>/<string:bank_in>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it","support"])
 def reconsile_banking(service_user_id,bank_in):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
