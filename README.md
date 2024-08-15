@@ -144,3 +144,34 @@ This will also be a useful feature as sometimes in social care. the person that 
 ![Fix Image](/readme_images/fix3.png)
 ![Fix Image](/readme_images/fix4.png)
 ![Fix Image](/readme_images/fix5.png)
+
+
+
+This still has the issue of not adding the previously stored reciepts which can be fixed by querying and totaling them to create the new Outstanding total that is passed to CloseWallet. (the reciepts form)
+
+```python
+if last_wallet_entry.is_cash_removed == True or last_wallet_entry.bank_card_removed == True:
+        last_wallet_entry = WalletEntry.query.filter(
+        WalletEntry.service_user_id == service_user_id,
+        WalletEntry.cash_out > 0).order_by(WalletEntry.id.desc()).first()
+
+        subsequent_entries = WalletEntry.query.filter(
+        WalletEntry.service_user_id == last_wallet_entry.service_user_id,
+        WalletEntry.id > last_wallet_entry.id,  
+        WalletEntry.is_cash_removed == True ).all()
+
+        if subsequent_entries:
+            cash_spent_values = [entry.cash_spent for entry in subsequent_entries]
+            total_cash_spent = sum(cash_spent_values)
+        else:
+            total_cash_spent = 0
+        
+
+        result = last_wallet_entry.cash_out - total_cash_in
+
+        return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=result))
+```
+
+Evidence of fix 
+
+![Final Fix](/readme_images/final_fix.png)

@@ -313,7 +313,22 @@ def open_wallet(service_user_id):
         last_wallet_entry = WalletEntry.query.filter(
         WalletEntry.service_user_id == service_user_id,
         WalletEntry.cash_out > 0).order_by(WalletEntry.id.desc()).first()
-        return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=last_wallet_entry.cash_out))
+
+        subsequent_entries = WalletEntry.query.filter(
+        WalletEntry.service_user_id == last_wallet_entry.service_user_id,
+        WalletEntry.id > last_wallet_entry.id,  
+        WalletEntry.is_cash_removed == True ).all()
+
+        if subsequent_entries:
+            cash_spent_values = [entry.money_spent for entry in subsequent_entries]
+            total_cash_spent = sum(cash_spent_values)
+        else:
+            total_cash_spent = 0
+        
+
+        result = last_wallet_entry.cash_out - total_cash_spent
+
+        return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=result))
 
     if request.method == "POST":
         wallet_entry = WalletEntry(
