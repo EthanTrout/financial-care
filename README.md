@@ -101,3 +101,46 @@ Ideas for future enhancements to WWAMI include:
 
 
 
+# Testing 
+
+## bugs 
+
+### Not storing that Cash has been taken out
+
+The Open Wallet route should redirect to a form to add reciepts if cash has been taken out.
+
+if the user takes cash out and then enters the reciepts in but does not click "done" to be redirected to the add cash in page the open wallet button will then redirect them back to taking cash out even though the cash may still need to be entered into the wallet. 
+
+Example:
+
+1. Cash taken out 
+![Cash out Example](/readme_images/cash_out_example.png)
+
+2. Adding reciept
+![reciept added example](/readme_images/add_reciept_example.png)
+
+3. Confimation of new reciept 
+![reciept added example](/readme_images/reciept_added_example.png)
+
+4. User Error - They click a navigation link, logout or close browser.
+![User error example](/readme_images/user_error_example.png)
+
+5. The Bug - redirecting to Take cash out form 
+![Bug example](/readme_images/open_wallet_redirect_example.png)
+
+6. The Data added to the database 
+![Database data](/readme_images/wallet_entries_incorrect_example.png)
+
+
+#### bug fix 
+To fix this i needed to change the Model of wallet_entry table to add a is_cash_out boolean field. similar to the is Card out field. 
+
+The reason for doing this instead of just using the stored Session data is that if another user has made this mistake and another user is left to fix it. they will be unable to as the data is stored only on a session.
+
+This will also be a useful feature as sometimes in social care. the person that has taken cash out for a service user might finish shift as they come back with the reciepts. and another satff member will enter them in. 
+
+![Fix Image](/readme_images/fix1.png)
+![Fix Image](/readme_images/fix2.png)
+![Fix Image](/readme_images/fix3.png)
+![Fix Image](/readme_images/fix4.png)
+![Fix Image](/readme_images/fix5.png)

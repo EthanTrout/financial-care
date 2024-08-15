@@ -54,6 +54,7 @@ class WalletEntry(db.Model):
     cash_out = db.Column(db.Numeric(precision=10, scale=2))
     cash_in = db.Column(db.Numeric(precision=10, scale=2))
     bank_card_removed = db.Column(db.Boolean,default=False,nullable=False)
+    is_cash_removed = db.Column(db.Boolean,default=False,nullable=False)
     money_spent = db.Column(db.Numeric(precision=10, scale=2))
     money_spent_description = db.Column(db.String)
     bank_out = db.Column(db.Numeric(precision=10, scale=2))
