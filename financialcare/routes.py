@@ -94,11 +94,14 @@ def add_service():
 @login_required(allowed_roles=["manager", "it"])
 def edit_service(service_id):
     service = Service.query.get_or_404(service_id)
+    staff_members = Staff.query.join(staff_service).join(Service).filter(Service.id == service_id).all()
+    staff_info = [{"id": staff.id, "name": staff.name} for staff in staff_members]
+    print(staff_members)
     if request.method == "POST":
         service.name = request.form.get("service_name")
         db.session.commit()
         return redirect(url_for("services"))
-    return render_template("edit_service.html",service=service)
+    return render_template("edit_service.html",service=service,staff_info=staff_info)
 
 
 @app.route("/edit_service_staff/<int:service_id>",methods=["GET","POST"])
@@ -113,7 +116,7 @@ def edit_service_staff(service_id):
         service_staff = Staff.query.filter_by(id=staff_id).first()
         service.staff.append(service_staff)
         db.session.commit()
-        return redirect(url_for("services"))
+        return redirect(url_for("edit_service",service_id=service_id))
     return render_template("edit_service_staff.html",service=service,staff=staff)
 
 @app.route("/delete_service/<int:service_id>")
@@ -123,6 +126,18 @@ def delete_service(service_id):
     db.session.delete(service)
     db.session.commit()
     return redirect(url_for("services"))
+
+@app.route("/remove_staff_from_service/<int:staff_id>/<int:service_id>")
+@login_required(allowed_roles=["manager", "it"])
+def remove_staff_from_service(staff_id, service_id):
+    service = Service.query.get_or_404(service_id)
+    staff = Staff.query.get_or_404(staff_id)
+
+    if staff in service.staff:
+        service.staff.remove(staff)
+        db.session.commit()
+
+    return redirect(url_for("edit_service", service_id=service_id))
 
 # Staff/website user routes
 

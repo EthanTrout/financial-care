@@ -23,9 +23,45 @@
         </div>
     </form>
 </div>
-<a href="#modal-{{ service.id }}" class="btn red modal-trigger">Delete Service</a>
-<a href="{{ url_for('edit_service_staff',service_id=service.id) }}" class="btn yellow accent-4">Add Staff</a>
+<div class="row">
+    <div class="col s6">
+        <a href="{{ url_for('edit_service_staff', service_id=service.id) }}" class="btn yellow accent-4 left">Add Staff</a>
+    </div>
+    <div class="col s6">
+        <a href="#modal-{{ service.id }}" class="btn red modal-trigger right">Delete Service</a>
+    </div>
+</div>
 
+<h5 class="light-blue-text text-darken-4 center-align">Staff In Service</h5>
+<div class="row">
+{% for staff_member in staff_info %}
+
+    <div class="col s12 m6 l3">
+      <div class="card light-blue darken-4 center-align">
+        <div class="card-content white-text">
+          <span class="card-title">{{staff_member.name}}</span>
+        </div>
+        <div class="card-action">
+          <a href="#modal-{{ staff_member.id }}" class="btn red modal-trigger">Remove From Service</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-{{ staff_member.id }}" class="modal">
+        <div class="modal-content">
+            <h4>Are you sure you want to remove {{staff_member.name}} from {{service.name}}</h4>
+            
+        </div>
+        <div class="modal-footer">
+            <a href="{{ url_for('remove_staff_from_service', staff_id=staff_member.id, service_id=service.id) }}" 
+            onclick="updateNavAlert('Staff removed from service', 'red')" 
+            class="btn red">Remove</a>
+            <a href="" class="btn green accent-4 modal-close">Cancel</a>
+        </div>
+    </div>
+  
+{% endfor %}
+</div>
 <!-- Modal Structure -->
 <div id="modal-{{ service.id }}" class="modal">
     <div class="modal-content">
