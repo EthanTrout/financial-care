@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block url %}
+<a a href="{{ get_previous_url() }}" class="btn-floating btn-large waves-effect waves-light red"><i class="fa-solid fa-arrow-left"></i></a>
+{% endblock %}
+
 {% block content %}
 
 <h3 class="light-blue-text text-darken-4 center-align">Users</h3>

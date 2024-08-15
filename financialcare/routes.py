@@ -36,6 +36,14 @@ def floatformat(value, decimal_places=2):
         return f"{value:.{decimal_places}f}"
     return value
 
+# Utility processor for jinja2 to Previous Url on all routes
+@app.context_processor
+def utility_processor():
+    def get_previous_url(default='services'):
+        return request.referrer or url_for(default)
+    return dict(get_previous_url=get_previous_url)
+
+
 # Login logout routes
 @app.route("/",methods=["GET", "POST"])
 def login():
@@ -48,6 +56,8 @@ def login():
         if staff and staff.check_password(password):
             session["user"] = staff.id
             session["user_access"] = staff.access
+            if 'all_receipts' not in session:
+                session['all_receipts'] = []
             return redirect(url_for("services"))
     if "user" in session:
         return redirect(url_for("services"))
@@ -242,7 +252,7 @@ def service_users():
         return render_template("service_users.html",service_users=service_users)
 
 
-@app.route("/individual<int:service_id>")
+@app.route("/individual/<int:service_id>")
 @login_required(allowed_roles=["manager", "it","support"])
 def service_users_in_service(service_id):
     service_users = ServiceUser.query.filter_by(service_id=service_id).all()
@@ -299,7 +309,7 @@ def open_wallet(service_user_id):
     if last_wallet_entry is None:
         return redirect(url_for("set_up_wallet",service_user_id=service_user_id))
 
-    if last_wallet_entry.cash_out > 0 or last_wallet_entry.bank_card_removed == True:
+    if last_wallet_entry.cash_out > 0 or last_wallet_entry.bank_card_removed == True or not session.get('all_receipts'):
         return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=last_wallet_entry.cash_out))
 
     if request.method == "POST":
@@ -395,9 +405,7 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
 @app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
 @login_required(allowed_roles=["manager", "it","support"])
 def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
-    # Clear session of reciepts
-    session['all_receipts'] = []
-
+    
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
     show_modal = False
@@ -425,6 +433,8 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
             )
             db.session.add(wallet_entry)
             db.session.commit()
+            # Clear session of reciepts
+            session['all_receipts'] = []
             if last_wallet_entry.bank_card_removed:
                 return redirect(url_for("close_wallet_banking",service_user_id=service_user_id))
             return redirect(url_for("service_users_in_service",service_id = service_user.service_id))

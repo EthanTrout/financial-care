@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block url %}
+<a a href="{{ get_previous_url() }}" class="btn-floating btn-large waves-effect waves-light red"><i class="fa-solid fa-arrow-left"></i></a>
+{% endblock %}
+
 {% block content %}
 
 <h3 class="light-blue-text text-darken-4 center-align">Set Up Wallet</h3>
@@ -20,7 +25,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="fa-solid fa-piggy-bank prefix light-blue-text text-darken-4"></i>
-                <input id="bank_amount" name="bank_amount" type="number" min="0" step="any" class="validate" >
+                <input id="bank_amount" name="bank_amount" type="number" min="0" step="0.01" class="validate" >
                 <label for="bank_amount">Total Money In Bank Account</label>
             </div>
         </div>
@@ -37,7 +42,7 @@
         <!-- submit button -->
         <div class="row">
             <div class="col s12 center-align">
-                <button type="submit" class="btn-large light-blue darken-1" onclick="updateNavAlert('New wallet has been set up', 'green')">
+                <button type="submit" class="btn-large light-blue darken-1">
                     Add <i class="fas fa-plus-square right"></i>
                 </button>
             </div>
