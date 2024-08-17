@@ -76,6 +76,8 @@ def logout():
 @login_required(allowed_roles=["manager", "it", "support"])
 def services():
     services = []  # Default value in case none of the conditions are met
+    # Clear session of reciepts
+    session['all_receipts'] = []
     if session["user_access"]in ["manager", "it"]:
         services =list(Service.query.order_by(Service.name).all())
         return render_template("services.html",services=services)
@@ -308,8 +310,10 @@ def open_wallet(service_user_id):
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
     if last_wallet_entry is None:
         return redirect(url_for("set_up_wallet",service_user_id=service_user_id))
+    if last_wallet_entry.cash_out == 0 and last_wallet_entry.bank_card_removed == True:
+        return redirect(url_for("close_wallet_banking",service_user_id=service_user_id,enter_seal = True))
 
-    if last_wallet_entry.is_cash_removed == True or last_wallet_entry.bank_card_removed == True:
+    if last_wallet_entry.is_cash_removed == True :
         last_wallet_entry = WalletEntry.query.filter(
         WalletEntry.service_user_id == service_user_id,
         WalletEntry.cash_out > 0).order_by(WalletEntry.id.desc()).first()
@@ -457,7 +461,7 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
             # Clear session of reciepts
             session['all_receipts'] = []
             if last_wallet_entry.bank_card_removed:
-                return redirect(url_for("close_wallet_banking",service_user_id=service_user_id))
+                return redirect(url_for("close_wallet_banking",service_user_id=service_user_id,enter_seal=False))
             return redirect(url_for("service_users_in_service",service_id = service_user.service_id))
         else:
             show_modal = True
@@ -467,9 +471,9 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
     #  if cash doesnt add up to total then propmpt to call manager or review reciepts
     
 
-@app.route("/close_wallet_banking/<int:service_user_id>",methods=["GET","POST"])
+@app.route("/close_wallet_banking/<int:service_user_id>/<string:enter_seal>",methods=["GET","POST"])
 @login_required(allowed_roles=["manager", "it","support"])
-def close_wallet_banking(service_user_id):
+def close_wallet_banking(service_user_id,enter_seal):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
     last_entry_with_receipt = (
@@ -479,16 +483,26 @@ def close_wallet_banking(service_user_id):
     .order_by(WalletEntry.id.desc())
     .first())
     all_receipts = session.get('all_receipts', [])
+    
+    enter_seal = True if enter_seal.lower() == "true" else False
+
+    print(enter_seal)
     if request.method == "POST":
         if last_entry_with_receipt is not None:
             receipt_number = last_entry_with_receipt.receipt_number + 1
         else:
             receipt_number = 1
+
+        if enter_seal:
+            new_seal_number = request.form.get("seal_number")
+        else:
+            new_seal_number = last_wallet_entry.seal_number
+
         wallet_entry = WalletEntry(
             service_user_id = service_user.id,
             staff_id = session["user"],
             date_time = datetime.now(),
-            seal_number = last_wallet_entry.seal_number,
+            seal_number = new_seal_number,
             cash_amount = last_wallet_entry.cash_amount,
             bank_amount = last_wallet_entry.bank_amount - Decimal(request.form.get("bank_out")),
             cash_out = 0,
@@ -506,11 +520,14 @@ def close_wallet_banking(service_user_id):
         receipt = [receipt_number, request.form.get("money_spent_description"), float(request.form.get("bank_out"))]
         all_receipts.append(receipt)
 
+        # after first reciept added - bank card is put in and seal remains the same
+        
+
          # Store updated receipts in session
         session['all_receipts'] = all_receipts
-        return redirect(url_for("close_wallet_banking",service_user_id=service_user_id))
+        return redirect(url_for("close_wallet_banking",service_user_id=service_user_id,enter_seal= "false"))
     else:
-        return render_template("close_wallet_banking.html",service_user=service_user,all_receipts=all_receipts)
+        return render_template("close_wallet_banking.html",service_user=service_user,all_receipts=all_receipts,enter_seal=enter_seal)
 
 
 @app.route("/set_up_wallet/<int:service_user_id>",methods=["GET","POST"])
