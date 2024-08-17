@@ -310,10 +310,12 @@ def open_wallet(service_user_id):
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
     if last_wallet_entry is None:
         return redirect(url_for("set_up_wallet",service_user_id=service_user_id))
-    if last_wallet_entry.cash_out == 0 and last_wallet_entry.bank_card_removed == True:
-        return redirect(url_for("close_wallet_banking",service_user_id=service_user_id,enter_seal = True))
 
-    if last_wallet_entry.is_cash_removed == True :
+    if last_wallet_entry.cash_out == 0 and last_wallet_entry.bank_card_removed == True:
+        return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=0,card_out_modal= "true"))
+
+    
+    if last_wallet_entry.is_cash_removed == True:
         last_wallet_entry = WalletEntry.query.filter(
         WalletEntry.service_user_id == service_user_id,
         WalletEntry.cash_out > 0).order_by(WalletEntry.id.desc()).first()
@@ -331,10 +333,17 @@ def open_wallet(service_user_id):
         
 
         result = last_wallet_entry.cash_out - total_cash_spent
-
-        return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=result))
+        if last_wallet_entry.bank_card_removed:
+            card_out_modal = "true"
+        else:
+            card_out_modal = "false"
+        return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=result,card_out_modal= card_out_modal))
 
     if request.method == "POST":
+        if int(request.form.get("cash_out")) == 0:
+            cash_removed = False
+        else:
+            cash_removed = True
         wallet_entry = WalletEntry(
             service_user_id = service_user.id,
             staff_id = session["user"],
@@ -350,7 +359,7 @@ def open_wallet(service_user_id):
             bank_out = 0 ,
             bank_in = 0,
             receipt_number = 0,
-            is_cash_removed = True
+            is_cash_removed = cash_removed
             )
         db.session.add(wallet_entry)
         db.session.commit()
@@ -362,9 +371,9 @@ def open_wallet(service_user_id):
 
 
 
-@app.route("/close_wallet/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
+@app.route("/close_wallet/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>/<string:card_out_modal>",methods=["GET","POST"])
 @login_required(allowed_roles=["manager", "it","support"])
-def close_wallet(service_user_id,last_wallet_id,outstanding_money):
+def close_wallet(service_user_id,last_wallet_id,outstanding_money,card_out_modal):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
     outstanding_money = Decimal(str(outstanding_money))
@@ -376,7 +385,7 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
     .first())
     show_modal = False
 
-
+    card_out_modal = True if card_out_modal.lower() == "true" else False
     # Retrieve receipts from session
     all_receipts = session.get('all_receipts', [])
 
@@ -417,13 +426,13 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
 
             print(all_receipts)
             
-            return redirect(url_for("close_wallet",service_user_id = service_user_id,last_wallet_id=last_wallet_id,outstanding_money=float(new_outstanding_money)))
+            return redirect(url_for("close_wallet",service_user_id = service_user_id,last_wallet_id=last_wallet_id,outstanding_money=float(new_outstanding_money),card_out_modal="false"))
         else:
             new_outstanding_money = outstanding_money - money_spent
             show_modal = True
             
             
-    return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,all_receipts=all_receipts,show_modal =show_modal,is_card_out = last_wallet_entry.bank_card_removed )
+    return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,all_receipts=all_receipts,show_modal =show_modal,card_out_modal=card_out_modal )
 
 
 @app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
@@ -461,7 +470,7 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
             # Clear session of reciepts
             session['all_receipts'] = []
             if last_wallet_entry.bank_card_removed:
-                return redirect(url_for("close_wallet_banking",service_user_id=service_user_id,enter_seal=False))
+                return redirect(url_for("close_wallet_banking",service_user_id=service_user_id,enter_seal="false"))
             return redirect(url_for("service_users_in_service",service_id = service_user.service_id))
         else:
             show_modal = True
@@ -484,7 +493,6 @@ def close_wallet_banking(service_user_id,enter_seal):
     .first())
     all_receipts = session.get('all_receipts', [])
     
-    enter_seal = True if enter_seal.lower() == "true" else False
 
     print(enter_seal)
     if request.method == "POST":
@@ -493,7 +501,7 @@ def close_wallet_banking(service_user_id,enter_seal):
         else:
             receipt_number = 1
 
-        if enter_seal:
+        if enter_seal == "true":
             new_seal_number = request.form.get("seal_number")
         else:
             new_seal_number = last_wallet_entry.seal_number
@@ -557,23 +565,23 @@ def banking_into_wallet(service_user_id,outstanding_money):
             seal_number = request.form.get("seal_number"),
             cash_amount = last_wallet_entry.cash_amount + Decimal(request.form.get("bank_out")),
             bank_amount = last_wallet_entry.bank_amount - Decimal(request.form.get("bank_out")),
-            cash_out = Decimal(request.form.get("bank_out")),
+            cash_out = 0,
             cash_in = 0,
-            bank_card_removed=bool(False),
+            bank_card_removed= True,
             money_spent = 0,
             money_spent_description = "Banking: Cash out of bank",
             bank_out = Decimal(request.form.get("bank_out")) ,
             bank_in = 0,
             receipt_number = receipt_number,
-            is_cash_removed = True
+            is_cash_removed = False
             )
         db.session.add(wallet_entry)
         db.session.commit()
-
+        
         last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
-        new_outstanding_money = last_wallet_entry.cash_out + outstanding_money
+        new_outstanding_money = last_wallet_entry.bank_out + outstanding_money
 
-        return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=new_outstanding_money))
+        return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=new_outstanding_money,card_out_modal="false"))
     else:
         return render_template("banking_into_wallet.html",service_user=service_user,outstanding_money=outstanding_money)
 
@@ -612,11 +620,11 @@ def check_seal(service_user_id):
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
     open_modal = False
     if last_wallet_entry is None:
-        return redirect(url_for("open_wallet",service_user_id=service_user_id))
+        return redirect(url_for("open_wallet",service_user_id=service_user_id,card_out_modal=False))
 
     if request.method == "POST":
         if last_wallet_entry.seal_number == int(request.form.get("seal_number")):
-            return redirect(url_for("open_wallet",service_user_id=service_user_id))
+            return redirect(url_for("open_wallet",service_user_id=service_user_id,card_out_modal=False))
         else:
             open_modal = True
     return render_template("check_seal.html",service_user_id=service_user_id, open_modal=open_modal)

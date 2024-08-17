@@ -52,7 +52,7 @@
             <p>Total unacounted for:{{ remaining_money|floatformat(2) }}</p>
         </div>
         <div class="modal-footer">
-            <a href="{{url_for('close_wallet',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money)}}" class="btn red">Add new Receipt</a>
+            <a href="{{url_for('close_wallet',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money,card_out_modal = 'false')}}" class="btn red">Add new Receipt</a>
             <a href="" class="btn green accent-4 modal-close">Update Cash in</a>
         </div>
     </div>

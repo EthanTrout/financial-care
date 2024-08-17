@@ -4,7 +4,7 @@
 <h3 class="light-blue-text text-darken-4 center-align">Add Cash Receipt</h3>
 
 <div class="row card-panel grey lighten-5">
-    <form class="col s12" method="POST" action="{{ url_for('close_wallet',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money)}}">
+    <form class="col s12" method="POST" action="{{ url_for('close_wallet',service_user_id = service_user.id,last_wallet_id = last_wallet_id,outstanding_money=outstanding_money,card_out_modal=card_out_modal)}}">
       <!-- Money spent description -->
         <div class="row">
             <div class="input-field col s12">
@@ -76,7 +76,7 @@
     </div>
     <div class="modal-footer">
         <a href="{{ url_for('banking_into_wallet',service_user_id=service_user.id,outstanding_money=outstanding_money) }}" class="btn green accent-4">got to Banking</a>
-        <a href="" class="btn red accent-4 modal-close">No</a>
+        <a href="{{url_for('close_wallet',service_user_id=service_user.id,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,card_out_modal='false')}}" class="btn red accent-4 modal-close">No</a>
         
     </div>
 </div>
@@ -95,7 +95,7 @@
     </script>
 {% endif %}
 
-{% if is_card_out %}
+{% if card_out_modal %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         
