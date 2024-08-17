@@ -370,10 +370,10 @@ def open_wallet(service_user_id):
             
 
 
-
+@app.route("/close_wallet/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>/<string:card_out_modal>/<string:no_cash_reciepts>", methods=["GET", "POST"])
 @app.route("/close_wallet/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>/<string:card_out_modal>",methods=["GET","POST"])
 @login_required(allowed_roles=["manager", "it","support"])
-def close_wallet(service_user_id,last_wallet_id,outstanding_money,card_out_modal):
+def close_wallet(service_user_id,last_wallet_id,outstanding_money,card_out_modal,no_cash_reciepts ="false"):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
     outstanding_money = Decimal(str(outstanding_money))
@@ -431,7 +431,8 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money,card_out_modal
             new_outstanding_money = outstanding_money - money_spent
             show_modal = True
             
-            
+    if no_cash_reciepts == "true":
+        return redirect(url_for("close_wallet_banking",service_user_id = service_user_id,enter_seal="true"))
     return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,all_receipts=all_receipts,show_modal =show_modal,card_out_modal=card_out_modal )
 
 

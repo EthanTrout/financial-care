@@ -47,10 +47,24 @@
     <!-- Done button -->
     <div class="row ">
         <div class="col s12 center-align">
-            <a class="btn-large green darken-1" href="{{url_for('services')}}">Done <i class="fa-solid fa-check"></i></a>
+            <a class="btn-large green darken-1" href="{{url_for('services')}}" onclick="updateNavAlert('Recorded: Bank reciepts Added', 'green')">Done <i class="fa-solid fa-check"></i></a>
         </div>
     </div>
 
-
+{% if all_receipts %}
+    <div class="row">
+    {% for receipt in all_receipts %}
+        <div class="col s12 m6 l3">
+          <div class="card light-blue darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Reciept: {{receipt[0]}}</span>
+              <p>{{receipt[1]}}.</p>
+              <b>£{{receipt[2]}}</b>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endif %}
 
 {% endblock %}
