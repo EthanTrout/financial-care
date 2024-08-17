@@ -41,6 +41,8 @@
         </div>
     </div>
 
+
+
 {% if all_receipts %}
     <div class="row">
     {% for receipt in all_receipts %}
@@ -67,6 +69,18 @@
     </div>
 </div>
 
+<div id="modal-bank-card-out" class="modal">
+    <div class="modal-content">
+        <h4>Bank Card out</h4>
+        <p>Have you been banking? do you need to log cash out of bank?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="{{ url_for('banking_into_wallet',service_user_id=service_user.id,outstanding_money=outstanding_money) }}" class="btn green accent-4">got to Banking</a>
+        <a href="" class="btn red accent-4 modal-close">No</a>
+        
+    </div>
+</div>
+
 {% endblock %}
 
 {% block script %}
@@ -79,5 +93,16 @@
             
         });
     </script>
+{% endif %}
+
+{% if is_card_out %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        var instance = M.Modal.getInstance(document.getElementById('modal-bank-card-out'));
+        instance.open();
+        
+    });
+</script>
 {% endif %}
 {% endblock %}

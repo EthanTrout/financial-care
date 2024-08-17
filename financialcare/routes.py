@@ -423,7 +423,7 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money):
             show_modal = True
             
             
-    return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,all_receipts=all_receipts,show_modal =show_modal)
+    return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,all_receipts=all_receipts,show_modal =show_modal,is_card_out = last_wallet_entry.bank_card_removed )
 
 
 @app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
@@ -529,6 +529,53 @@ def close_wallet_banking(service_user_id,enter_seal):
     else:
         return render_template("close_wallet_banking.html",service_user=service_user,all_receipts=all_receipts,enter_seal=enter_seal)
 
+
+@app.route("/banking_into_wallet/<int:service_user_id>/<float:outstanding_money>",methods=["GET","POST"])
+@login_required(allowed_roles=["manager", "it","support"])
+def banking_into_wallet(service_user_id,outstanding_money):
+    service_user = ServiceUser.query.get_or_404(service_user_id)
+    last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
+    last_entry_with_receipt = (
+    WalletEntry.query
+    .filter(WalletEntry.receipt_number != 0)
+    .filter(WalletEntry.service_user_id == service_user_id)
+    .order_by(WalletEntry.id.desc())
+    .first())
+    
+    outstanding_money = Decimal(str(outstanding_money))
+
+    if request.method == "POST":
+        if last_entry_with_receipt is not None:
+            receipt_number = last_entry_with_receipt.receipt_number + 1
+        else:
+            receipt_number = 1
+
+        wallet_entry = WalletEntry(
+            service_user_id = service_user.id,
+            staff_id = session["user"],
+            date_time = datetime.now(),
+            seal_number = request.form.get("seal_number"),
+            cash_amount = last_wallet_entry.cash_amount + Decimal(request.form.get("bank_out")),
+            bank_amount = last_wallet_entry.bank_amount - Decimal(request.form.get("bank_out")),
+            cash_out = Decimal(request.form.get("bank_out")),
+            cash_in = 0,
+            bank_card_removed=bool(False),
+            money_spent = 0,
+            money_spent_description = "Banking: Cash out of bank",
+            bank_out = Decimal(request.form.get("bank_out")) ,
+            bank_in = 0,
+            receipt_number = receipt_number,
+            is_cash_removed = True
+            )
+        db.session.add(wallet_entry)
+        db.session.commit()
+
+        last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
+        new_outstanding_money = last_wallet_entry.cash_out + outstanding_money
+
+        return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=new_outstanding_money))
+    else:
+        return render_template("banking_into_wallet.html",service_user=service_user,outstanding_money=outstanding_money)
 
 @app.route("/set_up_wallet/<int:service_user_id>",methods=["GET","POST"])
 @login_required(allowed_roles=["manager", "it","support"])
