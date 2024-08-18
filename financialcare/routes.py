@@ -47,6 +47,7 @@ def utility_processor():
 # Login logout routes
 @app.route("/",methods=["GET", "POST"])
 def login():
+    show_modal = False
     if request.method =="POST":
         email = request.form.get("email")
         password = request.form.get("password")
@@ -59,9 +60,11 @@ def login():
             if 'all_receipts' not in session:
                 session['all_receipts'] = []
             return redirect(url_for("services"))
+        else:
+            show_modal =True
     if "user" in session:
         return redirect(url_for("services"))
-    return render_template("login.html")
+    return render_template("login.html",show_modal=show_modal)
 
 
 @app.route("/logout")

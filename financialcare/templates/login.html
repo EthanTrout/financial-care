@@ -21,6 +21,11 @@
                 <label for="password">Password</label>
             </div>
         </div>
+        {% if show_modal %}
+            <div class="row">
+                <p class="red-text center-align"> Email Or Password Incorrect</p>
+            </div>
+        {% endif %}
         <!-- submit button -->
         <div class="row">
             <div class="col s12 center-align">
@@ -33,3 +38,4 @@
 </div>
 
 {% endblock %}
+
