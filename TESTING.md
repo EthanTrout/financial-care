@@ -120,4 +120,103 @@ minor bug i found when creating a user table was that psql already created a use
     ![deleted service_users ](/readme_images/Testing_images/service_users/deleted_service_user.png)
 
 
-## Testing User Functionality
+
+## User Functionality
+
+### Login and Logout
+
+1. User feedback when password is incorrect
+    ![Login incorrect](/readme_images/Testing_images/login/login_incorrect.png)
+    ![Login incorrect](/readme_images/Testing_images/login/login_incorrect_feedback.png)
+
+2. Accessing other pages without logging in cannot be done.
+    ![Accessing pages without login](/readme_images/Testing_images/login/login_redirect_to_login.png)
+
+3. Logging out clears a session and redirects back to login
+
+### Access
+
+1. New_user we created before login 
+    ![new user login](/readme_images/Testing_images/login/new_user_login.png)
+
+2. Users service page has only access to the services that they are asigned to and the indivduals that are in that service 
+    ![New user services page access](/readme_images/Testing_images/login/new_user_services_page_access.png)
+    ![New user services page access](/readme_images/Testing_images/login/new_user_people_page_access.png)
+
+3. For Refernce Admins can access all services and all indviduals
+    ![New user services page access](/readme_images/Testing_images/login/admin_login.png)
+    ![New user services page access](/readme_images/Testing_images/login/admin_service_page_access.png)
+
+4. users cannot Acess any of the previously defined admin CRUD functionality
+
+### service_user Wallet
+
+#### Set up
+
+1. Viewing Wallet
+    ![View Wallet](/readme_images/Testing_images/wallet/viewing_wallet.png)
+    ![View empty Wallet](/readme_images/Testing_images/wallet/empty_wallet.png)
+
+2. Setting up an empty wallet- if the service_users wallet is empty a user is redirected to set up wallet 
+    ![set up Wallet](/readme_images/Testing_images/wallet/setting_up_wallet.png)
+    ![set up Wallet](/readme_images/Testing_images/wallet/set_up_wallet.png)
+
+3. Testing Inputs:
+    User cannot input strings into the form. this could be broken by using something such as postman API online:
+    This would return an error. it would not allow a string to be added to the database.
+
+    Form Notifies users if number is not decimal 
+    ![Number not decimal](/readme_images/Testing_images/wallet/wallet_number_not_decimal.png)
+
+    Max Length is set.
+    ![Max Length](/readme_images/Testing_images/wallet/wallet_max_length.png)
+    
+
+#### Check Seal
+Before a user can take enter a wallet they must verify that the seal on the real world wallet matches the last one entered in the system
+
+1. Check Seal Form 
+    ![Check Seal](/readme_images/Testing_images/wallet/Check_seal.png)
+
+2. If incorrect:
+    ![check seal incorrect](/readme_images/Testing_images/wallet/Check_seal_incorrect.png)
+
+3. User has to enter a number and cannot enter a string as HTML is set to number 
+
+4. If correct 
+    ![ seal number stored](/readme_images/Testing_images/wallet/seal_number_stored.png)
+    ![ seal number entered](/readme_images/Testing_images/wallet/seal_number_entered.png)
+
+#### Taking Cash out. Adding Cash reciepts. Adding Cash back into wallet
+
+When user clicks Open Wallet if no cash is out they will be directed to take cash out.
+
+1. Take Cash out 
+    ![cash out](/readme_images/Testing_images/wallet/take_cash_out_only_cash.png)
+
+2. Confirmation of Cash out 
+    ![cash out](/readme_images/Testing_images/wallet/take_cash_out_only_cash_view.png)
+
+
+The User would now be out with a supported person and make payments with this cash 
+
+3. Cash Reciepts 
+    ![cash Reciept](/readme_images/Testing_images/wallet/cash_reciepts_added.png)
+    ![cash Reciept](/readme_images/Testing_images/wallet/cash_reciepts_added_2.png)
+
+4. if cash reciepts added go over cash taken out 
+    ![cash Reciept over](/readme_images/Testing_images/wallet/cash_reciept_over.png)
+    ![cash Reciept modal](/readme_images/Testing_images/wallet/cash_reciept_modal.png)
+
+The user then clicks done and is prompted to put cash in 
+
+5. Cash back in 
+    ![cash in ](/readme_images/Testing_images/wallet/cash_in.png)
+    ![cash in ](/readme_images/Testing_images/wallet/cash_in_view.png)
+
+6. If can in is over or under the remaning money to put it in notifies staff 
+    ![cash in over](/readme_images/Testing_images/wallet/cash_in_over.png)
+    ![cash in over](/readme_images/Testing_images/wallet/cash_in_over_modal.png)
+
+    ![cash in under](/readme_images/Testing_images/wallet/cash_in_under.png)
+    ![cash in under](/readme_images/Testing_images/wallet/cash_in_under_modal.png)

@@ -15,7 +15,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="fa-solid fa-sterling-sign prefix light-blue-text text-darken-4"></i>
-                <input id="cash_amount" name="cash_amount" type="number" min="0" step="0.01" class="validate" >
+                <input id="cash_amount" name="cash_amount" type="number" max="99999999.99" min="0" step="0.01" class="validate" >
                 <label for="cash_amount">Total Cash In Wallet</label>
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="fa-solid fa-piggy-bank prefix light-blue-text text-darken-4"></i>
-                <input id="bank_amount" name="bank_amount" type="number" min="0" step="0.01" class="validate" >
+                <input id="bank_amount" name="bank_amount" maxlength="11" type="number" min="0" step="0.01" class="validate" >
                 <label for="bank_amount">Total Money In Bank Account</label>
             </div>
         </div>
