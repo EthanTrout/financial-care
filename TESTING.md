@@ -272,3 +272,30 @@ Staff members may support someone out to Get cash out of the bank. money may be 
 
 8. viewing results
     ![results](/readme_images/Testing_images/wallet/cash_out_card_out_banking/shopping_banking_result.png)
+
+#### Card Out. Withdraw cash from bank. cash reciepts. cash in 
+
+A service_user may have no cash to take out and therefore they withdraw cash from a bank before spending cash 
+
+1. Card Out only
+    ![](/readme_images/Testing_images/wallet/card_out/card_out.png)
+
+2. Banking Modal
+    ![](/readme_images/Testing_images/wallet/card_out/banking_modal%20(2).png)
+
+3. Withdrawing from bank
+    ![](/readme_images/Testing_images/wallet/card_out/card_banking.png)
+
+4. Cash Reciepts
+    ![](/readme_images/Testing_images/wallet/card_out/card_cash_reciepts.png)
+
+5. Updated Cash in to show cash withdrawn from bank 
+    ![](/readme_images/Testing_images/wallet/card_out/card_cash_in_incorrect.png)
+
+6. Cash in
+    ![](/readme_images/Testing_images/wallet/card_out/card_cash_in_correct.png)
+
+7. Bank reciepts is now shown to user but as none need enetering user clicks done 
+
+8. Results
+    ![](/readme_images/Testing_images/wallet/card_out/card_results.png)
