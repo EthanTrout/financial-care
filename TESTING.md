@@ -220,3 +220,55 @@ The user then clicks done and is prompted to put cash in
 
     ![cash in under](/readme_images/Testing_images/wallet/cash_in_under.png)
     ![cash in under](/readme_images/Testing_images/wallet/cash_in_under_modal.png)
+
+
+#### Taking Cash out. Taking card out . adding cash reciepts. adding cash back in. adding bank reciepts.
+
+1. Cash and Card Out 
+    ![Cash out and card out](/readme_images/Testing_images/wallet/cash_out_card_out/cash_out_card_out.png)
+
+2. Card Out Modal for if staff has gone banking 
+    ![Card out Modal](/readme_images/Testing_images/wallet/cash_out_card_out/card_out_modal_banking.png)
+
+3. User has clicked No. cash reciepts in 
+    ![cash reciepts](/readme_images/Testing_images/wallet/cash_out_card_out/cash_out_card_out_cash_reciepts.png)
+
+4. Cash in 
+    ![cash in](/readme_images/Testing_images/wallet/cash_out_card_out/cash_out_card_out_cash_in.png)
+
+5. Bank Reciepts 
+    ![bank reciepts](/readme_images/Testing_images/wallet/cash_out_card_out/cash_out_card_out_bank_reciepts.png)
+    ![bank reciepts](/readme_images/Testing_images/wallet/cash_out_card_out/cash_out_card_out_bank_reciepts2.png)
+    
+
+6. Viewing results 
+    ![View FRS](/readme_images/Testing_images/wallet/cash_out_card_out/cash_out_card_out_view.png)
+
+
+#### Cash Out. Card Out . Taking withdrawing cash from bank. adding cash reciepts. adding cash back in . adding bank reciepts 
+
+Staff members may support someone out to Get cash out of the bank. money may be spent with the cash and this needs to be tracked when putting the cash back in.
+
+1. Shopping and banking 
+    ![shopping and banking](/readme_images/Testing_images/wallet/cash_out_card_out_banking/shopping_banking.png)
+
+2. Banking Modal 
+    ![banking modal](/readme_images/Testing_images/wallet/cash_out_card_out_banking/banking_modal.png)
+
+3. Cash Withdrawl from Bank
+    ![withdwal from bank](/readme_images/Testing_images/wallet/cash_out_card_out_banking/cash_out_of_bank.png)
+
+4. Cash reciepts
+    ![cash reciepts](/readme_images/Testing_images/wallet/cash_out_card_out_banking/cash_reciepts.png)
+
+5. Cash In Modal- updated with the cash withdrawl from bank 
+    ![cash in modal](/readme_images/Testing_images/wallet/cash_out_card_out_banking/cash_in_incorrect.png)
+
+6. correct cash in 
+    ![cash in](/readme_images/Testing_images/wallet/cash_out_card_out_banking/cash_in_correct.png)
+
+7. bank card reciepts
+    ![bank reciepts](/readme_images/Testing_images/wallet/cash_out_card_out_banking/bank_reciepts.png)
+
+8. viewing results
+    ![results](/readme_images/Testing_images/wallet/cash_out_card_out_banking/shopping_banking_result.png)

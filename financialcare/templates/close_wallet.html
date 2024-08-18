@@ -75,9 +75,13 @@
         <p>Have you been banking? do you need to log cash out of bank?</p>
     </div>
     <div class="modal-footer">
+        {% if cash_removed == "true" %}
+            <a href="{{ url_for('banking_into_wallet',service_user_id=service_user.id,outstanding_money=outstanding_money) }}" class="btn green accent-4">got to Banking</a>
+            <a href="{{url_for('close_wallet',service_user_id=service_user.id,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,card_out_modal='false')}}" class="btn red accent-4 modal-close">No</a>
+        {% else %}
         <a href="{{ url_for('banking_into_wallet',service_user_id=service_user.id,outstanding_money=outstanding_money) }}" class="btn green accent-4">got to Banking</a>
         <a href="{{url_for('close_wallet',service_user_id=service_user.id,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,card_out_modal='false',no_cash_reciepts='true')}}" class="btn red accent-4 modal-close">No</a>
-        
+        {% endif %}
     </div>
 </div>
 

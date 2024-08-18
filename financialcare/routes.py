@@ -389,6 +389,11 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money,card_out_modal
     .first())
     show_modal = False
 
+    if last_wallet_entry.is_cash_removed:
+        cash_removed ="true" 
+    else:
+        cash_removed ="false"
+
     card_out_modal = True if card_out_modal.lower() == "true" else False
     # Retrieve receipts from session
     all_receipts = session.get('all_receipts', [])
@@ -437,7 +442,7 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money,card_out_modal
             
     if no_cash_reciepts == "true":
         return redirect(url_for("close_wallet_banking",service_user_id = service_user_id,enter_seal="true"))
-    return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,all_receipts=all_receipts,show_modal =show_modal,card_out_modal=card_out_modal )
+    return render_template("close_wallet.html",service_user=service_user,last_wallet_id=last_wallet_id,outstanding_money=outstanding_money,all_receipts=all_receipts,show_modal =show_modal,card_out_modal=card_out_modal,cash_removed=cash_removed )
 
 
 @app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
