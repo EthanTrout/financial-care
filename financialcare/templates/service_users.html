@@ -6,7 +6,12 @@
 
 {% block content %}
 
-<h3 class="light-blue-text text-darken-4 center-align">Individuals</h3>
+{% if service %}
+    <h3 class="light-blue-text text-darken-4 center-align">{{service.name}}</h3>
+{% else%}
+    <h3 class="light-blue-text text-darken-4 center-align">Individuals</h3>
+{% endif %}
+
 {% if session["user_access"]in ["manager", "it"] %}
     <div class="row">
         <div class="col s12 center-align">

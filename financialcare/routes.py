@@ -258,7 +258,8 @@ def service_users():
 @login_required(allowed_roles=["manager", "it","support"])
 def service_users_in_service(service_id):
     service_users = ServiceUser.query.filter_by(service_id=service_id).all()
-    return render_template("service_users.html",service_users=service_users)
+    service = Service.query.get(service_id)
+    return render_template("service_users.html",service_users=service_users,service = service)
 
 
 @app.route("/add_individual",methods=["GET","POST"])
@@ -298,7 +299,7 @@ def delete_service_user(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     db.session.delete(service_user)
     db.session.commit()
-    return redirect(url_for("service_users"))
+    return redirect(request.referrer or url_for("service_users"))
 
 
 
