@@ -191,7 +191,85 @@ I also decided to remove the staff members from being viewed directly in Service
 
  ![Incorrect Login](/readme_images/features/Screenshot%20(112).png)
 
+ ### A user Cannot navigate to any other page if not logged in. 
 
+
+ ## Managers Admin controls
+
+ Managers have access to all services as even though they may manage only a couple they have oncall duties which means that staff members from any service could need there assistance with the software. Therefore they have access to all services,Service Users and users
+
+ ### services
+
+All services are displayed Aswell as additional Add service and edit service buttons
+
+ ![Services managers view](/readme_images/features/Screenshot%20(113).png)
+
+ <details>
+ <summary> Mobile View</summary>
+ ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20142748.png)
+ </details>
+
+### Add service
+Add service will create a new service. When HFT begins to use this application an IT admin would have to set up all managers user accounts. then managers would go on and add the services they manage.
+
+ ![Add Services managers view](/readme_images/features/Screenshot%20(114).png)
+
+ <details>
+ <summary> Mobile View</summary>
+ ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20143627.png)
+ </details>
+
+### User Feedback
+
+Whenever any action is taken on the website that updates the Database or fails to update the database it is shown to the user at the top of the Nav bar with a custom statement and color depending on what action was taken.
+
+ ![User feedback added service](/readme_images/features/Screenshot%20(115).png)
+
+ <details>
+ <summary> Mobile View</summary>
+ ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144138.png)
+ </details>
+
+ #### Users can click this alert to hide it.
+
+ ![User feedback added service hide](/readme_images/features/Screenshot%202024-08-20%20144312.png)
+
+ #### These alerts happen for all actions. here are some examples
+
+ ![User feedback example]()
+
+ Add Examples
+
+ ### Edit Service
+ 
+ Edit Service Allows a manager to change the name of the service. Give staff access to the service and delete the service.
+
+  ![Edit Services managers view](/readme_images/features/Screenshot%20(116).png)
+
+ <details>
+ <summary> Mobile View</summary>
+ ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144824.png)
+ </details>
+
+ ### Add staff to service 
+ If a new staff member starts to work in a service, they will need access to the Service and the people in the service. This is done by the manager filling out this form.
+ 
+ The manager Selects the staff to add and then submits and is redirected back to the edit service page.
+  ![Add staff to service managers view](/readme_images/features/Screenshot%20(117).png)
+
+ <details>
+ <summary> Mobile View</summary>
+ ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144824.png)
+ </details>
+
+ #### You can now see the Staff is added to the service and can be just as easily removed via the remove button
+
+ ![remove staff from service managers view](/readme_images/features/Screenshot%20(118).png)
+
+ <details>
+ <summary> Mobile View</summary>
+ ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144312.png)
+ </details>
 
 # Testing 
 
