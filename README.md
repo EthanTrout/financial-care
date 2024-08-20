@@ -107,6 +107,11 @@ The imagery and UI wes given great consideration. It needed to be fitting with H
 
 ### Color scheme
 
+![Color scheme](/readme_images/hft.png)
+
+Hft Website for Example:
+![Hft website](/readme_images/hft_website.png)
+
 ### Layout 
 
 The Web page has 4 main pages with many sub pages for each Page. 
@@ -175,6 +180,16 @@ I also decided to remove the staff members from being viewed directly in Service
 # Features
 
 ## Login
+
+ ### The Login Page requests a users email (all staff have a work email) and a password.
+
+ Users do not sign up to the site. a profile is made by them by a manager at HFT when they first start working.
+
+ ![Login](/readme_images/features/Screenshot%20(111).png)
+
+ ### if a user enters the wrong email or password they are notified 
+
+ ![Incorrect Login](/readme_images/features/Screenshot%20(112).png)
 
 
 
