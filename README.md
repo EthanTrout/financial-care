@@ -243,7 +243,7 @@ Whenever any action is taken on the website that updates the Database or fails t
 
  Add Examples
 
- ### Edit Service
+ ### Edit Service (Update Images to new color)
  
  Edit Service Allows a manager to change the name of the service. Give staff access to the service and delete the service.
 
