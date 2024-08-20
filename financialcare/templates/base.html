@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="light-blue darken-1 nav-extended">
+        <nav class="purple darken-3 nav-extended">
             <div class="nav-wrapper">
               <a href="{{url_for('login')}}" class="brand-logo">Financial Care</a>
               <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
@@ -21,7 +21,7 @@
                 {% if session["user_access"]in ["manager", "it"] %}
                   <li><a href="{{url_for('users')}}">Staff</a></li>
                 {% endif %}
-                <li class="red"><a href="{{url_for('logout')}}">Log out</a></li>
+                <li class="red darken-1"><a href="{{url_for('logout')}}">Log out</a></li>
               </ul>
             </div>
 
@@ -45,7 +45,7 @@
         {% endblock%}
     </main>
 
-    <footer class="page-footer blue darken-3">
+    <footer class="page-footer purple darken-3">
         <div class="footer-copyright">
           <div class="container">
           © 2024 Copyright - Created by Ethan Trout

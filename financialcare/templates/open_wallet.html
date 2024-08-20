@@ -6,14 +6,14 @@
 
 {% block content %}
 
-<h3 class="light-blue-text text-darken-4 center-align">Take Cash Out</h3>
+<h3 class="purple-text text-darken-3 center-align">Take Cash Out</h3>
 
 <div class="row card-panel grey lighten-5">
     <form class="col s12" method="POST" action="{{ url_for('open_wallet',service_user_id = service_user.id)}}">
       <!-- Cash out description -->
         <div class="row">
             <div class="input-field col s12">
-                <i class="fas fa-align-left prefix light-blue-text text-darken-4"></i>
+                <i class="fas fa-align-left prefix purple-text text-darken-3"></i>
                 <textarea id="cash_out_description" name="cash_out_description" minlength="5" maxlength="200"
                     type="text" class="materialize-textarea validate" required></textarea>
                 <label for="cash_out_description">Cash Out Description</label>
@@ -23,7 +23,7 @@
       <!-- Cash Out -->
         <div class="row">
             <div class="input-field col s12">
-                <i class="fa-solid fa-sterling-sign prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-sterling-sign prefix purple-text text-darken-3"></i>
                 <input id="cash_out" name="cash_out" type="number" min="0" step="0.01" class="validate" >
                 <label for="cash_out">Cash Out</label>
             </div>
@@ -33,7 +33,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <div class="switch">
-                    <i class="fas fa-exclamation-circle prefix light-blue-text text-darken-4"></i>
+                    <i class="fas fa-exclamation-circle prefix purple-text text-darken-3"></i>
                     <label for="bank_card_removed">
                         <input id="bank_card_removed" name="bank_card_removed" type="checkbox">
                         <span class="lever"></span>
@@ -47,7 +47,7 @@
          <!-- SealNumber -->
          <div class="row">
           <div class="input-field col s12">
-              <i class="fas fa-folder-open prefix light-blue-text text-darken-4"></i>
+              <i class="fas fa-folder-open prefix purple-text text-darken-3"></i>
               <input id="seal_number" name="seal_number" type="number" min="1"  class="validate" required >
               <label for="seal_number">Seal Number</label>
           </div>
@@ -56,7 +56,7 @@
         <!-- submit button -->
         <div class="row">
             <div class="col s12 center-align">
-                <button type="submit" class="btn-large light-blue darken-1" onclick="updateNavAlert('Recorded: Cash Taken out', 'green')" >
+                <button type="submit" class="btn-large teal accent-4" onclick="updateNavAlert('Recorded: Cash Taken out', 'green')" >
                     Add  <i class="fas fa-plus-square right"></i>
                 </button>
             </div>

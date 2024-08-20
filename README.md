@@ -100,6 +100,83 @@ Ideas for future enhancements to WWAMI include:
 - d. As a Frequent user i want to be able to easily view someones records and reconcile bank entries from a bank statment.
 
 
+# Design.
+
+## Imagery
+The imagery and UI wes given great consideration. It needed to be fitting with HFT's other website themes and also be very simple to navigate for staff and managers in order to save time compared to an FRS sheet
+
+### Color scheme
+
+### Layout 
+
+The Web page has 4 main pages with many sub pages for each Page. 
+
+1. Login- Where the user has to enter there email and password. Note: accounts are created by managers and not by users.
+
+2. Services- The services page displays the user what services they have been allocated to. they can only see these services and no others. Managers can see all services
+    - 2.1 Add a service(managers access only) a form to add a service
+
+    - 2.2 Edit a service(managers access only) a form to update or delete a service aswell as viewing staff working in service or removing staff from service
+
+    - 2.3 Add staff to service(managers access only) a form to allocate a staff member to this service
+
+3. Indviduals- this page displays all indivduals a user has access to(as a user may have multiple services they are aloocxated to). this page can also display all indivduals in a specific service if routed through services View people button
+    - 3.1 Add a indivdual(managers access only) a form to add a indivdual and asign them to a service
+
+    - 3.2 Edit a indivdual(managers access only) a form to update a indivdual or asign them to another service
+    
+    - 3.3 Open Wallet(Everyone can access) This routes to multiple pages depending on the record of the indivduals wallet entries
+        - No wallet entries -> a form to set up a wallet with cash amount. bank account amount and seal on the real wallet.
+        - wallet entry -> a form to declare taking cash or card out and the amounts
+        - Cash is out -> a form to record cash reciepts -> a form to record cash back into wallet
+        - Cash is out Card is out -> Modal to ask if money has been taken out of bank. If No -> cash reciepts form -> cash in form -> a form to record bank reciepts 
+        - Cash is out Card is out -> Modal to ask if money has been taken out of bank. If Yes ->A form to record cash taken out of bank -> cash reciepts form -> cash in form -> a form to record bank reciepts 
+        - Only card out -> Modal to ask if money has been taken out of bank. if Yes -> A form to record cash taken out of bank -> cash reciepts form -> cash in form -> a form to record bank reciepts 
+        - Only card out -> Modal to ask if money has been taken out of bank. If No -> bank reciepts with entry for seal.
+    
+    - 3.4 Reconsile Wallet(Everyone can access) This is a form that allows the user to record bank reciepts from a bank statment where they can set the date to the correct date from the bank statement.
+
+4. Staff (manager access only)- All staff members are displayed and can be added, edited or deleted. Passwords can be changed but not stored( for security)
+
+## WireFrames
+
+<details>
+
+ <summary>Services Wireframe</summary>
+
+![Users Wireframe]()
+
+ </details>
+
+ <details>
+    <summary>Users Wireframe</summary>
+
+![Users Wireframe]()
+
+ </details>
+
+### Changes since first designing the wireframes.
+
+I have changed alot since first designing the wireframes. Alot of this was due to User testing with Staff members from HFT.
+
+#### Services
+
+Orginally all the infomation about a service was going to be displayed on the services page. The service_users and the staff members. 
+
+i got feedback from staff that they worked in multiple services and so this approach made this page very crowded with infomation. They only ever needed to access the infomation from one service and therefore i decided to route Services into a Indivduals but query for the service ID. this meant that staff would navigate to there service and be able to only see the supported indivduals that they were working with on that shift.
+
+With that infomation i then decided to create all of the main wallet functionality in the drop down for indivduals(service_users)
+
+I also decided to remove the staff members from being viewed directly in Services and moved it to Edit services as the functionality to Add staff to a service or remove staff from a service is only to be used by a manager and edit service can already only be accessed by managers.
+
+## Database flow diagram
+
+
+# Features
+
+## Login
+
+
 
 # Testing 
 

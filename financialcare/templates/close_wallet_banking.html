@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3 class="light-blue-text text-darken-4 center-align">Add Bank Receipt</h3>
+<h3 class="purple-text text-darken-3 center-align">Add Bank Receipt</h3>
 
 <div class="row card-panel grey lighten-5">
     <form class="col s12" method="POST" action="{{ url_for('close_wallet_banking',service_user_id = service_user.id,enter_seal=enter_seal)}}">
       <!-- Money spent description -->
         <div class="row">
             <div class="input-field col s12">
-                <i class="fas fa-align-left prefix light-blue-text text-darken-4"></i>
+                <i class="fas fa-align-left prefix purple-text text-darken-3"></i>
                 <textarea id="money_spent_description" name="money_spent_description" minlength="2" maxlength="200"
                     type="text" class="materialize-textarea validate" required></textarea>
                 <label for="money_spent_description">Receipt Name</label>
@@ -18,7 +18,7 @@
       <!-- Bank spent -->
         <div class="row">
             <div class="input-field col s12">
-                <i class="fa-solid fa-sterling-sign prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-sterling-sign prefix purple-text text-darken-3"></i>
                 <input id="bank_out" name="bank_out" type="number" min="0" step="0.01" class="validate" >
                 <label for="bank_out">spent on card</label>
             </div>
@@ -27,7 +27,7 @@
         {% if enter_seal == "true" %}
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="fas fa-folder-open prefix light-blue-text text-darken-4"></i>
+                    <i class="fas fa-folder-open prefix purple-text text-darken-3"></i>
                     <input id="seal_number" name="seal_number" type="number" min="1" step="any" class="validate" >
                     <label for="seal_number">Seal number</label>
                 </div>
@@ -37,7 +37,7 @@
         <!-- submit button -->
         <div class="row">
             <div class="col s12 center-align">
-                <button type="submit" class="btn-large light-blue darken-1">
+                <button type="submit" class="btn-large teal accent-4">
                     Add <i class="fas fa-plus-square right"></i>
                 </button>
             </div>
@@ -55,7 +55,7 @@
     <div class="row">
     {% for receipt in all_receipts %}
         <div class="col s12 m6 l3">
-          <div class="card light-blue darken-1">
+          <div class="card teal lighten-1">
             <div class="card-content white-text">
               <span class="card-title">Reciept: {{receipt[0]}}</span>
               <p>{{receipt[1]}}.</p>

@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<h3 class="light-blue-text text-darken-4 center-align">Set Up Wallet</h3>
+<h3 class="purple-text text-darken-3 center-align">Set Up Wallet</h3>
 
 <div class="row card-panel grey lighten-5">
     <form class="col s12" method="POST" action="{{ url_for('set_up_wallet',service_user_id = service_user.id)}}">
@@ -14,7 +14,7 @@
       <!-- Cash Amount -->
         <div class="row">
             <div class="input-field col s12">
-                <i class="fa-solid fa-sterling-sign prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-sterling-sign prefix purple-text text-darken-3"></i>
                 <input id="cash_amount" name="cash_amount" type="number" max="99999999.99" min="0" step="0.01" class="validate" >
                 <label for="cash_amount">Total Cash In Wallet</label>
             </div>
@@ -24,7 +24,7 @@
         <!-- Bank Amount -->
         <div class="row">
             <div class="input-field col s12">
-                <i class="fa-solid fa-piggy-bank prefix light-blue-text text-darken-4"></i>
+                <i class="fa-solid fa-piggy-bank prefix purple-text text-darken-3"></i>
                 <input id="bank_amount" name="bank_amount" maxlength="11" type="number" min="0" step="0.01" class="validate" >
                 <label for="bank_amount">Total Money In Bank Account</label>
             </div>
@@ -33,7 +33,7 @@
          <!-- SealNumber -->
          <div class="row">
           <div class="input-field col s12">
-              <i class="fas fa-folder-open prefix light-blue-text text-darken-4"></i>
+              <i class="fas fa-folder-open prefix purple-text text-darken-3"></i>
               <input id="seal_number" name="seal_number" type="number" min="1"  class="validate" required >
               <label for="seal_number">Seal Number</label>
           </div>
@@ -42,7 +42,7 @@
         <!-- submit button -->
         <div class="row">
             <div class="col s12 center-align">
-                <button type="submit" class="btn-large light-blue darken-1">
+                <button type="submit" class="btn-large teal accent-4">
                     Add <i class="fas fa-plus-square right"></i>
                 </button>
             </div>

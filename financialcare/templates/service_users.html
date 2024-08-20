@@ -7,15 +7,15 @@
 {% block content %}
 
 {% if service %}
-    <h3 class="light-blue-text text-darken-4 center-align">{{service.name}}</h3>
+    <h3 class="purple-text text-darken-3 center-align">{{service.name}}</h3>
 {% else%}
-    <h3 class="light-blue-text text-darken-4 center-align">Individuals</h3>
+    <h3 class="purple-text text-darken-3 center-align">Individuals</h3>
 {% endif %}
 
 {% if session["user_access"]in ["manager", "it"] %}
     <div class="row">
         <div class="col s12 center-align">
-            <a href="{{ url_for('add_service_user') }}" class="btn-large light-blue darken-2">
+            <a href="{{ url_for('add_service_user') }}" class="btn-large teal accent-4">
                 Add Person <i class="fas fa-plus-square right"></i>
             </a>
         </div>
@@ -25,18 +25,18 @@
 <ul class="collapsible">
     {% for service_user in service_users %}
     <li>
-      <div class="collapsible-header white-text light-blue darken-4"><i class="fa fa-caret-down"></i><strong>{{service_user.name}}</strong></div>
+      <div class="collapsible-header white-text teal lighten-1"><i class="fa fa-caret-down"></i><strong>{{service_user.name}}</strong></div>
       <div class="collapsible-body">
         <strong>Supported Person</strong>
         <p>
             {% if session["user_access"]in ["manager", "it"] %}
-                    <a href="{{ url_for('edit_service_user',service_user_id=service_user.id) }}" class="btn green accent-4">Edit</a>
+                    <a href="{{ url_for('edit_service_user',service_user_id=service_user.id) }}" class="btn green darken-1">Edit</a>
                     <a href="#modal-{{ service_user.id }}" class="btn red modal-trigger">Delete</a>
                     
                 {% endif %}
-            <a href="{{ url_for('check_seal',service_user_id=service_user.id) }}" class="btn green accent-4">Open Wallet</a>
-            <a href="{{ url_for('view_wallet',service_user_id=service_user.id) }}" class="btn light-blue accent-4">View Wallet</a>
-            <a href="{{ url_for('reconsile_in_or_out',service_user_id=service_user.id) }}" class="btn yellow accent-4">Reconsile</a>
+            <a href="{{ url_for('check_seal',service_user_id=service_user.id) }}" class="btn green darken-1">Open Wallet</a>
+            <a href="{{ url_for('view_wallet',service_user_id=service_user.id) }}" class="btn teal accent-4">View Wallet</a>
+            <a href="{{ url_for('reconsile_in_or_out',service_user_id=service_user.id) }}" class="btn yellow darken-1">Reconsile</a>
         </p>
             <!-- Modal Structure -->
             <div id="modal-{{ service_user.id }}" class="modal">
