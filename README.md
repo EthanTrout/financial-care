@@ -206,6 +206,7 @@ All services are displayed Aswell as additional Add service and edit service but
 
  <details>
  <summary> Mobile View</summary>
+ 
  ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20142748.png)
  </details>
 
@@ -216,6 +217,7 @@ Add service will create a new service. When HFT begins to use this application a
 
  <details>
  <summary> Mobile View</summary>
+
  ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20143627.png)
  </details>
 
@@ -227,6 +229,7 @@ Whenever any action is taken on the website that updates the Database or fails t
 
  <details>
  <summary> Mobile View</summary>
+
  ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144138.png)
  </details>
 
@@ -248,6 +251,7 @@ Whenever any action is taken on the website that updates the Database or fails t
 
  <details>
  <summary> Mobile View</summary>
+
  ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144824.png)
  </details>
 
@@ -259,6 +263,7 @@ Whenever any action is taken on the website that updates the Database or fails t
 
  <details>
  <summary> Mobile View</summary>
+
  ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144824.png)
  </details>
 
@@ -268,6 +273,7 @@ Whenever any action is taken on the website that updates the Database or fails t
 
  <details>
  <summary> Mobile View</summary>
+
  ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144312.png)
  </details>
 
