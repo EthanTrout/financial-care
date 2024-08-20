@@ -206,7 +206,7 @@ All services are displayed Aswell as additional Add service and edit service but
 
  <details>
  <summary> Mobile View</summary>
- 
+
  ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20142748.png)
  </details>
 
@@ -255,7 +255,7 @@ Whenever any action is taken on the website that updates the Database or fails t
  ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144824.png)
  </details>
 
- ### Add staff to service 
+ ### Add staff to service And Remove staff from service
  If a new staff member starts to work in a service, they will need access to the Service and the people in the service. This is done by the manager filling out this form.
  
  The manager Selects the staff to add and then submits and is redirected back to the edit service page.
@@ -264,7 +264,7 @@ Whenever any action is taken on the website that updates the Database or fails t
  <details>
  <summary> Mobile View</summary>
 
- ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144824.png)
+ ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20145249.png)
  </details>
 
  #### You can now see the Staff is added to the service and can be just as easily removed via the remove button
@@ -274,8 +274,61 @@ Whenever any action is taken on the website that updates the Database or fails t
  <details>
  <summary> Mobile View</summary>
 
- ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20144312.png)
+ ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20145922.png)
  </details>
+
+### Delete Service 
+
+- The Service can be deleted by clicking Delete. it Will show the user a pop up to confirm there actions
+
+- For display purposes we will be deleteing another Service called Service 1 that has two staff members and 2 Indivduals in it
+
+- The Delete function will not delete staff members or service_users accociated with the service.
+
+- Staff can work in multiple services and therfore only there relation to this service is deleted from the link table Service_staff
+
+- Service_users service will be set to none which means that managers can realocate them to a new service when they have moved in to there home 
+
+![delete service managers view](/readme_images/features/Screenshot%20(119).png)
+
+ <details>
+ <summary> Mobile View</summary>
+
+ ![service managers mobile view](/readme_images/features/Screenshot%202024-08-20%20151330.png)
+ </details>
+
+
+ ### Staff 
+
+ This page can only be viewed by managers or It admins. 
+
+ ![staff managers view](/readme_images/features/Screenshot%20(121).png)
+
+ <details>
+ <summary> Mobile View</summary>
+
+ ![staff managers mobile view](/readme_images/features/Screenshot%202024-08-20%20151946.png)
+ </details>
+
+### Add staff
+
+- Initally an Admin account would be set up for and IT personale to add all managers accounts with the access of Manager
+
+- Then Managers can add the current staff that they manage. giving them the "support" access which does not allow admin controls.
+
+- The manager can allocate the staff member a service or leave it blank to later add them to a service when they start working there.
+
+ ![add staff managers view](/readme_images/features/Screenshot%20(122).png)
+
+ <details>
+ <summary> Mobile View</summary>
+
+ ![staff managers mobile view](/readme_images/features/Screenshot%202024-08-20%20151946.png)
+ </details>
+
+ #### We can now see the new user has been added 
+
+  ![added staff managers view](/readme_images/features/Screenshot%20(124).png)
 
 # Testing 
 
