@@ -65,6 +65,7 @@ The Data should also be stored securly on there in House servers with Access onl
 Ideas for future enhancements to WWAMI include:
 
 - An image based upload for Reciepts to be stored on the database with the relating transaction
+- Search Bar querying for users, staff and services
 
 
 
@@ -175,6 +176,29 @@ With that infomation i then decided to create all of the main wallet functionali
 I also decided to remove the staff members from being viewed directly in Services and moved it to Edit services as the functionality to Add staff to a service or remove staff from a service is only to be used by a manager and edit service can already only be accessed by managers.
 
 ## Database flow diagram
+
+<details>
+
+ <summary>Inital DB flow diagram</summary>
+
+![DB flow diagram](/readme_images/financial-care-DBTables.png)
+
+ </details>
+
+### Changes since first designing the Flow diagram 
+
+#### Many to Many of service and staff/users
+The princples are exactly the same. The use of PSQL meant that a seperate refernce table called service_staff is created to hold the many to many relation ship of Staff and Services. therfore Staff/users isnt stored as a foreign key in services 
+
+The name used is also changed to Staff instead of users because querying for users in PSQL gives you the standard PSQL users table that is always created by the program. 
+
+### Wallet entries fields 
+
+Two fields were added to Wallet entries
+
+1. Is_cash_removed. (Bool) this field was added as a way to track if money was taken out of the last entry and therefore route the user to the forms to put back back in. This is really useful in this application as it makes the UI very simple for staff to use. all they have to do is click Open Wallet button and are routed to the correct form dpending on the last entry of the Indivdual.
+
+2. reciept_number.(int) this field was added as on FRS sheets the reciepts for transactions are numbered by staff which conrespond with the number on the FRS sheet. this means that when managers are reconsiling they are easily able to match the real world reciept with the online recording.
 
 
 # Features
