@@ -19,7 +19,7 @@
         <div class="card teal lighten-1 center-align">
             <div class="card-content white-text">
                 <i class="fa-solid fa-house"></i>
-                <span class="card-title">{{ service.name }}</span>
+                <span class="card-title">{{ service.name | truncate(20) }}</span>
             </div>
             <div class="card-action">
                 {% if session["user_access"]in ["manager", "it"] %}
