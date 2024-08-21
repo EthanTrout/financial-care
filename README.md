@@ -330,6 +330,103 @@ Whenever any action is taken on the website that updates the Database or fails t
 
   ![added staff managers view](/readme_images/features/Screenshot%20(124).png)
 
+
+### Edit staff
+
+- Staff name can be edited
+
+- Staff Acess can be edited if they have been promoted to a manger position 
+
+- Email can be changed in case it was input incorrectly in the first case 
+
+![Edit staff managers view](/readme_images/features/Screenshot%20(127).png)
+
+ <details>
+ <summary> Mobile View</summary>
+
+ ![staff managers mobile view](/readme_images/features/Screenshot%202024-08-21%20124928.png)
+ </details>
+
+ #### Update Password
+
+ - If a user has forgotten there password. they can call or email a manager and they will reset the users password.
+ 
+ - The forgotten password cannot be recovered only changed.
+
+ ![Update Password staff managers view](/readme_images/features/Screenshot%20(126).png)
+
+
+### Delete Staff
+
+When trying to delete a staff member a pop up will occur to confirm the deletion 
+
+![delete staff managers view](/readme_images/features/Screenshot%20(128).png)
+
+
+### Indviduals(Service_users)
+
+Different social care providers call refer to service users as different names. HFT use People we support. others use Supported People or service users. I have used indviduals as this encompasses all and is a generally accepted term for People within supported living or care. 
+
+- This page displays all Service users that someone has access to( managers have access to all)
+
+![Indivduals managers view](/readme_images/features/Screenshot%20(129).png)
+
+ <details>
+ <summary> Mobile View</summary>
+
+ ![Indivduals managers mobile view](/readme_images/features/Screenshot%202024-08-21%20125540.png)
+ </details>
+
+### Add Indivdual 
+
+- The indivduals name is added
+
+- the bank account they use is set 
+
+- the service they live in is set . This can be left blank if the person does not yet have a service.
+    Supported Indivduals only live in one service at a time and that is why this is a one to one conection in the database.
+
+![Add Indivduals managers view](/readme_images/features/Screenshot%20(130).png)
+
+ <details>
+ <summary> Mobile View</summary>
+
+ ![Indivduals managers mobile view](/readme_images/features/Screenshot%202024-08-21%20125820.png)
+ </details>
+
+ ### Edit Indivdual 
+
+- When editing an indivdual you can change there name 
+
+- You can change the bank account that they use if the person has moved banks 
+
+- You can change the service they are set to. as Supported Indivdual will sometimes move out of one service and start living in another.
+    Supported Indivduals only live in one service at a time and that is why this is a one to one conection in the database.
+![Edit Indivduals managers view](/readme_images/features/Screenshot%20(131).png)
+
+ <details>
+ <summary> Mobile View</summary>
+
+ ![Indivduals managers mobile view](/readme_images/features/Screenshot%202024-08-21%20130706.png)
+ </details>
+
+### Delete Indivdual 
+
+A pop up to confirm deletion of indivdual occurs when delete is clicked 
+
+![Delete Indivduals managers view](/readme_images/features/Screenshot%20(133).png)
+
+### Other Indivdual functionality
+
+- The other functionality that links this person to there Wallet entries is accessable by Managers and staff.
+
+- This will be covered in the User Controls functionality portion 
+
+![Edit Indivduals managers view](/readme_images/features/Screenshot%20(132).png)
+
+## User Controls
+
+
 # Testing 
 
 ## bugs 

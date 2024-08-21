@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<h3 class="purple-text text-darken-3 center-align">Edit User</h3>
+<h3 class="purple-text text-darken-3 center-align">Edit {{staff.name}}</h3>
 
 <div class="row card-panel grey lighten-5">
     <form class="col s12" method="POST" action="{{ url_for('edit_user',staff_id=staff.id) }}">
