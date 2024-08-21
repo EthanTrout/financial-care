@@ -37,6 +37,18 @@ def floatformat(value, decimal_places=2):
         return f"{value:.{decimal_places}f}"
     return value
 
+# Filter to shorten text of Service Names so cards are all similar height
+def shorten_text(text, max_length=50, suffix='...'):
+    if len(text) <= max_length:
+        return text
+    else:
+        truncated_text = text[:max_length + 1].rsplit(' ', 1)[0]
+        return truncated_text + suffix
+
+@app.template_filter('shorten_text')
+def shorten_text_filter(text, max_length=15):
+    return shorten_text(text, max_length)
+
 
 # Utility processor for jinja2 to Previous Url on all routes
 @app.context_processor
@@ -665,7 +677,7 @@ def reconsile_in_or_out(service_user_id):
 def reconsile_banking(service_user_id,bank_in):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
-    
+
     if request.method == "POST":
         if bank_in =="True":
             wallet_entry = WalletEntry(
