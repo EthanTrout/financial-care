@@ -426,6 +426,70 @@ A pop up to confirm deletion of indivdual occurs when delete is clicked
 
 ## User Controls
 
+### Login as Demo account (Support access)
+
+This is now the Section of how staff in services would use the website.
+
+(Password is Shown here for Demo but would be hidden in real application)
+
+![Login support view](/readme_images/features/Screenshot%20(134).png)
+
+### User Services page
+
+- The user only has access to the services that were previously set by the managers 
+
+- The user can be set to multiple service but in this Demo is only set to One
+
+![Services support view](/readme_images/features/Screenshot%20(135).png)
+
+ <details>
+ <summary> Mobile View</summary>
+
+ ![Services support view mobile](/readme_images/features/Screenshot%202024-08-21%20132436.png)
+ </details>
+
+ #### Users do not have access to the staff tab 
+
+  ![Services support view mobile](/readme_images/features/Screenshot%202024-08-21%20132041.png)
+
+#### If staff member works at multiple services
+
+- I will add a new service that has service users from admin account
+- i will link this staff account to that service from admin account 
+
+![Demo second service](/readme_images/features/Screenshot%20(136).png)
+![Demo second service](/readme_images/features/Screenshot%20(137).png)
+
+#### Demo user new services Page 
+
+![Demo second service](/readme_images/features/Screenshot%20(138).png)
+
+### user indivduals page
+
+- This page will show all Indivduals a staff member has access to regardless of what service that indivdual is in.
+
+![Indivdual support view](/readme_images/features/Screenshot%20(139).png)
+
+ <details>
+ <summary> Mobile View</summary>
+
+ ![Indivdual support view mobile](/readme_images/features/Screenshot%202024-08-21%20133701.png)
+ </details>
+
+
+ ### user indivduals page in specific service. 
+
+ - if the user navigates from Services and clicks view People 
+
+ - it Shows all the service users that are in that specific service 
+
+ - this would be the most common routing to Indivduals page as Staff only tend to work in one service on a shift but will need to make multiple wallet entries for the people in that service.
+
+  ![Indivdual support view ](/readme_images/features/Screenshot%202024-08-21%20133919.png)
+
+ #### This Page is the same as Indviduals but querys for just this service. 
+
+ ![Indivdual support view ](/readme_images/features/Screenshot%20(140).png)
 
 # Testing 
 
