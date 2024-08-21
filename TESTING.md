@@ -306,3 +306,15 @@ A service_user may have no cash to take out and therefore they withdraw cash fro
 I have concluded that all routes correctly redirect the user to the correct form depending on there inital Cash out record and then there input of the banking Modal.
 
 I think that this is a very good way to make it easy for staff members to not make mistakes when recording wallet entries. If i was to rather implement a system that just allowed users to click cash in and cash out then human errors are more likely to be made. This way if cash is out then tthe user is propmted to deal with this entry before moving on to anything else.
+
+## Input Testing 
+
+### bugs 
+
+#### Input failed when submiting empty form on Add cash in
+
+![Input Bug on Add cash In](/readme_images/Testing_images/bugs/Screenshot%202024-08-21%20174057.png)
+
+#### Fix 
+
+I added Required tags to the forms and now they cannot be submitted without data.
