@@ -26,6 +26,7 @@ def login_required(allowed_roles=None):
         return decorated_function
     return decorator
 
+
 # Template filter to format Float as a decimal like 0.00
 @app.template_filter('floatformat')
 def floatformat(value, decimal_places=2):
@@ -35,6 +36,7 @@ def floatformat(value, decimal_places=2):
     elif isinstance(value, float):
         return f"{value:.{decimal_places}f}"
     return value
+
 
 # Utility processor for jinja2 to Previous Url on all routes
 @app.context_processor
@@ -79,8 +81,9 @@ def logout():
 @login_required(allowed_roles=["manager", "it", "support"])
 def services():
     services = []  # Default value in case none of the conditions are met
-    # Clear session of reciepts
-    session['all_receipts'] = []
+    
+    session['all_receipts'] = [] # Clear session of reciepts
+
     if session["user_access"]in ["manager", "it"]:
         services =list(Service.query.order_by(Service.name).all())
         return render_template("services.html",services=services)
@@ -89,9 +92,9 @@ def services():
         service_ids =[]
         for service in staff.services:
             service_ids.append(service.id)
-            print(service_ids)
             services = Service.query.filter(Service.id.in_(service_ids)).all()
         return render_template("services.html",services=services)
+
 
 @app.route("/add_service",methods=["GET","POST"])
 @login_required(allowed_roles=["manager", "it"])
@@ -111,7 +114,7 @@ def edit_service(service_id):
     service = Service.query.get_or_404(service_id)
     staff_members = Staff.query.join(staff_service).join(Service).filter(Service.id == service_id).all()
     staff_info = [{"id": staff.id, "name": staff.name} for staff in staff_members]
-    print(staff_members)
+
     if request.method == "POST":
         service.name = request.form.get("service_name")
         db.session.commit()
@@ -124,6 +127,7 @@ def edit_service(service_id):
 def edit_service_staff(service_id):
     service = Service.query.get_or_404(service_id)
     staff =list(Staff.query.order_by(Staff.name).all())
+
     if request.method == "POST":
         service.name = service.name
         print (service.name)
@@ -134,6 +138,7 @@ def edit_service_staff(service_id):
         return redirect(url_for("edit_service",service_id=service_id))
     return render_template("edit_service_staff.html",service=service,staff=staff)
 
+
 @app.route("/delete_service/<int:service_id>")
 @login_required(allowed_roles=["manager", "it"])
 def delete_service(service_id):
@@ -141,6 +146,7 @@ def delete_service(service_id):
     db.session.delete(service)
     db.session.commit()
     return redirect(url_for("services"))
+
 
 @app.route("/remove_staff_from_service/<int:staff_id>/<int:service_id>")
 @login_required(allowed_roles=["manager", "it"])
@@ -172,16 +178,13 @@ def add_user():
             name=request.form.get("user_name"),
             email=request.form.get("email"),
                 access=request.form.get("access"),
-            # password=request.form.get("password")
+            
         )
         staff.set_password(request.form.get("password"))
             
         service_id = request.form.get("service")
         staff_service = Service.query.filter_by(id=service_id).first()
-        print(service_id)
-        # db.session.add(user)
-        # db.session.commit()
-            
+        
         if staff_service is not None:
             staff.services.append(staff_service)
             db.session.add(staff)
@@ -201,8 +204,8 @@ def add_user():
 def edit_user(staff_id):
     staff = Staff.query.get_or_404(staff_id)
     services =list(Service.query.order_by(Service.name).all())
-    if request.method=="POST":
 
+    if request.method=="POST":
         staff.name=request.form.get("user_name")
         staff.email=request.form.get("email")
         staff.access=request.form.get("access")
@@ -217,8 +220,8 @@ def edit_user(staff_id):
 @login_required(allowed_roles=["manager", "it"])
 def edit_user_password(staff_id):
     staff = Staff.query.get_or_404(staff_id)
-    if request.method=="POST":
 
+    if request.method=="POST":
         staff.name= staff.name
         staff.email= staff.email
         staff.access= staff.access
@@ -247,7 +250,6 @@ def service_users():
         service_users =list(ServiceUser.query.order_by(ServiceUser.name).all())
         return render_template("service_users.html",service_users=service_users)
     elif session["user_access"] == "support":
-        # service_users =list(ServiceUser.query.order_by(ServiceUser.name).all())
         staff = Staff.query.filter_by(id=session["user"]).first()
         service_ids =[]
         for service in staff.services:
@@ -269,6 +271,7 @@ def service_users_in_service(service_id):
 @login_required(allowed_roles=["manager", "it"])
 def add_service_user():
     services =list(Service.query.order_by(Service.name).all())
+
     if request.method=="POST":
         service_user = ServiceUser(
             name=request.form.get("name"),
@@ -287,6 +290,7 @@ def add_service_user():
 def edit_service_user(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     services =list(Service.query.order_by(Service.name).all())
+
     if request.method == "POST":
         service_user.name = request.form.get("name")
         service_user.bank = request.form.get("bank")
@@ -305,20 +309,19 @@ def delete_service_user(service_user_id):
     return redirect(request.referrer or url_for("service_users"))
 
 
-
 # Wallet routes
 @app.route("/open_wallet/<int:service_user_id>",methods=["GET","POST"])
 @login_required(allowed_roles=["manager", "it","support"])
 def open_wallet(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
+
     if last_wallet_entry is None:
         return redirect(url_for("set_up_wallet",service_user_id=service_user_id))
 
     if last_wallet_entry.cash_out == 0 and last_wallet_entry.bank_card_removed == True:
         return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=0,card_out_modal= "true"))
 
-    
     if last_wallet_entry.is_cash_removed == True:
         last_wallet_entry = WalletEntry.query.filter(
         WalletEntry.service_user_id == service_user_id,
@@ -335,8 +338,8 @@ def open_wallet(service_user_id):
         else:
             total_cash_spent = 0
         
-
         result = last_wallet_entry.cash_out - total_cash_spent
+
         if last_wallet_entry.bank_card_removed:
             card_out_modal = "true"
         else:
@@ -372,7 +375,6 @@ def open_wallet(service_user_id):
     else:
         return render_template("open_wallet.html",service_user=service_user)
             
-
 
 @app.route("/close_wallet/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>/<string:card_out_modal>/<string:no_cash_reciepts>", methods=["GET", "POST"])
 @app.route("/close_wallet/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>/<string:card_out_modal>",methods=["GET","POST"])
@@ -448,13 +450,12 @@ def close_wallet(service_user_id,last_wallet_id,outstanding_money,card_out_modal
 @app.route("/close_wallet_add_cash/<int:service_user_id>/<int:last_wallet_id>/<float:outstanding_money>",methods=["GET","POST"])
 @login_required(allowed_roles=["manager", "it","support"])
 def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
-    
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(id=last_wallet_id).first()
     show_modal = False
     remaining_money = Decimal(0.00)
     outstanding_money = Decimal(str(outstanding_money))
-    print(outstanding_money)
+
     if request.method == "POST":
         cash_in = Decimal(request.form.get("cash_in"))
         if cash_in == outstanding_money:
@@ -477,8 +478,9 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
             )
             db.session.add(wallet_entry)
             db.session.commit()
-            # Clear session of reciepts
-            session['all_receipts'] = []
+            
+            session['all_receipts'] = [] # Clear session of reciepts
+
             if last_wallet_entry.bank_card_removed:
                 return redirect(url_for("close_wallet_banking",service_user_id=service_user_id,enter_seal="false"))
             return redirect(url_for("service_users_in_service",service_id = service_user.service_id))
@@ -487,7 +489,6 @@ def close_wallet_add_cash(service_user_id,last_wallet_id,outstanding_money):
             remaining_money = outstanding_money - cash_in
 
     return render_template("close_wallet_add_cash.html", service_user=service_user, last_wallet_id=last_wallet_id, outstanding_money=outstanding_money, show_modal=show_modal,remaining_money=remaining_money)
-    #  if cash doesnt add up to total then propmpt to call manager or review reciepts
     
 
 @app.route("/close_wallet_banking/<int:service_user_id>/<string:enter_seal>",methods=["GET","POST"])
@@ -503,8 +504,6 @@ def close_wallet_banking(service_user_id,enter_seal):
     .first())
     all_receipts = session.get('all_receipts', [])
     
-
-    print(enter_seal)
     if request.method == "POST":
         if last_entry_with_receipt is not None:
             receipt_number = last_entry_with_receipt.receipt_number + 1
@@ -537,9 +536,6 @@ def close_wallet_banking(service_user_id,enter_seal):
         db.session.commit()
         receipt = [receipt_number, request.form.get("money_spent_description"), float(request.form.get("bank_out"))]
         all_receipts.append(receipt)
-
-        # after first reciept added - bank card is put in and seal remains the same
-        
 
          # Store updated receipts in session
         session['all_receipts'] = all_receipts
@@ -595,6 +591,7 @@ def banking_into_wallet(service_user_id,outstanding_money):
     else:
         return render_template("banking_into_wallet.html",service_user=service_user,outstanding_money=outstanding_money)
 
+
 @app.route("/set_up_wallet/<int:service_user_id>",methods=["GET","POST"])
 @login_required(allowed_roles=["manager", "it","support"])
 def set_up_wallet(service_user_id):
@@ -622,13 +619,15 @@ def set_up_wallet(service_user_id):
         return redirect(url_for("service_users_in_service",service_id = service_user.service_id))
     else:
         return render_template("set_up_wallet.html",service_user=service_user)
-            
+
+
 @app.route("/check_seal/<int:service_user_id>", methods=["GET","POST"])
 @login_required(allowed_roles=["manager", "it","support"])
 def check_seal(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
     open_modal = False
+
     if last_wallet_entry is None:
         return redirect(url_for("open_wallet",service_user_id=service_user_id,card_out_modal=False))
 
@@ -651,6 +650,7 @@ def view_wallet(service_user_id):
 @login_required(allowed_roles=["manager", "it","support"])
 def reconsile_in_or_out(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
+
     if request.method == "POST":
         if request.form.get("in_or_out") == "bank_in":
             return redirect(url_for("reconsile_banking",service_user_id=service_user_id, bank_in = "True"))
@@ -665,6 +665,7 @@ def reconsile_in_or_out(service_user_id):
 def reconsile_banking(service_user_id,bank_in):
     service_user = ServiceUser.query.get_or_404(service_user_id)
     last_wallet_entry = WalletEntry.query.filter_by(service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
+    
     if request.method == "POST":
         if bank_in =="True":
             wallet_entry = WalletEntry(
