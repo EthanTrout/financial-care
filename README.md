@@ -14,6 +14,7 @@ This application has been made alongside HFT Leeds(a social care provider locate
   - [How this Application Plans to Fix These Issues](#how-this-application-plans-to-fix-these-issues)
   - [Project Scope and Limitations](#project-scope-and-limitations)
   - [Future Versions](#future-versions)
+
 - [User Experience (UX)](#user-experience-ux)
   - [User Stories](#user-stories)
     - [Organization Goals](#organization-goals)
@@ -21,16 +22,21 @@ This application has been made alongside HFT Leeds(a social care provider locate
     - [Staff Member/User Goals](#staff-memberuser-goals)
       - [First Time User](#first-time-user)
       - [Frequent User](#frequent-user)
+
 - [Design](#design)
   - [Imagery](#imagery)
     - [Color Scheme](#color-scheme)
     - [Layout](#layout)
   - [Wireframes](#wireframes)
     - [Changes Since First Designing the Wireframes](#changes-since-first-designing-the-wireframes)
-  - [Database Flow Diagram](#database-flow-diagram)
+  - [DataBase Schema](#database-schema)
+   - [Database Flow Diagram](#database-flow-diagram)
     - [Changes Since First Designing the Flow Diagram](#changes-since-first-designing-the-flow-diagram)
-    - [Many to Many of Service and Staff/Users](#many-to-many-of-service-and-staffusers)
-    - [Wallet Entries Fields](#wallet-entries-fields)
+     - [Staff fields](#staff-fields)
+     - [Many to Many of Service and Staff/Users](#many-to-many-of-service-and-staffusers)
+     - [Wallet Entries Fields](#wallet-entries-fields)
+  - [Updated Database Flow Diagram](#updated-db-flow-diagram)
+   
 - [Features](#features)
   - [Login](#login)
   - [Managers Admin Controls](#managers-admin-controls)
@@ -55,9 +61,11 @@ This application has been made alongside HFT Leeds(a social care provider locate
     - [User Services Page](#user-services-page)
     - [User Individuals Page](#user-individuals-page)
     - [User Individuals Page in Specific Service](#user-individuals-page-in-specific-service)
+
 - [Features Left to Develop](#features-left-to-develop)
   - [Scale](#scale)
   - [Spends](#spends)
+
 - [Testing](#testing)
   - [Validator Testing](#validator-testing)
   - [Manual Testing](#manual-testing)
@@ -66,14 +74,17 @@ This application has been made alongside HFT Leeds(a social care provider locate
     - [Not Storing That Cash Has Been Taken Out](#not-storing-that-cash-has-been-taken-out)
     - [Bug Fix](#bug-fix)
   - [Known Bugs](#known-bugs)
+
 - [Accessibility](#accessibility)
   - [Lighthouse Score](#lighthouse-score)
   - [Browser Testing](#browser-testing)
   - [Device Testing](#device-testing)
+
 - [Technologies Used](#technologies-used)
   - [Languages](#languages)
   - [Programs](#programs)
   - [Frameworks](#frameworks)
+  
 - [Deployment](#deployment)
 - [Credits](#credits)
  - [content](#content)
@@ -265,6 +276,8 @@ I also decided to remove the staff members from being viewed directly in Service
 
  </details>
 
+## DataBase Schema 
+
 ### Changes since first designing the Flow diagram 
 
 #### Many to Many of service and staff/users
@@ -272,14 +285,26 @@ The princples are exactly the same. The use of PSQL meant that a seperate refern
 
 The name used is also changed to Staff instead of users because querying for users in PSQL gives you the standard PSQL users table that is always created by the program. 
 
+### staff Fields
+Email and password(Hashed and salted) were added to the user table. to allow for the login. 
+
 ### Wallet entries fields 
 
-Two fields were added to Wallet entries
+three fields were added to Wallet entries
 
-1. Is_cash_removed. (Bool) this field was added as a way to track if money was taken out of the last entry and therefore route the user to the forms to put back back in. This is really useful in this application as it makes the UI very simple for staff to use. all they have to do is click Open Wallet button and are routed to the correct form dpending on the last entry of the Indivdual.
+1. Foreign Key of user_id is set as the user that made the entry needs to be tracked for auditing.
 
-2. reciept_number.(int) this field was added as on FRS sheets the reciepts for transactions are numbered by staff which conrespond with the number on the FRS sheet. this means that when managers are reconsiling they are easily able to match the real world reciept with the online recording.
+2. Is_cash_removed. (Bool) this field was added as a way to track if money was taken out of the last entry and therefore route the user to the forms to put back back in. This is really useful in this application as it makes the UI very simple for staff to use. all they have to do is click Open Wallet button and are routed to the correct form dpending on the last entry of the Indivdual.
 
+3. reciept_number.(int) this field was added as on FRS sheets the reciepts for transactions are numbered by staff which conrespond with the number on the FRS sheet. this means that when managers are reconsiling they are easily able to match the real world reciept with the online recording.
+
+## Updated DB Flow Diagram
+
+I have updated the flow chart to better represent the new Database Schema. 
+
+NOTE: many to many table on flow chart is not an actual table. 
+
+![Updated Schema](/readme_images/Screenshot%202024-08-22%20135450.png)
 
 # Features
 
