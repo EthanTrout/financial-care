@@ -75,6 +75,9 @@ This application has been made alongside HFT Leeds(a social care provider locate
   - [Programs](#programs)
   - [Frameworks](#frameworks)
 - [Deployment](#deployment)
+- [Credits](#credits)
+ - [content](#content)
+ - [Resources used](#resources-used)
 
 </details>
 
@@ -694,7 +697,7 @@ Evidence of fix
 
 There are no known bugs
 
-# Accesibility 
+# Accessibility
 
 ## lighthouse score
 
@@ -741,4 +744,14 @@ This could be achived by adding Area field to services and users. then displayin
 ## Spends. 
 
 Some Social care providers do not require reciepts for transactions called spends,where the supported person is given an amount of money to spend on there own without staff present. a extra tile on the cash out form could be added to specify spends. this would then automatically complete this as a whole transaction and not route the user to add a reciept when opening the wallet
+
+# Credits
+
+## Content 
+
+I currently work in Health and social care and therefore have noticed the issues with the FRS sheets personally and from staff and managers. There seems to be alot of time wasted with very small mistakes. when something is being used as often as this is. it should be efficent and difficult for users to make these mistakes. 
+
+i Built this website for my workplace and as i have friends thats work in other charities that deliver social care. i would like to continue developing it and deliver it to these other businesses to help fix these issues. 
+
+## Resources Used 
 
