@@ -4,6 +4,82 @@ Financial Care is a web application developed for social care providers and ther
 
 This application has been made alongside HFT Leeds(a social care provider located in leeds). to update there systems and move away from FRS sheets (Paper recording sheets for transactions)
 
+<details>
+<summary> Table of Contents </summary>
+
+- [Introduction](#introduction)
+- [Rationale](#rationale)
+  - [Introduction and Background](#introduction-and-background)
+  - [Problems with the Paper Model](#problems-with-the-paper-model)
+  - [How this Application Plans to Fix These Issues](#how-this-application-plans-to-fix-these-issues)
+  - [Project Scope and Limitations](#project-scope-and-limitations)
+  - [Future Versions](#future-versions)
+- [User Experience (UX)](#user-experience-ux)
+  - [User Stories](#user-stories)
+    - [Organization Goals](#organization-goals)
+    - [Managers and Admin Goals](#managers-and-admin-goals)
+    - [Staff Member/User Goals](#staff-memberuser-goals)
+      - [First Time User](#first-time-user)
+      - [Frequent User](#frequent-user)
+- [Design](#design)
+  - [Imagery](#imagery)
+    - [Color Scheme](#color-scheme)
+    - [Layout](#layout)
+  - [Wireframes](#wireframes)
+    - [Changes Since First Designing the Wireframes](#changes-since-first-designing-the-wireframes)
+  - [Database Flow Diagram](#database-flow-diagram)
+    - [Changes Since First Designing the Flow Diagram](#changes-since-first-designing-the-flow-diagram)
+    - [Many to Many of Service and Staff/Users](#many-to-many-of-service-and-staffusers)
+    - [Wallet Entries Fields](#wallet-entries-fields)
+- [Features](#features)
+  - [Login](#login)
+  - [Managers Admin Controls](#managers-admin-controls)
+    - [Services](#services)
+    - [Add Service](#add-service)
+    - [User Feedback](#user-feedback)
+    - [Edit Service](#edit-service)
+    - [Add Staff to Service and Remove Staff from Service](#add-staff-to-service-and-remove-staff-from-service)
+    - [Delete Service](#delete-service)
+    - [Staff](#staff)
+    - [Add Staff](#add-staff)
+    - [Edit Staff](#edit-staff)
+    - [Update Password](#update-password)
+    - [Delete Staff](#delete-staff)
+    - [Individuals (Service Users)](#individuals-service-users)
+    - [Add Individual](#add-individual)
+    - [Edit Individual](#edit-individual)
+    - [Delete Individual](#delete-individual)
+    - [Other Individual Functionality](#other-individual-functionality)
+  - [User Controls](#user-controls)
+    - [Login as Demo Account (Support Access)](#login-as-demo-account-support-access)
+    - [User Services Page](#user-services-page)
+    - [User Individuals Page](#user-individuals-page)
+    - [User Individuals Page in Specific Service](#user-individuals-page-in-specific-service)
+- [Features Left to Develop](#features-left-to-develop)
+  - [Scale](#scale)
+  - [Spends](#spends)
+- [Testing](#testing)
+  - [Validator Testing](#validator-testing)
+  - [Manual Testing](#manual-testing)
+  - [User Testing](#user-testing)
+  - [Bugs](#bugs)
+    - [Not Storing That Cash Has Been Taken Out](#not-storing-that-cash-has-been-taken-out)
+    - [Bug Fix](#bug-fix)
+  - [Known Bugs](#known-bugs)
+- [Accessibility](#accessibility)
+  - [Lighthouse Score](#lighthouse-score)
+  - [Browser Testing](#browser-testing)
+  - [Device Testing](#device-testing)
+- [Technologies Used](#technologies-used)
+  - [Languages](#languages)
+  - [Programs](#programs)
+  - [Frameworks](#frameworks)
+- [Deployment](#deployment)
+
+</details>
+
+
+</details>
 
 # Rationale
 
@@ -66,6 +142,7 @@ Ideas for future enhancements to WWAMI include:
 
 - An image based upload for Reciepts to be stored on the database with the relating transaction
 - Search Bar querying for users, staff and services
+- System for logging spends and automating the reciept.
 
 
 
@@ -517,6 +594,28 @@ This is now the Section of how staff in services would use the website.
 
 # Testing 
 
+## Validator Testing
+
+## Manual Testing 
+
+- I have manually tested all CRUD functionality of the tables. staff, service_users, services, Wallet_entry and the many to many link table of service_staff. All buttons and routes work correctly and the change in the database is immediately refelected on the website. 
+
+- I have manually tested that all CRUD functionality displays a alert to the user. to notify them of what action has taken place.
+
+- I have tested that any delete functionality will prompt the user before allowing them to remove a object. 
+
+- I have tested the routing system for wallet_entry (Open Wallet button) to make sure that it routes to the correct form depending on what the user filled out in the Cash out form and the modal for banking. 
+
+- I have tested that the website does not allow users to enter cash reciepts and cash in that does not add up to the inital cash out. 
+
+Testing document : [Testing](/TESTING.md)
+
+## User Testing 
+
+I have had my collegues that work in Social care and use FRS sheets on a daily basis to test the difference between the two and give me feedback on what they think of the application.
+
+
+
 ## bugs 
 
 ### Not storing that Cash has been taken out
@@ -589,3 +688,57 @@ if last_wallet_entry.is_cash_removed == True or last_wallet_entry.bank_card_remo
 Evidence of fix 
 
 ![Final Fix](/readme_images/final_fix.png)
+
+
+# Known Bugs 
+
+There are no known bugs
+
+# Accesibility 
+
+## lighthouse score
+
+## Browser testing 
+
+- The Website was tested on Google Chrome, Firefox, Microsoft Edge, Safari browsers with no issues noted.  
+
+## Device Testing 
+
+- The website was viewed on a variety of devices such as Desktop, Laptop, iPhone 8, iPhoneX and iPad to ensure responsiveness on various screen sizes. The website performed as intended. The responsive design was also checked using Chrome developer tools across multiple devices with structural integrity holding for the various sizes.
+
+# Technologies used:
+
+## Languages:
+- HTML5
+- CSS3
+- JavaScript
+- Python
+- Jinja2 
+
+## Frameworks, librarys and programs used. 
+
+### Programs
+- Chrome dev tools- used for overall development and testing, including responsivness and preformance
+- GitHub -Used for version control 
+- W3C -used for validation testing of HTML and CSS
+
+### Frameworks
+- Flask-SQLAlchemy- used for the back end Routing and data manipulation 
+- PostgreSQL - used to store and manage the database.
+
+# Deployment
+
+# Features left to develop 
+
+## Scale.
+
+As HFT is split up into sectors. the Database currently only has to store all the services in one sector. However. if HFT was to adopt this across all Sectors then there Would need to be a system in place to handle the larger amount of data. especially when an Admin is using the Services and Users pages.
+
+This is because these pages currently display all services and all users. Having a search bar would help managers find people or services yes, however if this was adopted on scale then displaying all services and users could take alot of time and therefore the data should be split into sectors/areas. 
+
+This could be achived by adding Area field to services and users. then displaying only services and users from that area. an additional form would then be added to the top of services and users giving an option to change the area. 
+
+## Spends. 
+
+Some Social care providers do not require reciepts for transactions called spends,where the supported person is given an amount of money to spend on there own without staff present. a extra tile on the cash out form could be added to specify spends. this would then automatically complete this as a whole transaction and not route the user to add a reciept when opening the wallet
+
