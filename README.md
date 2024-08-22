@@ -620,6 +620,221 @@ This is now the Section of how staff in services would use the website.
 
  ![Indivdual support view ](/readme_images/features/Screenshot%20(140).png)
 
+ ## Wallet entries (FRS Sheet replacement)
+
+ ## View Wallet 
+
+ This will show the service users wallet entries 
+
+The User can find this page by clicking on a user and clicking View wallet.
+
+ ![View wallet button](/readme_images/features/Screenshot%20(141).png)
+
+Currently it is empty but you will see that the Fields are the same as an FRS sheet.
+
+![View wallet support button](/readme_images/features/Screenshot%20(142).png)
+
+The Mobile view Displays the fields on the left to fit on a mobile device.
+ <details>
+ <summary> Mobile View</summary>
+
+ ![Wallet support view mobile](/readme_images/features/Screenshot%202024-08-22%20180054.png)
+ </details>
+ 
+## Open Wallet
+
+- Open wallet will route to different forms depending on the previous wallet entries.
+
+### Set Up wallet
+
+If there are no wallet entries then the user is prompted to set up the wallet.
+
+The staff member would count the money in the real world wallet and total in the bank account from a bank statment. They would then seal the pouch and add this number
+
+![Open wallet support button](/readme_images/features/Screenshot%20(143).png)
+
+ <details>
+ <summary> Mobile View</summary>
+
+ ![Open wallet support view mobile](/readme_images/features/Screenshot%202024-08-22%20180523.png)
+ </details>
+
+ We now see that the wallet is set up 
+
+ ![Open wallet support button](/readme_images/features/Screenshot%20(145).png)
+
+ 
+ ### Check Seal Number
+
+ If the wallet is set up and a user tries to click Open wallet. they will always be routed to the Check walletg form before continuing. 
+
+ It is HFT policy that the seal number on the real world wallet is checked to be the same as the one previously entered on a FRS sheet before a staff member can make any transactions.
+
+ If the seal number is incorrect then they cannot make any transaction and are to contact a manager. 
+
+ Therefore this check takes place before routing to the forms to add wallet entries. 
+
+ ![Open wallet support button](/readme_images/features/Screenshot%20(146).png)
+
+ #### If Seal number is incorrect
+
+ The user is prompted by a Modal that they should contact a manager if the seal is incorrect and only retry if they typed it wrong.
+
+ ![Open wallet support button](/readme_images/features/Screenshot%20(147).png)
+
+ #### If correct seal number is entered
+
+ The page will route to either Taking cash out or the other routes (Depending on previous entry)
+
+ ### Open Wallet 
+
+ This is a form for the staff member to state. 
+
+ - The description of what they are taking cash or bank card out to do.
+ - The amount of cash
+ - if the bank card is being taken out 
+ - The new seal number after they have sealed the wallet
+
+  ![Open wallet support button](/readme_images/features/Screenshot%20(148).png)
+
+  The staff member would then leave with the supported person and make any transaction with cash. card or get cash out of a bank.
+
+
+ ### Close Wallet 
+
+ When the last transaction was the previous form of declaring cash or a card is out. when clicking open wallet again (When back from a supported trip) the user will be routed to different forms depending of what was taken out 
+
+ This was done to make it very simple for staff to know what needs entering and makes it much harder for them to make a mistake.
+
+ Summary: 
+ - If only Cash is taken out the only cash reciepts and cash back in is routed to  
+
+ - if Cash and card are out. the user will be prompted if they have made a cash withdrawl from a bank. it then routes to the same as if only cash is out but with the additional card reciepts form.
+
+ - if Cash has been withdrawn from the bank a form for recording cash out of the bank is recorded before everything else.
+
+ - If the card has been taken out and no cash has been taken out but cash has been withdrawn from the bank. the route works in the same way as cash out and card out.
+
+
+#### Basic Routing explained Only Cash Out
+
+if you need to see all routes tested then see ![Testing](/TESTING.md)
+
+- The wallet Entry:
+
+  ![Close wallet support button](/readme_images/features/Screenshot%202024-08-22%20183353.png)
+
+
+1. This Would then show the user check the seal number is correct 
+
+2. This would then show the user Cash reciepts 
+
+  ![Close wallet support button](/readme_images/features/Screenshot%20(150).png)
+
+  - The support worker will enter all the reciepts they have and click done when finished.
+
+  - The page displays the reciept number for the support worker so they can add this to the real world reciept.
+
+  ![Close wallet support button](/readme_images/features/Screenshot%20(151).png)
+
+  - If the Reciept adds up to more than cash taken out the user will be informed 
+
+  ![Open wallet support button](/readme_images/features/Screenshot%20(152).png)
+
+3. The user is then shown a form to enter the remaning cash back into the wallet. 
+
+  - The staff member would now add up the cash they have left and enter the ammount into the form.
+
+  - if this is incorrect. which happens as you can get short changed or loose coins are lost. this modal tells them how much should be going back in and how much they are missing
+
+  ![Close wallet support button](/readme_images/features/Screenshot%20(155).png)
+
+  - They can then add a new reciept if they have forgotten to add one or should look for this missing money. 
+
+  - The wallet can only be closed when this ammount is accounted for 
+
+  ![Close wallet support button](/readme_images/features/Screenshot%20(154).png)
+
+4. The FRS sheet is now populated correctly without any mistakes
+
+  ![Close wallet support button](/readme_images/features/Screenshot%20(156).png)
+
+
+#### Card out
+
+If only the card is out and no cash is withdrawn from the bank then the user only has to enter bank reciepts. this functionality works the same as cash reciepts without limiting spending. 
+
+![Card wallet support button](/readme_images/features/Screenshot%20(158).png)
+
+![Card wallet support button](/readme_images/features/Screenshot%202024-08-22%20183353.png)
+
+
+#### Withdrawing Cash from Bank
+
+If the card is removed then the user always gets prompted first if they have taken any cash from the bank. 
+
+![Card wallet support button](/readme_images/features/Screenshot%20(159).png)
+
+If they have then they fill out the form to say how much has been taken out. 
+
+![Card wallet support button](/readme_images/features/Screenshot%20(160).png)
+
+They will now be sent to Cash Reciepts then Cash in and then Bank reciepts. 
+
+The total Cash withdrawn from the bank is added to the cash that the user could of spent and the cash that needs to go back in 
+
+In This Example £20  was taken out and £100 was withdrawn from the bank.
+
+If the Cash reciept goes over this they are prompted
+![Banking wallet support button](/readme_images/features/Screenshot%20(161).png)
+
+Two reciepts are then added:
+
+![Banking wallet support button](/readme_images/features/Screenshot%20(162).png)
+
+If the user enters the wrong ammount. you can see that the Total is tracked
+
+![Banking wallet support button](/readme_images/features/Screenshot%20(163).png)
+
+the same happens for a total above 
+
+![Banking wallet support button](/readme_images/features/Screenshot%20(164).png)
+
+The user can then add any bank reciepts if they spent money using the card( not the Withdrawl)
+
+![Banking wallet support button](/readme_images/features/Screenshot%20(165).png)
+
+You can see the Wallet entries here 
+
+![Banking wallet support button](/readme_images/features/Screenshot%202024-08-22%20183353.png)
+
+
+#### Routing functionality
+
+The other inputs work exactly in the same way. i have outlined all forms. different ones are shown to the user depending on what they took out orginally and the decision on the baking modal. 
+
+I covered all the cases how staff would support people out.
+
+If they just pay using the card or just with cash. if they go to the bank and withdraw cash to then spend. if they sepnd on the card and with cash. or all of the above. 
+
+
+## Reconcile 
+
+Usually in HFT services. a staff member will collect bank statements weekly and then Reconsile the FRS sheet so that the total of the real world bank account matches the total of the FRS sheet count. The reason they dont match up is because of standing orders, benefits. Any automatic payments that are not made by staff.
+
+- Therefore when reconsiling the Date of this transaction is needed
+
+- There also needs to be a way to put cash into the bank for things such as Benfits or family sending money. 
+
+The User picks if it is Cash in or cash out 
+
+![Reconsile wallet support button](/readme_images/features/Screenshot%20(166).png)
+
+They can then Add these transactions in and the Bank total will be updated. 
+
+![Reconsile wallet support button](/readme_images/features/Screenshot%20(167).png)
+![Reconsile wallet support button](/readme_images/features/Screenshot%20(169).png)
+
 # Testing 
 
 ## Validator Testing
