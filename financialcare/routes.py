@@ -68,7 +68,7 @@ def login():
         
         staff = Staff.query.filter_by(email=email).first()
         
-        if staff:
+        if staff and staff.check_password(password):
             session["user"] = staff.id
             session["user_access"] = staff.access
             if 'all_receipts' not in session:
