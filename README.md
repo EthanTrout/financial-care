@@ -843,7 +843,7 @@ Usually in HFT services. a staff member will collect bank statements weekly and 
 
 The User picks if it is Cash in or cash out 
 
-![Reconsile wallet support button](/readme_images/features/Screenshot%20(166).png)
+![Reconsile wallet support button](/readme_images/features/Screenshot%20(141).png)
 
 They can then Add these transactions in and the Bank total will be updated. 
 
