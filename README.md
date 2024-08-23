@@ -5,41 +5,41 @@ Financial Care is a web application developed for social care providers and ther
 This application has been made alongside HFT Leeds(a social care provider located in leeds). to update there systems and move away from FRS sheets (Paper recording sheets for transactions)
 
 <details>
-<summary> Table of Contents </summary>
+<summary>Table of Contents</summary>
 
 - [Introduction](#introduction)
 - [Rationale](#rationale)
   - [Introduction and Background](#introduction-and-background)
   - [Problems with the Paper Model](#problems-with-the-paper-model)
-  - [How this Application Plans to Fix These Issues](#how-this-application-plans-to-fix-these-issues)
+  - [How This Application Plans to Fix These Issues](#how-this-application-plans-to-fix-these-issues)
   - [Project Scope and Limitations](#project-scope-and-limitations)
   - [Future Versions](#future-versions)
-
+  
 - [User Experience (UX)](#user-experience-ux)
   - [User Stories](#user-stories)
     - [Organization Goals](#organization-goals)
     - [Managers and Admin Goals](#managers-and-admin-goals)
     - [Staff Member/User Goals](#staff-memberuser-goals)
-      - [First Time User](#first-time-user)
+      - [First-Time User](#first-time-user)
       - [Frequent User](#frequent-user)
-
+      
 - [Design](#design)
   - [Imagery](#imagery)
     - [Color Scheme](#color-scheme)
     - [Layout](#layout)
   - [Wireframes](#wireframes)
     - [Changes Since First Designing the Wireframes](#changes-since-first-designing-the-wireframes)
-  - [DataBase Schema](#database-schema)
-   - [Database Flow Diagram](#database-flow-diagram)
+  - [Database Schema](#database-schema)
+    - [Database Flow Diagram](#database-flow-diagram)
     - [Changes Since First Designing the Flow Diagram](#changes-since-first-designing-the-flow-diagram)
-     - [Staff fields](#staff-fields)
-     - [Many to Many of Service and Staff/Users](#many-to-many-of-service-and-staffusers)
-     - [Wallet Entries Fields](#wallet-entries-fields)
+      - [Staff Fields](#staff-fields)
+      - [Many-to-Many Relationship of Service and Staff/Users](#many-to-many-of-service-and-staffusers)
+      - [Wallet Entries Fields](#wallet-entries-fields)
   - [Updated Database Flow Diagram](#updated-db-flow-diagram)
-   
+
 - [Features](#features)
   - [Login](#login)
-  - [Managers Admin Controls](#managers-admin-controls)
+  - [Managers/Admin Controls](#managers-admin-controls)
     - [Services](#services)
     - [Add Service](#add-service)
     - [User Feedback](#user-feedback)
@@ -61,6 +61,21 @@ This application has been made alongside HFT Leeds(a social care provider locate
     - [User Services Page](#user-services-page)
     - [User Individuals Page](#user-individuals-page)
     - [User Individuals Page in Specific Service](#user-individuals-page-in-specific-service)
+  
+  - [Wallet Entries (FRS Sheet Replacement)](#wallet-entries-frs-sheet-replacement)
+    - [View Wallet](#view-wallet)
+    - [Open Wallet](#open-wallet)
+      - [Set Up Wallet](#set-up-wallet)
+      - [Check Seal Number](#check-seal-number)
+        - [If Seal Number is Incorrect](#if-seal-number-is-incorrect)
+        - [If Correct Seal Number is Entered](#if-correct-seal-number-is-entered)
+      - [Open Wallet](#open-wallet-form)
+      - [Close Wallet](#close-wallet)
+        - [Basic Routing Explained: Only Cash Out](#basic-routing-explained-only-cash-out)
+        - [Card Out](#card-out)
+        - [Withdrawing Cash from Bank](#withdrawing-cash-from-bank)
+      - [Routing Functionality](#routing-functionality)
+    - [Reconcile](#reconcile)
 
 - [Features Left to Develop](#features-left-to-develop)
   - [Scale](#scale)
@@ -84,16 +99,14 @@ This application has been made alongside HFT Leeds(a social care provider locate
   - [Languages](#languages)
   - [Programs](#programs)
   - [Frameworks](#frameworks)
-  
+
 - [Deployment](#deployment)
 - [Credits](#credits)
- - [content](#content)
- - [Resources used](#resources-used)
+  - [Content](#content)
+  - [Resources Used](#resources-used)
 
 </details>
 
-
-</details>
 
 # Rationale
 
@@ -114,6 +127,8 @@ FRS sheets are known as Financial Recording sheets and are paper backed document
 Bank statments are usually collected weekly by staff and the FRS sheets updated with transactions such as Direct debits or benefits that have been added to a bank account.
 
 FRS sheets are Legal Documents that are audited by managers and have to reflect every transaction of the indivdual. Staff are to sign for every transaction to state it was them they supported to person to make it.
+
+![FRS sheet](/readme_images/Screenshot%202024-08-23%20085751.png)
 
 ## Problems with the Paper Model
 
