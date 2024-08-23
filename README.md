@@ -998,6 +998,63 @@ There are no known bugs
 
 # Deployment
 
+## This website was deployed using Heroku. The steps to Deploy are.
+
+Note:make sure the files include a Procfile. requirements.txt and runtime.txt
+
+1. Navigate to [Heroku](https://dashboard.heroku.com/apps)
+
+2. Click New -> Create new app
+
+3. add a unique name and selection the region you are in
+
+4. Navigate to Settings.
+
+5. Reveal Config vars
+
+6. Enter variables used in env.py
+- "IP"
+- "PORT"
+- "SECRET_KEY"
+- "DEBUG" (if still testing)
+- "DATABASE_URL"
+
+7. Navigate to Deploy and link to github repo
+
+8. Click Deploy
+
+9. click "more" -> run console.
+
+10. Enter these scripts to instatiate DB
+
+- python3 
+
+- from financialcare import db
+
+- db.create_all()
+
+## Creating a Admin user to create accounts.
+
+There are two methods to do this. you can either remove the Auth for Login and create an admin account ( remember to add Auth back in)
+
+or 
+
+1. using Git Pod and Heroku
+
+2. Navigate to heroku profile and retrieve user API key 
+
+3. in Gitpod type heroku login -i
+
+4. enter email 
+
+5. enter API key as password 
+
+6. type psql (The URL of your database)
+
+7. INSERT INTO user (all field names) VALUES (Values of admin account);
+
+
+
 # Features left to develop 
 
 ## Scale.
