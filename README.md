@@ -172,7 +172,7 @@ Ideas for future enhancements to WWAMI include:
 - An image based upload for Reciepts to be stored on the database with the relating transaction
 - Search Bar querying for users, staff and services
 - System for logging spends and automating the reciept.
-
+- functionality to edit reciepts before submitting all of them rather than submitting them one by one.
 
 
 # User Experience (UX)
@@ -319,7 +319,7 @@ I have updated the flow chart to better represent the new Database Schema.
 
 NOTE: many to many table on flow chart is not an actual table. 
 
-![Updated Schema](/readme_images/Screenshot%202024-08-22%20135450.png)
+![Updated Schema](/readme_images/Screenshot%202024-08-23%20090508.png)
 
 # Features
 
