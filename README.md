@@ -387,7 +387,7 @@ Whenever any action is taken on the website that updates the Database or fails t
 
  Add Examples
 
- ### Edit Service (Update Images to new color)
+ ### Edit Service
  
  Edit Service Allows a manager to change the name of the service. Give staff access to the service and delete the service.
 
@@ -717,12 +717,12 @@ The staff member would count the money in the real world wallet and total in the
 
  ### Close Wallet 
 
- When the last transaction was the previous form of declaring cash or a card is out. when clicking open wallet again (When back from a supported trip) the user will be routed to different forms depending of what was taken out 
+ When the last transaction was the previous form of declaring cash or a card is out. when the user clicks open wallet again (When back from a supported trip) the user will be routed to different forms depending on what was taken out 
 
  This was done to make it very simple for staff to know what needs entering and makes it much harder for them to make a mistake.
 
  Summary: 
- - If only Cash is taken out the only cash reciepts and cash back in is routed to  
+ - If only Cash is taken out then only cash reciepts and cash back in is routed to  
 
  - if Cash and card are out. the user will be prompted if they have made a cash withdrawl from a bank. it then routes to the same as if only cash is out but with the additional card reciepts form.
 
@@ -781,7 +781,7 @@ If only the card is out and no cash is withdrawn from the bank then the user onl
 
 ![Card wallet support button](/readme_images/features/Screenshot%20(158).png)
 
-![Card wallet support button](/readme_images/features/Screenshot%202024-08-22%20183353.png)
+![Card wallet support button](/readme_images/Screenshot%202024-08-23%20092204.png)
 
 
 #### Withdrawing Cash from Bank
@@ -821,7 +821,7 @@ The user can then add any bank reciepts if they spent money using the card( not 
 
 You can see the Wallet entries here 
 
-![Banking wallet support button](/readme_images/features/Screenshot%202024-08-22%20183353.png)
+![Banking wallet support button](/readme_images/Screenshot%202024-08-23%20092229.png)
 
 
 #### Routing functionality
