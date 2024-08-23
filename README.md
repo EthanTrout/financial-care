@@ -1009,4 +1009,8 @@ I currently work in Health and social care and therefore have noticed the issues
 i Built this website for my workplace and as i have friends thats work in other charities that deliver social care. i would like to continue developing it and deliver it to these other businesses to help fix these issues. 
 
 ## Resources Used 
+- [Stack overflow](https://stackoverflow.com/)
+- [Code institute Course](https://codeinstitute.net/)
+
+## Thanks to my Tutors at Code institute. 
 
