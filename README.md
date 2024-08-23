@@ -950,6 +950,18 @@ Evidence of fix
 
 # Known Bugs 
 
+If The user Enters the a Banking Cash Withdrawl and then exits the program without logging the reciepts or cash in. the program will not then log this cash as being added to the wallet amount and does not give an option to re route this cash in. The user would have to log a reconciliation and re complete the form fully. 
+
+Before this Website is deployed for HFT's use i will have fixed this bug but currently it is still in the website. 
+
+![Wallet entry error](/readme_images/Screenshot%202024-08-23%20115013.png)
+
+i have added a Note to users on the banking Section to try and have them avoid this mistake.
+
+![Wallet entry error](/readme_images/Screenshot%202024-08-23%20134227.png)
+
+
+
 There are no known bugs
 
 # Accessibility
