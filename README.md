@@ -885,9 +885,16 @@ Minimal Custom JS has been used and the majority is Intilasation for Materalize.
 
 Testing document : [Testing](/TESTING.md)
 
+## Deployed Website testing.
+
+The Deployed version has been tested by myself and users. it works the same as the Development version.
+
+This is a bug found by one of the users.
+
+[User testing image bug](/readme_images/usertestingimg.jpeg)
 ## User Testing 
 
-I have had my collegues that work in Social care and use FRS sheets on a daily basis to test the difference between the two and give me feedback on what they think of the application.
+I have had my collegues that work in Social care and use FRS sheets on a daily basis to test the difference between the two and give me feedback on what they think of the Deployed Application 
 
 
 
