@@ -359,7 +359,7 @@ def open_wallet(service_user_id):
         return redirect(url_for("close_wallet",service_user_id=service_user_id,last_wallet_id=last_wallet_entry.id,outstanding_money=result,card_out_modal= card_out_modal))
 
     if request.method == "POST":
-        if int(request.form.get("cash_out")) == 0:
+        if Decimal(request.form.get("cash_out")) == 0:
             cash_removed = False
         else:
             cash_removed = True
