@@ -36,6 +36,7 @@ This application has been made alongside HFT Leeds(a social care provider locate
       - [Many-to-Many Relationship of Service and Staff/Users](#many-to-many-of-service-and-staffusers)
       - [Wallet Entries Fields](#wallet-entries-fields)
   - [Updated Database Flow Diagram](#updated-db-flow-diagram)
+  -[Database Tables](#database-tables)
 
 - [Features](#features)
   - [Login](#login)
@@ -321,6 +322,83 @@ NOTE: many to many table on flow chart is not an actual table.
 
 ![Updated Schema](/readme_images/Screenshot%202024-08-23%20090508.png)
 
+
+## Database tables 
+
+### Staff
+
+The staff table is to store the Support workers that will be accessing the website. 
+
+This is checked when logging in and can be created by a manager or it administrator. 
+
+Fields:
+- Name
+- Email
+- Password
+- Access
+
+Relationships:
+- Staff has a many to many relationship with Services. reference table is called staff_service. 
+
+
+### ServiceUser
+
+the service user table is used to store infomation about the service user.
+
+Fields:
+- name
+- bank
+- service_id (Foreign Key to service Table)
+
+Relationships:
+- ServiceUser table has a many to one relationship to Service Table and this is stored as a Foreign key in Service_user
+
+- ServiceUser table has a one to many relationship with WalletEntry table. service_user_id is stored as a foreign key on WalletEntry table
+
+### Service
+
+the Service table is used to both group service users together in the house that they live in and allow Staff to have access to the Service users tables.
+
+Fields:
+- Name
+
+RelationShips:
+- Service has a many to many relationship with Staff. reference table is called staff_service. 
+
+- Service table has a one to many relationship with ServiceUser table
+
+### WalletEntry
+
+The wallet entry table is used to store all the FRS entries for a given Service user.
+
+Fields:
+- service_user_id (Foreign key for ServiceUser)
+- staff_id (Foreign key for staff)
+- date_time
+- seal_number
+- cash_amount
+- bank_amount
+- cash_out
+- cash_in
+- bank_card_removed
+- is_cash_removed
+- money_spent
+- money_spent_description
+- bank_out
+- bank_in
+- receipt_number
+
+Relationships:
+WalletEntry table has a many to one relationship with ServiceUser. Foreign key is in WalletEntry
+
+WalletEntry table has a many to one relationship with Staff. foreign key is in WalletEntry
+
+
+
+
+### Service
+
+The Service table is used to group Supported indivduals into the services that they live in 
 # Features
 
 ## Login
