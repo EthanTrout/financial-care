@@ -854,6 +854,23 @@ They can then Add these transactions in and the Bank total will be updated.
 
 ## Validator Testing
 
+HTML
+[Login](https://validator.w3.org/nu/?doc=https%3A%2F%2Ffinancial-care-a8ea2e851d47.herokuapp.com%2F)
+
+HTML is all valid and tested
+
+CSS
+
+As i have used Materalize for the majority of the CSS. this is valid and tested by Google Materalize.
+
+CSS is all valid and tested
+
+JS 
+
+Minimal Custom JS has been used and the majority is Intilasation for Materalize. However custom JS was developed for the alert system and that has been validated here .
+
+![JS validator](/readme_images/Screenshot%202024-08-26%20160559.png)
+
 ## Manual Testing 
 
 - I have manually tested all CRUD functionality of the tables. staff, service_users, services, Wallet_entry and the many to many link table of service_staff. All buttons and routes work correctly and the change in the database is immediately refelected on the website. 
