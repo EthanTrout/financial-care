@@ -111,6 +111,17 @@ This application has been made alongside HFT Leeds(a social care provider locate
 
 # Rationale
 
+## Target Audiences
+
+This Website is made for Social care providers and the staff that work in Social care. 
+
+Managers will use this Website to Audit Financial Recordings that the staff make. 
+
+Staff will use this website to make the financial recording for the Supported indivduals.
+
+This will ensure that supported peoples money is looked after securely and will reduce accounting mistakes made by staff. thereby saving time for managers.
+
+
 ## Introduction and background
 
 To understand this application you must first understand how financial transactions are recorded currently in social care.
@@ -154,6 +165,29 @@ There are many issues that arise with FRS sheets that creates more work for Mana
 
 3. Managers will have access to the Application and can access the records stored digitally and therefore will not need to travel to services to collect FRS sheets.
     - Staff will still store Reciepts but these can be photographed and sent to managers via Email.
+
+
+## The Data
+
+The main Data for this project is the replacement of the FRS sheets with the Database table WalletEntry. This has all of the same fields as the FRS sheet however it is store digitally which means managers can access it without going into services and Totals for Cash and Bank accounts are not added up by staff but by the application itself. 
+
+What Else is stored:
+
+Staff accounts to access the website. 
+
+Services to catagorise Supported people 
+
+ServiceUsers to identify whos wallet entry the staff member is entering infomation into.
+
+for more infomation on the data Schema ![Click](#database-schema)
+
+## Security Features
+
+As Supported Peoples data is protected. No routes can be accessed unless a user is signed in.
+
+Users are added by Managers or IT administrators.
+
+Passwords are stored but are Hashed and salted. 
 
 
 ## Project Scope and limitations 
