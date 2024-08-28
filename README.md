@@ -1162,6 +1162,9 @@ Some Pages the Contrast between the HFT color pallet reduces the Accessibility l
 
 - The website was viewed on a variety of devices such as Desktop, Laptop, iPhone 8, iPhoneX and iPad to ensure responsiveness on various screen sizes. The website performed as intended. The responsive design was also checked using Chrome developer tools across multiple devices with structural integrity holding for the various sizes.
 
+[AmIResponsive](https://ui.dev/amiresponsive?url=https://financial-care-a8ea2e851d47.herokuapp.com/)
+[Responsinator](http://www.responsinator.com/?url=https%3A%2F%2Ffinancial-care-a8ea2e851d47.herokuapp.com%2F)
+
 # Technologies used:
 
 ## Languages:
@@ -1177,6 +1180,8 @@ Some Pages the Contrast between the HFT color pallet reduces the Accessibility l
 - Chrome dev tools- used for overall development and testing, including responsivness and preformance
 - GitHub -Used for version control 
 - W3C -used for validation testing of HTML and CSS
+- Responisnator - used for device testing
+- Heroku- used for hosting website
 
 ### Frameworks
 - Flask-SQLAlchemy- used for the back end Routing and data manipulation 
