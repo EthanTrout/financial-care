@@ -316,14 +316,14 @@ The Web page has 4 main pages with many sub pages for each Page.
 
 <details>
 
- <summary>Services Wireframe</summary>
+ <summary>Daesktop Wireframe</summary>
 
 ![Desktop Wireframe](/readme_images/financialcare-wireframe.png)
 
  </details>
 
  <details>
-    <summary>Users Wireframe</summary>
+    <summary>Mobile Wireframe</summary>
 
 ![Mobile Wireframe](/readme_images/finanialcare-mobile-wireframe.png)
 
@@ -996,6 +996,17 @@ They can then Add these transactions in and the Bank total will be updated.
 HTML
 [Login](https://validator.w3.org/nu/?doc=https%3A%2F%2Ffinancial-care-a8ea2e851d47.herokuapp.com%2F)
 
+As Other pages cannot be accessed by link. (Login is required) i manally entered and validated these pages 
+
+Services:
+![Services validated](/readme_images/validation/Screenshot%202024-08-28%20162633.png)
+
+Individual:
+![Individual validated](/readme_images/validation/Screenshot%202024-08-28%20163008.png)
+
+Staff:
+![Staff validated](/readme_images/validation/Screenshot%202024-08-28%20163228.png)
+
 HTML is all valid and tested
 
 CSS
@@ -1009,6 +1020,14 @@ JS
 Minimal Custom JS has been used and the majority is Intilasation for Materalize. However custom JS was developed for the alert system and that has been validated here .
 
 ![JS validator](/readme_images/Screenshot%202024-08-26%20160559.png)
+
+
+Python:
+
+Python has been validated tousing the Pep8 Validator Codeinstitute provides [Pep8 Linter](https://pep8ci.herokuapp.com/#)
+
+![Python Validated](/readme_images/validation/Screenshot%202024-08-28%20163358.png)
+
 
 ## Manual Testing 
 
