@@ -142,7 +142,7 @@ FRS sheets are Legal Documents that are audited by managers and have to reflect 
 
 ![FRS sheet](/readme_images/Screenshot%202024-08-23%20085751.png)
 
-## Problems with the Paper Model
+## Problems with the Paper Model(needs of target audience)
 
 There are many issues that arise with FRS sheets that creates more work for Managers and Staff teams that this application aims to solve.
 
@@ -157,7 +157,7 @@ There are many issues that arise with FRS sheets that creates more work for Mana
     - This can take alot of time as services can be spaced far apart.
     - If FRS sheets are not all stored correctly weeks can be missing from this audit.
 
-## How this Application plans to fix these issues.
+## How this Application plans to fix these issues.(Development)
 
 1. The application will track the cash taken out of a wallet and will prompt a user that the reciepts and cash in does not add up to the cash that was taken out. It will then prompt the user that they are either missing a reciept or to recount the cash going in. if these still do not add up they should contact a manager. (As in procedure Within HFT and other care providers)
 
