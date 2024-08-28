@@ -1150,6 +1150,10 @@ There are no known bugs
 
 ## lighthouse score
 
+Some Pages the Contrast between the HFT color pallet reduces the Accessibility lighthouse score however on a whole the website has 100%
+
+![lighthouse score](/readme_images/google-lighthouse.png)
+
 ## Browser testing 
 
 - The Website was tested on Google Chrome, Firefox, Microsoft Edge, Safari browsers with no issues noted.  

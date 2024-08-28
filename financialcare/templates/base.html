@@ -16,13 +16,17 @@
               <a href="{{url_for('login')}}" class="brand-logo">Financial Care</a>
               <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
               <ul class="right hide-on-med-and-down">
-                <li><a href="{{url_for('login')}}">Home</a></li>
-                <li><a href="{{url_for('services')}}">Services</a></li>
-                <li><a href="{{url_for('service_users')}}">Individual</a></li>
+                {% if session["user"] %}
+                  <li><a href="{{url_for('login')}}">Home</a></li>
+                  <li><a href="{{url_for('services')}}">Services</a></li>
+                  <li><a href="{{url_for('service_users')}}">Individual</a></li>
+                {% endif %}
                 {% if session["user_access"]in ["manager", "it"] %}
                   <li><a href="{{url_for('users')}}">Staff</a></li>
                 {% endif %}
-                <li class="red darken-1"><a href="{{url_for('logout')}}">Log out</a></li>
+                {% if session["user"] %}
+                  <li class="red darken-1"><a href="{{url_for('logout')}}">Log out</a></li>
+                {% endif %}
               </ul>
             </div>
 
