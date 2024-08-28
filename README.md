@@ -157,6 +157,25 @@ There are many issues that arise with FRS sheets that creates more work for Mana
     - This can take alot of time as services can be spaced far apart.
     - If FRS sheets are not all stored correctly weeks can be missing from this audit.
 
+Summary:
+
+Audience: The Orginasation(HFT)
+
+- need: the financial recordings to be accurate 
+- need: security so that only employees can access and update this infomation
+
+Audience: Managers
+
+- need: to be able to create, services , service_users and staff whenever a new service, staff member or supported person joins HFT.
+- need: to be able to access the finanical recording that staff make virtually. to be able to audit them.
+
+Audience: Staff
+
+- need: to be able to find the service they work in and the person that they are supporting
+- need: to be able to add a new recording to the person they are recording.
+- need: to be able to add bank transactions retrospectivly (reconsiling)
+- need: this process to be easy to navigate and difficult to make mistakes.
+
 ## How this Application plans to fix these issues.(Development)
 
 1. The application will track the cash taken out of a wallet and will prompt a user that the reciepts and cash in does not add up to the cash that was taken out. It will then prompt the user that they are either missing a reciept or to recount the cash going in. if these still do not add up they should contact a manager. (As in procedure Within HFT and other care providers)
@@ -166,6 +185,14 @@ There are many issues that arise with FRS sheets that creates more work for Mana
 3. Managers will have access to the Application and can access the records stored digitally and therefore will not need to travel to services to collect FRS sheets.
     - Staff will still store Reciepts but these can be photographed and sent to managers via Email.
 
+
+The Application will be easy for Staff to navigate as the Cash taken out will always route correctly to the forms to put Cash back in.
+
+The Application will be Secure and only users in the database can access services they are allocated to.
+
+The Application will allow Managers full CRUD Access regarding Services, Staff and Indivduals. 
+
+Financial Recording will not be able to be edited by staff these are Legal recording and if there are errors these are treated as Financial error by the company and Investigations are then made into the user that entered them.
 
 ## The Data
 
@@ -179,7 +206,7 @@ Services to catagorise Supported people
 
 ServiceUsers to identify whos wallet entry the staff member is entering infomation into.
 
-for more infomation on the data Schema ![Click](#database-schema)
+for more infomation on the data Schema [Click](#database-schema)
 
 ## Security Features
 
