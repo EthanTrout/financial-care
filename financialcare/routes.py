@@ -54,6 +54,14 @@ def shorten_text_filter(text, max_length=15):
     return shorten_text(text, max_length)
 
 
+# Utility processor for jinja2 to Previous Url on all routes
+@app.context_processor
+def utility_processor():
+    def get_previous_url(default='services'):
+        return request.referrer or url_for(default)
+    return dict(get_previous_url=get_previous_url)
+
+
 # Login logout routes
 @app.route("/", methods=["GET", "POST"])
 def login():
