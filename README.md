@@ -233,78 +233,76 @@ Ideas for future enhancements to WWAMI include:
 
 # User Experience (UX)
 
-- ## User Stories
+## User Stories
 
-- ### Orginsation Goals
+### Organisation Goals
 
-- a. As a orginasation i want the application to save workers time filling out these forms and managers auditing them, allowing for more time spent supporting the people in services.
-- b. As a orginsation i want to decrease the amount of financial error that are made while filling out these forms.
-- c. As a orginsation i want to be able to ensure these forms are correctly maintained and easily accessable for auditing.
+- a. As an organisation, I want the application to save workers' time filling out these forms and managers auditing them, allowing for more time spent supporting the people in services.
+- b. As an organisation, I want to decrease the number of financial errors made while filling out these forms.
+- c. As an organisation, I want to be able to ensure these forms are correctly maintained and easily accessible for auditing.
 
 ### Managers and Admin Goals
 
-- a. As a manager i want to be able to easily create new services, edit services or delete them to reflect the services i manage.
-- b. As a manager i want to be able to easily create new service users and add them to the services that they reside in. Or delete service users that are no longer using us as a care provider.
-- c. As a manager i want to be able to easily create new staff members and give them access to the services they are working in. or update the services of exsisting staff members.
-- d. As a manager or IT technictan i want to be able to update staff members passwords if they are having trouble logging into the site
-- e. As a manager i want to be able to update a staff members access if they have been promoted to a manager.
+- a. As a manager, I want to be able to easily create new services, edit services, or delete them to reflect the services I manage.
+- b. As a manager, I want to be able to easily create new service users and add them to the services they reside in, or delete service users who are no longer using us as a care provider.
+- c. As a manager, I want to be able to easily create new staff members and give them access to the services they are working in, or update the services of existing staff members.
+- d. As a manager or IT technician, I want to be able to update staff members' passwords if they are having trouble logging into the site.
+- e. As a manager, I want to be able to update a staff member's access if they have been promoted to a manager.
 
-### Staff member/ User Goals
+### Staff Member/User Goals
 
-#### First time user
-- a. As a first time user i want to be easily able to access the service that i work in and add records to the person that i am supporting to take money out or in.
-- b. As a first time user i want to be easily able to view the records of the person i am supporting.
-- c. As a first time user i want the website to be easy to navigate and intutaive as to what i am doing.
-- d. As a first time user i want the website to assist with not making any mistakes on the records that i enter.
+#### First-time User
 
-#### Frequent user
-- a. a Frequent user i want to be easily able to access the service that i work in and add records to the person that i am supporting to take money out or in.
-- b. a Frequent user i want to be easily able to view the records of the person i am supporting.
-- d. As a Frequent user i want to be able to easily view someones records and reconcile bank entries from a bank statment.
+- a. As a first-time user, I want to be easily able to access the service that I work in and add records for the person I am supporting to take money out or in.
+- b. As a first-time user, I want to be easily able to view the records of the person I am supporting.
+- c. As a first-time user, I want the website to be easy to navigate and intuitive regarding what I am doing.
+- d. As a first-time user, I want the website to assist with not making any mistakes on the records that I enter.
 
+#### Frequent User
 
-# Design.
+- a. As a frequent user, I want to be easily able to access the service that I work in and add records for the person I am supporting to take money out or in.
+- b. As a frequent user, I want to be easily able to view the records of the person I am supporting.
+- c. As a frequent user, I want to be able to easily view someone's records and reconcile bank entries from a bank statement.
+
+# Design
 
 ## Imagery
-The imagery and UI wes given great consideration. It needed to be fitting with HFT's other website themes and also be very simple to navigate for staff and managers in order to save time compared to an FRS sheet
 
-### Color scheme
+The imagery and UI were given great consideration. It needed to be fitting with HFT's other website themes and also be very simple to navigate for staff and managers to save time compared to an FRS sheet.
+
+### Color Scheme
 
 ![Color scheme](/readme_images/hft.png)
 
-Hft Website for Example:
-![Hft website](/readme_images/hft_website.png)
+HFT Website for Example:
+![HFT website](/readme_images/hft_website.png)
 
-### Layout 
+### Layout
 
-The Web page has 4 main pages with many sub pages for each Page. 
+The web page has 4 main pages with many subpages for each page.
 
-1. Login- Where the user has to enter there email and password. Note: accounts are created by managers and not by users.
+1. **Login** - Where the user has to enter their email and password. Note: Accounts are created by managers and not by users.
 
-2. Services- The services page displays the user what services they have been allocated to. they can only see these services and no others. Managers can see all services
-    - 2.1 Add a service(managers access only) a form to add a service
+2. **Services** - The services page displays to the user what services they have been allocated to. They can only see these services and no others. Managers can see all services.
+    - 2.1 **Add a Service** (managers access only) - A form to add a service.
+    - 2.2 **Edit a Service** (managers access only) - A form to update or delete a service as well as view staff working in the service or remove staff from the service.
+    - 2.3 **Add Staff to Service** (managers access only) - A form to allocate a staff member to this service.
 
-    - 2.2 Edit a service(managers access only) a form to update or delete a service aswell as viewing staff working in service or removing staff from service
+3. **Individuals** - This page displays all individuals a user has access to (as a user may have multiple services they are allocated to). This page can also display all individuals in a specific service if routed through the service’s "View People" button.
+    - 3.1 **Add an Individual** (managers access only) - A form to add an individual and assign them to a service.
+    - 3.2 **Edit an Individual** (managers access only) - A form to update an individual or assign them to another service.
+    - 3.3 **Open Wallet** (everyone can access) - This routes to multiple pages depending on the record of the individual's wallet entries.
+        - No wallet entries -> A form to set up a wallet with cash amount, bank account amount, and seal on the real wallet.
+        - Wallet entry -> A form to declare taking cash or card out and the amounts.
+        - Cash is out -> A form to record cash receipts -> A form to record cash back into the wallet.
+        - Cash is out, Card is out -> Modal to ask if money has been taken out of the bank. If No -> Cash receipts form -> Cash in form -> A form to record bank receipts.
+        - Cash is out, Card is out -> Modal to ask if money has been taken out of the bank. If Yes -> A form to record cash taken out of the bank -> Cash receipts form -> Cash in form -> A form to record bank receipts.
+        - Only card out -> Modal to ask if money has been taken out of the bank. If Yes -> A form to record cash taken out of the bank -> Cash receipts form -> Cash in form -> A form to record bank receipts.
+        - Only card out -> Modal to ask if money has been taken out of the bank. If No -> Bank receipts with entry for seal.
+    - 3.4 **Reconcile Wallet** (everyone can access) - This is a form that allows the user to record bank receipts from a bank statement, where they can set the date to the correct date from the bank statement.
 
-    - 2.3 Add staff to service(managers access only) a form to allocate a staff member to this service
+4. **Staff** (manager access only) - All staff members are displayed and can be added, edited, or deleted. Passwords can be changed but not stored (for security).
 
-3. Indviduals- this page displays all indivduals a user has access to(as a user may have multiple services they are aloocxated to). this page can also display all indivduals in a specific service if routed through services View people button
-    - 3.1 Add a indivdual(managers access only) a form to add a indivdual and asign them to a service
-
-    - 3.2 Edit a indivdual(managers access only) a form to update a indivdual or asign them to another service
-    
-    - 3.3 Open Wallet(Everyone can access) This routes to multiple pages depending on the record of the indivduals wallet entries
-        - No wallet entries -> a form to set up a wallet with cash amount. bank account amount and seal on the real wallet.
-        - wallet entry -> a form to declare taking cash or card out and the amounts
-        - Cash is out -> a form to record cash reciepts -> a form to record cash back into wallet
-        - Cash is out Card is out -> Modal to ask if money has been taken out of bank. If No -> cash reciepts form -> cash in form -> a form to record bank reciepts 
-        - Cash is out Card is out -> Modal to ask if money has been taken out of bank. If Yes ->A form to record cash taken out of bank -> cash reciepts form -> cash in form -> a form to record bank reciepts 
-        - Only card out -> Modal to ask if money has been taken out of bank. if Yes -> A form to record cash taken out of bank -> cash reciepts form -> cash in form -> a form to record bank reciepts 
-        - Only card out -> Modal to ask if money has been taken out of bank. If No -> bank reciepts with entry for seal.
-    
-    - 3.4 Reconsile Wallet(Everyone can access) This is a form that allows the user to record bank reciepts from a bank statment where they can set the date to the correct date from the bank statement.
-
-4. Staff (manager access only)- All staff members are displayed and can be added, edited or deleted. Passwords can be changed but not stored( for security)
 
 ## WireFrames
 
