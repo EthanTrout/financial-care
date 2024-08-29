@@ -113,129 +113,123 @@ This application has been made alongside HFT Leeds(a social care provider locate
 
 ## Target Audiences
 
-This Website is made for Social care providers and the staff that work in Social care. 
+This website is made for social care providers and the staff that work in social care.
 
-Managers will use this Website to Audit Financial Recordings that the staff make. 
+Managers will use this website to audit financial recordings that the staff make.
 
-Staff will use this website to make the financial recording for the Supported indivduals.
+Staff will use this website to make the financial recordings for the supported individuals.
 
-This will ensure that supported peoples money is looked after securely and will reduce accounting mistakes made by staff. thereby saving time for managers.
+This will ensure that supported people's money is looked after securely and will reduce accounting mistakes made by staff, thereby saving time for managers.
 
+## Introduction and Background
 
-## Introduction and background
+To understand this application, you must first understand how financial transactions are recorded currently in social care.
 
-To understand this application you must first understand how financial transactions are recorded currently in social care.
+Supported people within social care may not have the capacity to look after their own finances. Therefore, the staff teams that work within these services support the individual to store, withdraw, and make payments.
 
-Supported people within Social care may not have capacity to look after their own finances. therefore the staff teams that work within these services support the indivdual to to store. withdraw and make payments. 
+Cash is usually stored within a wallet or pouch that can be sealed. These seals have a number on them so that the ins and outs of the wallet can be tracked to specific staff members. This is to avoid financial abuse or to help identify perpetrators of this abuse. These wallets are stored securely in safes that staff have access to.
 
-Cash is usually stored within a wallet or pouch that can be sealed. these seals have a number on them so that the ins and outs of the wallet can be tracked to specific staff members. This is to avoid Financial Abuse or to help identify perptrators of this abuse. These wallets are stored securely in safes that staff have access to.
+Whenever a supported person would like to take money or their bank card out, the staff have to access these safes and wallets and log on an FRS sheet the amount taken out, the new total that is left in the wallet, and the new seal number that is on the wallet.
 
-Whenever a Supported person would like to take money or there bank card out the staff has to access these safes and wallets and Log on a FRS sheet the amount taken out the new total that is left in the wallet and the new seal number that is on the wallet.
+Whenever money has been spent by a supported person, receipts have to be logged on the FRS sheet by a staff member, and any remaining money has to be added back to the wallet with the new seal number recorded.
 
-Whenever money has been spent by a supported person reciepts have to be logged to the FRS sheet by a staff member and any remaning money has to be added back to the wallet and the new seal number recorded 
+FRS sheets are known as Financial Recording Sheets and are paper-backed documents that record all of these transactions.
 
-FRS sheets are known as Financial Recording sheets and are paper backed documents that record all of these transactions.
+Bank statements are usually collected weekly by staff, and the FRS sheets are updated with transactions such as direct debits or benefits that have been added to a bank account.
 
-Bank statments are usually collected weekly by staff and the FRS sheets updated with transactions such as Direct debits or benefits that have been added to a bank account.
-
-FRS sheets are Legal Documents that are audited by managers and have to reflect every transaction of the indivdual. Staff are to sign for every transaction to state it was them they supported to person to make it.
+FRS sheets are legal documents that are audited by managers and must reflect every transaction of the individual. Staff are to sign for every transaction to state that it was them who supported the person in making it.
 
 ![FRS sheet](/readme_images/Screenshot%202024-08-23%20085751.png)
 
-## Problems with the Paper Model(needs of target audience)
+## Problems with the Paper Model (Needs of Target Audience)
 
-There are many issues that arise with FRS sheets that creates more work for Managers and Staff teams that this application aims to solve.
+There are many issues that arise with FRS sheets that create more work for managers and staff teams that this application aims to solve.
 
-1. Staff members taking money out, recording reciepts and adding money back in and the total of the the reciepts and cash in does not add up to the total of money taken out.
-    - This means that there is so money unacounted for. This is classed as a Financial Error for the staff member and can result in disaplinary action.
+1. Staff members taking money out, recording receipts, and adding money back in; and the total of the receipts and cash in does not add up to the total of money taken out.
+    - This means that there is some money unaccounted for. This is classed as a financial error for the staff member and can result in disciplinary action.
 
-2. Staff members making addition or subtraction mistakes when adding up the Totals of the wallet or Bank total.
-    - This is easily done in a very busy work place but is also a Financial Error.
-    - This can cause alot of wasted time when Staff have to reconsile FRS sheets as they have to identify where this error was made.
+2. Staff members making addition or subtraction mistakes when adding up the totals of the wallet or bank total.
+    - This is easily done in a very busy workplace but is also a financial error.
+    - This can cause a lot of wasted time when staff have to reconcile FRS sheets as they have to identify where this error was made.
 
-3. Managers traveling to all services to collect these FRS sheets each month to collect these FRS sheets to be audited.
-    - This can take alot of time as services can be spaced far apart.
-    - If FRS sheets are not all stored correctly weeks can be missing from this audit.
+3. Managers traveling to all services to collect these FRS sheets each month to be audited.
+    - This can take a lot of time as services can be spaced far apart.
+    - If FRS sheets are not all stored correctly, weeks can be missing from this audit.
 
 Summary:
 
-Audience: The Orginasation(HFT)
+**Audience: The Organisation (HFT)**
 
-- need: the financial recordings to be accurate 
-- need: security so that only employees can access and update this infomation
+- Need: The financial recordings to be accurate.
+- Need: Security so that only employees can access and update this information.
 
-Audience: Managers
+**Audience: Managers**
 
-- need: to be able to create, services , service_users and staff whenever a new service, staff member or supported person joins HFT.
-- need: to be able to access the finanical recording that staff make virtually. to be able to audit them.
+- Need: To be able to create services, service users, and staff whenever a new service, staff member, or supported person joins HFT.
+- Need: To be able to access the financial recordings that staff make virtually, and to be able to audit them.
 
-Audience: Staff
+**Audience: Staff**
 
-- need: to be able to find the service they work in and the person that they are supporting
-- need: to be able to add a new recording to the person they are recording.
-- need: to be able to add bank transactions retrospectivly (reconsiling)
-- need: this process to be easy to navigate and difficult to make mistakes.
+- Need: To be able to find the service they work in and the person they are supporting.
+- Need: To be able to add a new recording for the person they are recording.
+- Need: To be able to add bank transactions retrospectively (reconciling).
+- Need: This process to be easy to navigate and difficult to make mistakes.
 
-## How this Application plans to fix these issues.(Development)
+## How This Application Plans to Fix These Issues (Development)
 
-1. The application will track the cash taken out of a wallet and will prompt a user that the reciepts and cash in does not add up to the cash that was taken out. It will then prompt the user that they are either missing a reciept or to recount the cash going in. if these still do not add up they should contact a manager. (As in procedure Within HFT and other care providers)
+1. The application will track the cash taken out of a wallet and will prompt a user if the receipts and cash in do not add up to the cash that was taken out. It will then prompt the user that they are either missing a receipt or need to recount the cash going in. If these still do not add up, they should contact a manager (as per procedure within HFT and other care providers).
 
-2. The Addition and subtraction from the Cash Total and the Bank Account total will be done by the application so that no mistakes are made. The user is only prompted to enter either the cash out, The cash reciepts, the Bank card reciepts or the Cash In.
+2. The addition and subtraction from the cash total and the bank account total will be done by the application so that no mistakes are made. The user is only prompted to enter either the cash out, the cash receipts, the bank card receipts, or the cash in.
 
-3. Managers will have access to the Application and can access the records stored digitally and therefore will not need to travel to services to collect FRS sheets.
-    - Staff will still store Reciepts but these can be photographed and sent to managers via Email.
+3. Managers will have access to the application and can access the records stored digitally and therefore will not need to travel to services to collect FRS sheets.
+    - Staff will still store receipts, but these can be photographed and sent to managers via email.
 
+The application will be easy for staff to navigate as the cash taken out will always route correctly to the forms to put cash back in.
 
-The Application will be easy for Staff to navigate as the Cash taken out will always route correctly to the forms to put Cash back in.
+The application will be secure, and only users in the database can access services they are allocated to.
 
-The Application will be Secure and only users in the database can access services they are allocated to.
+The application will allow managers full CRUD access regarding services, staff, and individuals.
 
-The Application will allow Managers full CRUD Access regarding Services, Staff and Indivduals. 
-
-Financial Recording will not be able to be edited by staff these are Legal recording and if there are errors these are treated as Financial error by the company and Investigations are then made into the user that entered them.
+Financial recordings will not be editable by staff; these are legal records, and if there are errors, these are treated as financial errors by the company, and investigations are then made into the user that entered them.
 
 ## The Data
 
-The main Data for this project is the replacement of the FRS sheets with the Database table WalletEntry. This has all of the same fields as the FRS sheet however it is store digitally which means managers can access it without going into services and Totals for Cash and Bank accounts are not added up by staff but by the application itself. 
+The main data for this project is the replacement of the FRS sheets with the database table WalletEntry. This has all of the same fields as the FRS sheet; however, it is stored digitally, which means managers can access it without going into services, and totals for cash and bank accounts are not added up by staff but by the application itself.
 
-What Else is stored:
+What else is stored:
 
-Staff accounts to access the website. 
+- Staff accounts to access the website.
+- Services to categorize supported people.
+- ServiceUsers to identify whose wallet entry the staff member is entering information into.
 
-Services to catagorise Supported people 
-
-ServiceUsers to identify whos wallet entry the staff member is entering infomation into.
-
-for more infomation on the data Schema [Click](#database-schema)
+For more information on the data schema [click](#database-schema).
 
 ## Security Features
 
-As Supported Peoples data is protected. No routes can be accessed unless a user is signed in.
+As supported people's data is protected, no routes can be accessed unless a user is signed in.
 
-Users are added by Managers or IT administrators.
+Users are added by managers or IT administrators.
 
-Passwords are stored but are Hashed and salted. 
+Passwords are stored but are hashed and salted.
 
-
-## Project Scope and limitations 
+## Project Scope and Limitations
 
 The scope of the project includes the development of the web-based application with the aforementioned features, focusing on usability and accessibility. Known limitations include:
 
-- A large orginsation such as HFT has thousands of staff and service users aswell as hundred of services. Querying these large datasets could be slow using Postgresql as the dataset increases. i have proposed some future additions to the application. See Future Versions.
+- A large organization such as HFT has thousands of staff and service users as well as hundreds of services. Querying these large datasets could be slow using PostgreSQL as the dataset increases. I have proposed some future additions to the application. See Future Versions.
 
-- Social Care providers have to adhere to strict GDPR regulation via the The Data Protection Act 2018. I have set up Encryption with stored passwords however the best practice for a social care provider would be to store these User tables Internally and authenticate through there already set up internal system
+- Social care providers have to adhere to strict GDPR regulations via The Data Protection Act 2018. I have set up encryption with stored passwords; however, the best practice for a social care provider would be to store these user tables internally and authenticate through their already set up internal system.
 
-The Data should also be stored securly on there in House servers with Access only through the company computers.
+The data should also be stored securely on their in-house servers with access only through company computers.
 
 ## Future Versions
 
 Ideas for future enhancements to WWAMI include:
 
-- An image based upload for Reciepts to be stored on the database with the relating transaction
-- Search Bar querying for users, staff and services
-- System for logging spends and automating the reciept.
-- functionality to edit reciepts before submitting all of them rather than submitting them one by one.
-
+- An image-based upload for receipts to be stored in the database with the related transaction.
+- Search bar querying for users, staff, and services.
+- A system for logging spends and automating the receipt.
+- Functionality to edit receipts before submitting all of them rather than submitting them one by one.
 
 # User Experience (UX)
 
