@@ -688,6 +688,12 @@ def view_wallet(service_user_id):
 def reconsile_in_or_out(service_user_id):
     service_user = ServiceUser.query.get_or_404(service_user_id)
 
+    last_wallet_entry = WalletEntry.query.filter_by(
+        service_user_id=service_user_id).order_by(WalletEntry.id.desc()).first()
+
+    if last_wallet_entry is None:
+        return redirect(url_for("set_up_wallet", service_user_id=service_user_id))
+
     if request.method == "POST":
         if request.form.get("in_or_out") == "bank_in":
             return redirect(url_for("reconsile_banking", service_user_id=service_user_id, bank_in="True"))
