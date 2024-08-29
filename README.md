@@ -308,7 +308,7 @@ The web page has 4 main pages with many subpages for each page.
 
 <details>
 
- <summary>Daesktop Wireframe</summary>
+ <summary>Desktop Wireframe</summary>
 
 ![Desktop Wireframe](/readme_images/financialcare-wireframe.png)
 
@@ -512,11 +512,7 @@ Whenever any action is taken on the website that updates the Database or fails t
 
  ![User feedback added service hide](/readme_images/features/Screenshot%202024-08-20%20144312.png)
 
- #### These alerts happen for all actions. here are some examples
-
- ![User feedback example]()
-
- Add Examples
+ #### These alerts happen for all actions.
 
  ### Edit Service
  
