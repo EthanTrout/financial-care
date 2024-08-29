@@ -22,7 +22,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <i class="fa-regular fa-user prefix purple-text text-darken-3"></i>
-                <select id="staff" name="staff" class="validate" >
+                <select id="staff" name="staff" class="validate" required >
                     <option value="" disabled selected>Select Staff</option>
                     {% for staff_member in staff %}
                         <option value="{{staff_member.id}}">{{staff_member.name}}</option>
