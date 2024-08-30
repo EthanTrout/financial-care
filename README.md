@@ -982,7 +982,7 @@ They can then Add these transactions in and the Bank total will be updated.
 ## Validator Testing
 
 HTML
-[Login](https://validator.w3.org/nu/?doc=https%3A%2F%2Ffinancial-care-a8ea2e851d47.herokuapp.com%2F)
+[Login W3C validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Ffinancial-care-a8ea2e851d47.herokuapp.com%2F)
 
 As Other pages cannot be accessed by link. (Login is required) i manally entered and validated these pages 
 
@@ -1000,6 +1000,10 @@ HTML is all valid and tested
 CSS
 
 As i have used Materalize for the majority of the CSS. this is valid and tested by Google Materalize.
+
+"Materialize is ideal for Material Design users, it’s also responsive and works with all modern browsers, including Internet Explorer 10+."
+
+[Quote from HTMLBurger site](https://htmlburger.com/blog/bootstrap-vs-materialize-review/)
 
 CSS is all valid and tested
 
@@ -1029,7 +1033,7 @@ Python has been validated tousing the Pep8 Validator Codeinstitute provides [Pep
 
 - I have tested that the website does not allow users to enter cash reciepts and cash in that does not add up to the inital cash out. 
 
-Testing document : [Testing](/TESTING.md)
+Testing document : [See all Testing on Seperate Testing Doc](/TESTING.md)
 
 ## Deployed Website testing.
 
@@ -1037,11 +1041,19 @@ The Deployed version has been tested by myself and users. it works the same as t
 
 This is a bug found by one of the users.
 
-[User testing image bug](/readme_images/usertestingimg.jpeg)
+![User testing image bug](/readme_images/usertestingimg.jpeg)
+
+This has been resolved by Changing the if condition to use Decimal. 
+
 ## User Testing 
 
 I have had my collegues that work in Social care and use FRS sheets on a daily basis to test the difference between the two and give me feedback on what they think of the Deployed Application 
 
+Note: Personal work Details such as emails and phone numbers have been removed for data protection:
+
+![User feedback Support worker](/readme_images/userfeedback1.png)
+
+![User feedback Manager](/readme_images/Userfeedback2.png)
 
 
 ## bugs 
