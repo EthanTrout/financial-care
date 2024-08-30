@@ -1007,6 +1007,8 @@ As i have used Materalize for the majority of the CSS. this is valid and tested 
 
 CSS is all valid and tested
 
+![Custom CSS validation](/readme_images/Screenshot%202024-08-30%20113501.png)
+
 JS 
 
 Minimal Custom JS has been used and the majority is Intilasation for Materalize. However custom JS was developed for the alert system and that has been validated here .
