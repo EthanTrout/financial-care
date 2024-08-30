@@ -1,5 +1,7 @@
 # Financial-Care
 
+![Wepage Image](/readme_images/Screenshot%202024-08-30%20114519.png)
+
 Financial Care is a web application developed for social care providers and there staff team to securely store records of the transactions of the people that they support and the staff that have helped them make these transactions
 
 This application has been made alongside HFT Leeds(a social care provider located in leeds). to update there systems and move away from FRS sheets (Paper recording sheets for transactions)
