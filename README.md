@@ -1043,7 +1043,24 @@ This is a bug found by one of the users.
 
 ![User testing image bug](/readme_images/usertestingimg.jpeg)
 
-This has been resolved by Changing the if condition to use Decimal. 
+This has been resolved by Changing the if condition to use Decimal.
+
+
+Deployed Testing Evidence:
+
+<details>
+ <summary> Deployed testing images (condenced)</summary>
+
+ ![Deployed Images](/readme_images/deployedimages1.png)
+  ![Deployed Images](/readme_images/deployedimages2.png)
+ </details>
+
+
+ 
+
+### All links and CRUD functionality retested. 
+
+All the links and CRUD functionality have been tested by myself and multiple users. 
 
 ## User Testing 
 
